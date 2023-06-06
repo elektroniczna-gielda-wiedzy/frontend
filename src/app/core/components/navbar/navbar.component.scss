@@ -1,0 +1,39 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar a {
+  display: inline-block;
+  margin-inline: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.active-nav-item {
+  color: black !important;
+}
+
+.active-side-nav-item {
+  background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
+}
