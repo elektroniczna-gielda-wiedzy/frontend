@@ -8,10 +8,14 @@ export const entryTypeGuard: CanActivateFn = (
   router = inject(Router)
 ) => {
   const entryType = route.paramMap.get('entryType');
-  if (entryType && stringToEntryType(entryType) !== null) {
-    return true;
-  } else {
+  if (!entryType) {
+    return false;
+  }
+  try {
+    stringToEntryType(entryType);
+  } catch (error) {
     router.navigate(['/entries/announcement']);
     return false;
   }
+  return true;
 };
