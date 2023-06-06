@@ -1,4 +1,21 @@
-<p>entry-list works!</p>
-<span>{{entryType}}</span>
 
-<app-entry-card *ngFor="let entry of entries" [entry]="entry"></app-entry-card>
+<div class="entry-list-outer-container">
+  <div class="entry-list-controls">
+    <a
+      color="primary"
+      mat-fab
+      matTooltip="Add {{ entryTypeString }}"
+      routerLink="add"
+      aria-label="Add entry button"
+      class="add-entry-button"
+    >
+      <mat-icon>add</mat-icon>
+    </a>
+  </div>
+  <div class="entry-list-container">
+    <app-entry-card
+      *ngFor="let entry of entries"
+      [entry]="entry"
+    ></app-entry-card>
+  </div>
+</div>

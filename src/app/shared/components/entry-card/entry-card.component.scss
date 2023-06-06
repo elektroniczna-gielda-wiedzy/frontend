@@ -1,0 +1,106 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+$max-card-width: 400px;
+$category-line-height: 1.5em;
+$category-border-width: 0.2em;
+$categories-gap: 0.25em;
+$category-row-count: 2;
+$categories-max-height: calc(
+    ($category-line-height - 1px + $category-border-width * 2) *
+        $category-row-count + $categories-gap * ($category-row-count - 0.5)
+);
+
+.entry-card {
+    min-width: min-content;
+    max-width: 400px;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+mat-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-card-title {
+    $title-row-count: 3;
+    $line-height: 1.5em;
+
+    display: -webkit-box;
+    -webkit-line-clamp: $title-row-count;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5em;
+    height: calc($line-height * $title-row-count);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        color: mat.get-color-from-palette(theme.$app-primary);
+        text-decoration: underline;
+    }
+}
+
+.favorite-icon {
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        scale: 1.3;
+        color: mat.get-color-from-palette(theme.$app-primary);
+    }
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.categories {
+    $line-height: 2.2em;
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    overflow: hidden;
+    gap: $categories-gap;
+    margin: 1em 0;
+    height: $categories-max-height;
+}
+
+.category {
+    padding: 0 0.4em;
+    border-radius: 100px;
+    border-style: solid;
+    border-width: $category-border-width;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: $category-line-height;
+    max-width: calc($max-card-width - 2em);
+    height: $category-line-height;
+
+    &.faculty {
+        background-color: mat.get-color-from-palette(
+            theme.$app-accent,
+            "lighter"
+        );
+        border-color: mat.get-color-from-palette(theme.$app-accent, "darker");
+
+        &.major {
+            border-color: mat.get-color-from-palette(theme.$app-accent);
+        }
+    }
+
+    &.area {
+        background-color: mat.get-color-from-palette(
+            theme.$app-primary,
+            "lighter"
+        );
+        border-color: mat.get-color-from-palette(theme.$app-primary, "darker");
+
+        &.subarea {
+            border-color: mat.get-color-from-palette(theme.$app-primary);
+        }
+    }
+}

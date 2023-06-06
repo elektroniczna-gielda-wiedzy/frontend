@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EntryType, stringToEntryType, EntryService, Entry } from 'src/app/core';
+import { EntryType, stringToEntryType, EntryService, Entry, entryTypeToString } from 'src/app/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,7 +10,8 @@ import { Subscription } from 'rxjs';
 })
 
 export class EntryListComponent implements OnInit, OnDestroy {
-  entryType: EntryType | null = null;
+  entryType!: EntryType;
+  
   entries: Entry[] = [];
   private paramMapSubscription: Subscription | null = null;
   private entriesSubscription: Subscription | null = null;
@@ -49,5 +50,9 @@ export class EntryListComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  get entryTypeString(): string {
+    return entryTypeToString(this.entryType);
   }
 }

@@ -1,0 +1,21 @@
+.entry-list-outer-container {
+    margin: 1em;
+}
+
+.entry-list-container {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    min-width: min-content;
+}
+
+.entry-list-controls {
+    display: flex;
+
+}
+
+.add-entry-button {
+    margin-left: auto;
+}
