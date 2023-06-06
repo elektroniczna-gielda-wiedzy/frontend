@@ -1,7 +1,7 @@
 import { EntryType } from '../enums/entry-type';
 
 const baseEntry = {
-  favorite: false,
+  
   categories: [
     {
       category_id: 1,
@@ -39,12 +39,14 @@ const baseEntry = {
 const createEntry = (
   entry_id: number,
   entry_type_id: EntryType,
-  title: string
+  title: string,
+  favorite = false,
 ) => {
   return {
     entry_id: entry_id,
     entry_type_id: entry_type_id,
     title: title,
+    favorite: favorite,
     ...baseEntry,
   };
 };
@@ -55,7 +57,8 @@ export const ENTRIES = [
   createEntry(
     3,
     EntryType.Announcement,
-    'Ogłoszenie o korepetycjach 3 z długim tytułem długim tytułem, długim tytułem, długim tytułem, długim tytułem, długim tytułem'
+    'Ogłoszenie o korepetycjach 3 z długim tytułem długim tytułem, długim tytułem, długim tytułem, długim tytułem, długim tytułem',
+    true
   ),
   createEntry(4, EntryType.Note, 'Notatki z Analiza'),
   createEntry(5, EntryType.Post, 'Post o Analiza'),
