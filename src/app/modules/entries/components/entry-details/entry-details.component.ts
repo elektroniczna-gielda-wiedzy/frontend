@@ -1,28 +1,20 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs';
 import { EntryType, stringToEntryType } from 'src/app/core';
 
 @Component({
   selector: 'app-entry-details',
   templateUrl: './entry-details.component.html',
-  styleUrls: ['./entry-details.component.scss']
+  styleUrls: ['./entry-details.component.scss'],
 })
 export class EntryDetailsComponent {
-  entryType: EntryType | null = null;
+  entryType!: EntryType;
 
-  constructor(private readonly route: ActivatedRoute,) { }
+  constructor(private readonly route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      first()
-    ).subscribe(
-      paramMap => {
-        const entryType = paramMap.get('entryType');
-        if (entryType) {
-          this.entryType = stringToEntryType(entryType);
-        }
-      }
+    this.entryType = stringToEntryType(
+      this.route.snapshot.paramMap.get('entryType')!
     );
   }
 }
