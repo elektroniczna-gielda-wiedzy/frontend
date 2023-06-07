@@ -1,1 +1,91 @@
-<p>sign-up works!</p>
+<mat-card class="responsive-mat-card">
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">
+      <h2>Sign Up</h2>
+    </mat-card-title>
+    <mat-card-subtitle class="card-center-row">
+      <span>Already have an account?</span>
+      <a class="link" mat-button color="primary" routerLink="/auth/sign-in"
+        >Sign In</a
+      >
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="signUpForm"
+      (ngSubmit)="onSubmit()"
+      class="form-container"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required />
+        <mat-error *ngIf="signUpForm.get('firstName')?.errors?.['required']">
+          First name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required />
+        <mat-error *ngIf="signUpForm.get('lastName')?.errors?.['required']">
+          Last name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="example@student.agh.edu.pl"
+          required
+        />
+        <mat-error *ngIf="signUpForm.get('email')?.errors?.['required']">
+          Email is required.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('email')?.errors?.['pattern']">
+          Please enter a valid student email.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required />
+        <mat-error *ngIf="signUpForm.get('password')?.errors?.['required']">
+          Password is required.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('password')?.errors?.['minlength']">
+          Password must be at least 6 characters long.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Repeat Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="repeatPassword"
+          required
+        />
+        <mat-error
+          *ngIf="signUpForm.get('repeatPassword')?.errors?.['required']"
+        >
+          You must repeat your password.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('repeatPassword')?.errors?.['matching']">
+            Passwords must match.
+        </mat-error>
+        
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!signUpForm.valid"
+      >
+        Sign Up
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

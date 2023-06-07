@@ -1,0 +1,38 @@
+.responsive-mat-card {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .card-title {
+    text-align: center;
+  }
+  
+  .card-title h2 {
+    margin-bottom: 0;
+  }
+  
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+  }
+  
+  .card-footer {
+    margin: 1em;
+  }
+  
+  .card-center-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
