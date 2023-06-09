@@ -11,8 +11,9 @@ export interface Entry {
   entry_type_id: number;
   title: string;
   favorite: boolean;
-  content: string;
   categories: Category[];
   author: Author;
   created_at: string;
+  content?: string;
+  image?: string;
 }
