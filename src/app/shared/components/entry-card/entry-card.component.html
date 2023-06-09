@@ -12,7 +12,7 @@
             <span
                 *ngFor="let category of entry.categories"
                 [ngClass]="getCategoryClass(category)"
-                >{{ category.names[0].name }}</span
+                >{{ getCategoryName(category) }}</span
             >
         </div>
         <mat-card-subtitle class="card-footer">

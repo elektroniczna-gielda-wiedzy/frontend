@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EntryType, stringToEntryType, EntryService, Entry, entryTypeToString } from 'src/app/core';
+import { EntryType, stringToEntryType, EntryService, Entry } from 'src/app/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -44,15 +44,15 @@ export class EntryListComponent implements OnInit, OnDestroy {
 
   loadEntries(): void {
     if (this.entryType !== null) {
-      this.entriesSubscription = this.entryService.getEntriesByType(this.entryType).subscribe(
-        entries => {
-          this.entries = entries;
+      this.entriesSubscription = this.entryService.getEntries({type: this.entryType}).subscribe(
+        response => {
+          this.entries = response.result;
         }
       );
     }
   }
 
-  get entryTypeString(): string {
-    return entryTypeToString(this.entryType);
+  get entryTypeName(): string {
+    return EntryType[this.entryType]
   }
 }

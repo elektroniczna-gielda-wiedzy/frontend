@@ -1,7 +1,7 @@
 export enum EntryType {
-  Announcement = 0,
+  Announcement = 2,
   Note = 1,
-  Post = 2,
+  Post = 3,
 }
 export function stringToEntryType(type: string): EntryType {
   switch (type.toLowerCase()) {
@@ -13,15 +13,4 @@ export function stringToEntryType(type: string): EntryType {
       return EntryType.Note;
   }
   throw new Error(`Unknown entry type: ${type}`);
-}
-
-export function entryTypeToString(type: EntryType): string {
-  switch (type) {
-    case EntryType.Announcement:
-      return 'Announcement';
-    case EntryType.Post:
-      return 'Post';
-    case EntryType.Note:
-      return 'Note';
-  }
 }

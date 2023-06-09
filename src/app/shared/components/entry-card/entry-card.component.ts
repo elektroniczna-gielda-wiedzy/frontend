@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Entry, entryTypeToString } from 'src/app/core';
+import { Entry, Category, EntryType, Language } from 'src/app/core';
 
 @Component({
   selector: 'app-entry-card',
@@ -9,6 +9,7 @@ import { Entry, entryTypeToString } from 'src/app/core';
 })
 export class EntryCardComponent {
   @Input() entry!: Entry;
+  language = Language.Polish;
 
   constructor(private router: Router) { }
 
@@ -27,10 +28,14 @@ export class EntryCardComponent {
     return result;
   }
 
+  getCategoryName(category: Category) {
+    return category.names.find((name) => name.lang_id === this.language)?.name;
+  }
+
   navigateToDetails(): void {
     this.router.navigate([
       'entries',
-      entryTypeToString(this.entry.entry_type_id).toLowerCase(),
+      EntryType[this.entry.entry_type_id].toLowerCase(),
       this.entry.entry_id,
     ]);
   }
