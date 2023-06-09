@@ -1,5 +1,6 @@
 // http
 export * from './http/entry-http.service';
+export * from './http/category-http.service';
 
 // services
 export * from './services/category.service';
