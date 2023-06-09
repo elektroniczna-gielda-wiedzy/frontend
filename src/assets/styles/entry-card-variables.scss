@@ -1,0 +1,10 @@
+$max-card-width: 400px;
+$min-card-width: 250px;
+$category-line-height: 1.5em;
+$category-border-width: 0.2em;
+$categories-gap: 0.25em;
+$category-row-count: 2;
+$categories-max-height: calc(
+    ($category-line-height - 1px + $category-border-width * 2) *
+        $category-row-count + $categories-gap * ($category-row-count - 0.5)
+);

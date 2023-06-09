@@ -1,3 +1,5 @@
+@use "src/assets/styles/entry-card-variables.scss" as *;
+
 .entry-list-outer-container {
     margin: 1em;
 }
@@ -18,4 +20,9 @@
 
 .add-entry-button {
     margin-left: auto;
+}
+
+.entry-list-container > * {
+    flex: 0 1 $max-card-width;
+    min-width: $min-card-width;
 }

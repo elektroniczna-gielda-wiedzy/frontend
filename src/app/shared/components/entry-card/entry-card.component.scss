@@ -1,21 +1,10 @@
 @use "@angular/material" as mat;
 @use "src/theme";
-
-$max-card-width: 400px;
-$category-line-height: 1.5em;
-$category-border-width: 0.2em;
-$categories-gap: 0.25em;
-$category-row-count: 2;
-$categories-max-height: calc(
-    ($category-line-height - 1px + $category-border-width * 2) *
-        $category-row-count + $categories-gap * ($category-row-count - 0.5)
-);
+@use "src/assets/styles/entry-card-variables.scss" as *;
 
 .entry-card {
-    min-width: min-content;
-    max-width: 400px;
-    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 5px 2px rgba(mat.get-color-from-palette(theme.$app-primary), 0.5);
+    border: 1px solid rgba(mat.get-color-from-palette(theme.$app-primary), 0.5);
 }
 
 mat-card-header {
@@ -79,6 +68,7 @@ mat-card-title {
     line-height: $category-line-height;
     max-width: calc($max-card-width - 2em);
     height: $category-line-height;
+    color: black;
 
     &.faculty {
         background-color: mat.get-color-from-palette(
