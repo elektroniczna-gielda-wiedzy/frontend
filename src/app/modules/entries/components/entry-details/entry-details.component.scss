@@ -1,0 +1,58 @@
+@use "src/assets/styles/categories";
+
+$image-max-width: 400px;
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &>img {
+    width: min(100%, $image-max-width);
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.responsive-mat-card {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+mat-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.contact-button {
+    white-space: nowrap;
+    min-width: max-content;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+}
+
+.author-container, .date-container {
+    display: inline-block;
+    
+}
+
+.author-container {
+    margin-right: 1em;
+}
+
+
+  

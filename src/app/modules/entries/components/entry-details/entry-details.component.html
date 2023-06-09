@@ -1,2 +1,48 @@
-<p>entry-details works!</p>
-<span>Entry Type {{entryType}}</span>
+<mat-card class="responsive-mat-card">
+    <mat-card-header>
+        <mat-card-title>
+            {{ entry?.title }}
+        </mat-card-title>
+        <app-favorite-icon [isFavorite]="entry?.favorite === true" [bigger]="true"></app-favorite-icon>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="content">
+            {{ entry?.content }}
+        </div>
+
+        <div *ngIf="entry?.image" class="image-container" >
+            <img [src]="entry?.image"/>
+        </div>
+
+        <div class="categories">
+            <span *ngFor="let category of entry?.categories" [ngClass]="getCategoryClass(category)">
+                {{ getCategoryName(category) }}
+            </span>
+        </div>
+
+        <div class="card-footer">
+
+            <button mat-raised-button color="primary" class="contact-button">
+                CONTACT AUTHOR
+            </button>
+            <mat-card-subtitle>
+                <div class="author-container">
+                    <span>
+                        {{ entry?.author?.first_name }}
+                    </span>
+                    <span>
+                        {{ entry?.author?.last_name }}
+                    </span>
+                </div>
+                <div class="date-container">
+
+                    <span>added</span>
+                    <span>
+                        {{ entry?.created_at | date }}
+                    </span>
+                </div>
+            </mat-card-subtitle>
+        </div>
+    </mat-card-content>
+    
+</mat-card>
