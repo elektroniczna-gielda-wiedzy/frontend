@@ -18,7 +18,7 @@
                 {{ entry.author.first_name }}
             </span>
             <span>
-                {{ entry.created_at }}
+                {{ entry.created_at | relativeTime}}
             </span>
         </mat-card-subtitle>
     </mat-card-content>
