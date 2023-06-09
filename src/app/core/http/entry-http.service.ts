@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ENTRIES } from '../mocks/entries';
 import { Observable, of } from 'rxjs';
 import { EntryType } from '../enums/entry-type';
 import { Entry } from '../models/entry';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EntryService {
+export class EntryHttpService {
   private readonly apiUrl = `${environment.apiUrl}/entry`;
 
   constructor(private http: HttpClient) { }

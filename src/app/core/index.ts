@@ -1,5 +1,8 @@
+// http
+export * from './http/entry-http.service';
+
 // services
-export * from './services/entry.service';
+export * from './services/category.service';
 export * from './services/auth.service';
 
 // enums
