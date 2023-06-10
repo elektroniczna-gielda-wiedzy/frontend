@@ -7,6 +7,7 @@ import { EntriesRoutingModule } from './entries-routing.module';
 import { EntryListComponent } from './components/entry-list/entry-list.component';
 import { EntryAddComponent } from './components/entry-add/entry-add.component';
 import { EntryDetailsComponent } from './components/entry-details/entry-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { EntryDetailsComponent } from './components/entry-details/entry-details.
     EntriesRoutingModule,
     SharedModule,
     MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class EntriesModule { }

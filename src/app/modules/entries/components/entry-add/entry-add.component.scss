@@ -66,3 +66,22 @@ textarea{
 .file-name {
     margin-left: 1rem; /* or whatever margin you require */
 }
+
+
+
+.example-section {
+    margin: 3px 0;
+  }
+  
+  .example-margin {
+    margin: 0 3px;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin-top: 4px;
+  }
+
+  mat-pseudo-checkbox{
+    visibility: hidden;
+  }

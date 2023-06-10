@@ -26,7 +26,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatInputModule,
         MatSelectModule,
         MatCheckboxModule,
-        MatGridListModule
+        MatGridListModule,
+        
     ]
 })
 export class MaterialModule { }
