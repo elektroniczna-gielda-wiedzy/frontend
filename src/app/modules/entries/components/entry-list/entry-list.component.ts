@@ -56,6 +56,6 @@ export class EntryListComponent implements OnInit, OnDestroy {
   }
 
   get entryTypeName(): string {
-    return EntryType[this.entryType];
+    return EntryType[this.entryType].toLowerCase();
   }
 }

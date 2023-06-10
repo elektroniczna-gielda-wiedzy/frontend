@@ -33,7 +33,13 @@
     "Password must be at least 6 characters long.": "Password must be at least 6 characters long.",
     "Repeat Password": "Repeat Password",
     "You must repeat your password.": "You must repeat your password.",
-    "Passwords must match.": "Passwords must match."
+    "Passwords must match.": "Passwords must match.",
+
+    "Contact author": "Contact author",
+
+    "Add new post": "Add new post",
+    "Add new note": "Add new note",
+    "Add new announcement": "Add new announcement"
 
 
 

@@ -33,7 +33,13 @@
     "Password must be at least 6 characters long.": "Hasło musi mieć co najmniej 6 znaków.",
     "Repeat Password": "Powtórz hasło",
     "You must repeat your password.": "Musisz powtórzyć hasło.",
-    "Passwords must match.": "Hasła muszą być takie same."
+    "Passwords must match.": "Hasła muszą być takie same.",
+
+    "Contact author": "Skontaktuj się z autorem",
+
+    "Add new post": "Dodaj nowy post",
+    "Add new note": "Dodaj nową notatkę",
+    "Add new announcement": "Dodaj nowe ogłoszenie"
 
 
 
