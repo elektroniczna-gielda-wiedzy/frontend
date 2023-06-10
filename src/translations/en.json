@@ -23,10 +23,17 @@
     "Password is required.": "Password is required.",
     "Remember me": "Remember me",
     "Forgot your password?": "Forgot your password?",
-    "example@student.agh.edu.pl": "your.email@student.agh.edu.pl"
+    "example@student.agh.edu.pl": "your.email@student.agh.edu.pl",
 
-
-
+    "Already have an account?": "Already have an account?",
+    "First Name": "First Name",
+    "First name is required.": "First name is required.",
+    "Last Name": "Last Name",
+    "Last name is required.": "Last name is required.",
+    "Password must be at least 6 characters long.": "Password must be at least 6 characters long.",
+    "Repeat Password": "Repeat Password",
+    "You must repeat your password.": "You must repeat your password.",
+    "Passwords must match.": "Passwords must match."
 
 
 
