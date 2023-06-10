@@ -40,11 +40,11 @@ export class RelativeTimePipe implements PipeTransform {
     }
 
     else if (elapsed < msPerHour * 2) {
-      return '1 ' + this.languageService.translate('hour ago');
+      return '1 ' + " " + this.languageService.translate('hour ago');
     }
 
     else if (elapsed < msPerDay) {
-      return Math.round(elapsed / msPerHour) + this.languageService.translate('hours ago');   
+      return Math.round(elapsed / msPerHour) + " " + this.languageService.translate('hours ago');   
     }
 
     else if (elapsed < msPerDay * 2) {
