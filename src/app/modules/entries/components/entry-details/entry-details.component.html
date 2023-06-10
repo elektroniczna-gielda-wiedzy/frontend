@@ -15,9 +15,24 @@
         </div>
 
         <div class="categories">
-            <span *ngFor="let category of entry?.categories" [ngClass]="getCategoryClass(category)">
+            <!-- <span *ngFor="let category of entry?.categories" [ngClass]="getCategoryClass(category)">
                 {{ getCategoryName(category) }}
-            </span>
+            </span> -->
+            <mat-chip-set>
+                <div *ngFor="let category of entry?.categories"  >
+                    <mat-chip  selected class="faculty" *ngIf="category.type==0"  [ngClass]="getCategoryClass(category)" >
+                        {{ getCategoryName(category) }}
+                    </mat-chip>
+                    
+                </div>
+            </mat-chip-set>
+            <mat-chip-set>
+                <div *ngFor="let category of entry?.categories">
+                    <mat-chip selected class="area"  [ngClass]="getCategoryClass(category)"   *ngIf="category.type==1" >
+                        {{ getCategoryName(category) }}
+                    </mat-chip>
+                </div>
+            </mat-chip-set>
         </div>
 
         <div class="card-footer">
