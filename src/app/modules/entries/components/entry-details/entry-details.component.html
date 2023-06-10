@@ -36,9 +36,9 @@
                 </div>
                 <div class="date-container">
 
-                    <span>added</span>
+                    <span translate>added</span>
                     <span>
-                        {{ entry?.created_at | relativeTime}}
+                        {{ entry?.created_at | relativeTime:currentLanguage}}
                     </span>
                 </div>
             </mat-card-subtitle>
