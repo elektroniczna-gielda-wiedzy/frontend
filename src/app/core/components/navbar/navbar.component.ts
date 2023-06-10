@@ -11,7 +11,7 @@ import { map, shareReplay } from 'rxjs/operators';
 export class NavbarComponent {
   private breakpointObserver = inject(BreakpointObserver);
   links = [
-    { url: '/entries/post', label: 'Post' },
+    { url: '/entries/post', label: 'Posts' },
     { url: '/entries/note', label: 'Notes' },
     { url: '/entries/announcement', label: 'Announcements' },
     { url: '/auth/sign-in', label: 'Sign In' },

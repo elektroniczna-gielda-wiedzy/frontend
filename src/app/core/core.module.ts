@@ -4,6 +4,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
+import { AppTranslateModule } from '../modules/translate/translate.module';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { MaterialModule } from './material-module';
     CommonModule,
     RouterModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    AppTranslateModule
   ],
   exports: [
     NavbarComponent
