@@ -31,9 +31,14 @@ mat-toolbar a {
 }
 
 .active-nav-item {
-  color: black !important;
+  color: mat.get-color-from-palette(theme.$app-accent) !important;
 }
 
 .active-side-nav-item {
-  background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
+  background-color: mat.get-color-from-palette(theme.$app-accent, lighter);
 }
+
+a.main-nav-item  {
+  font-size: .9em;
+}
+
