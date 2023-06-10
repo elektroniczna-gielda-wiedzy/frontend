@@ -14,5 +14,21 @@
     "hours ago": "godzin temu",
     "yesterday": "wczoraj",
     "days ago": "dni temu",
-    "added": "dodano"
+    "added": "dodano",
+
+    "Don't have an account?": "Nie masz konta?",
+    "Email is required.": "Email jest wymagany.",
+    "Please enter a valid student email.": "Proszę podać poprawny email studenta.",
+    "Password": "Hasło",
+    "Password is required.": "Hasło jest wymagane.",
+    "Remember me": "Zapamiętaj mnie",
+    "Forgot your password?": "Zapomniałeś hasła?",
+    "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl"
+
+
+
+
+
+
+    
 }

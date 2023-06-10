@@ -14,5 +14,22 @@
     "hours ago": "hours ago",
     "yesterday": "yesterday",
     "days ago": "days ago",
-    "added": "added"
+    "added": "added",
+
+    "Don't have an account?": "Don't have an account?",
+    "Email is required.": "Email is required.",
+    "Please enter a valid student email.": "Please enter a valid student email.",
+    "Password": "Password",
+    "Password is required.": "Password is required.",
+    "Remember me": "Remember me",
+    "Forgot your password?": "Forgot your password?",
+    "example@student.agh.edu.pl": "your.email@student.agh.edu.pl"
+
+
+
+
+
+
+
+    
 }
