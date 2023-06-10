@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'TODO: Add your production API URL here'
+    apiUrl: 'TODO: Add your production API URL here',
+    defaultLanguage: 'pl',
   };
   
