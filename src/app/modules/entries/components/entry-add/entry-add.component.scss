@@ -1,0 +1,68 @@
+
+@use "@angular/material" as mat;
+@use "src/theme";
+
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    
+    
+   
+}
+
+mat-card{
+	display:flex;
+	flex-direction: column;
+    justify-content:center;
+    align-items:flex-start;
+    max-width: 1000px;
+    min-width: 800px;
+    padding: 10px;
+
+}
+mat-card-header{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    width: 100%;
+}
+mat-card-content{
+   
+    width: 100%;
+   padding: 10px;
+}
+mat-grid-tile {
+    width: 100%;
+   
+  }
+  mat-card-footer{
+    justify-content:left;
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-end;
+    width: 100%;
+}
+
+
+.example-full-width{
+  width: 90%;
+}
+
+.description{
+    height: 190px;
+}
+textarea{
+    height: 190px;
+    overflow-y: auto;
+}
+.title{
+ 
+}
+.file-name {
+    margin-left: 1rem; /* or whatever margin you require */
+}
