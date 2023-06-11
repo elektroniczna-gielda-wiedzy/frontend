@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { AuthService, UserSignInCredentials } from 'src/app/core';
-import { TokenService } from 'src/app/core';
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -30,8 +30,7 @@ export class SignInComponent {
     private logger: NGXLogger,
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
-    private tokenService: TokenService
+    private authService: AuthService
   ) {}
 
   onSubmit() {
@@ -47,7 +46,6 @@ export class SignInComponent {
             response.result[0].session_token
           ) {
             this.logger.info('login successful');
-            this.tokenService.setToken(response.result[0].session_token);
             this.router.navigate(['/']);
           } else {
             this.logger.info('login failed');

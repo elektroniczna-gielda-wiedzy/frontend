@@ -14,7 +14,7 @@ export class TokenService {
     localStorage.setItem(TOKEN_KEY, token);
   }
 
-  getToken(): string {
+  static getToken(): string {
     return localStorage.getItem(TOKEN_KEY) || '';
   }
 
@@ -23,8 +23,8 @@ export class TokenService {
   }
 
   isTokenExpired(): boolean {
-    const token = this.getToken();
-    console.log(this.jwtHelper.decodeToken(token));
+    const token = TokenService.getToken();
+    // console.log(this.jwtHelper.decodeToken(token));
     return this.jwtHelper.isTokenExpired(token);
   }
 }

@@ -5,10 +5,10 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { AppTranslateModule } from '../modules/translate/translate.module';
-import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { TokenService } from './services/token.service';
 import { environment } from 'src/environments/environment';
-import { tokenGetter } from './models/token';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -22,11 +22,12 @@ import { tokenGetter } from './models/token';
       config: {
         headerName: 'Authorization',
         authScheme: '',
-        tokenGetter: tokenGetter,
+        tokenGetter: TokenService.getToken,
         allowedDomains: [...environment.tokenAllowedDomains],
-        disallowedRoutes: [environment.apiUrl + '/auth/sign_in'],
+        disallowedRoutes: [...environment.tokenDisallowedRoutes],
       },
     }),
+    SharedModule
   ],
   providers: [TokenService],
   exports: [NavbarComponent],

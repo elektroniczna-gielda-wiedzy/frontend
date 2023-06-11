@@ -28,6 +28,7 @@
         (click)="drawer.close()"
         >{{ link.label | translate }}</a
       >
+      <a mat-list-item *appIsLoggedIn mat-list-item (click)="signOut();drawer.close()">{{'Sign Out' | translate}}</a>
     </mat-nav-list>
     
       <app-language-selector [sideNav]="true" ></app-language-selector>
@@ -56,7 +57,7 @@
           routerLinkActive="active-nav-item"
           >{{ link.label | translate}}</a
         >
-        <button mat-button (click)="signOut()">{{'Sign Out' | translate}}</button>
+        <a *appIsLoggedIn mat-button class="main-nav-item" (click)="signOut()">{{'Sign Out' | translate}}</a>
         <app-language-selector></app-language-selector>
       </div>
     </mat-toolbar>

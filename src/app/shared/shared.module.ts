@@ -5,12 +5,15 @@ import { MaterialModule } from './material-module';
 import { FavoriteIconComponent } from './components/favorite-icon/favorite-icon.component';
 import { RelativeTimePipe } from './pipes/relative-time.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { IsLoggedInDirective } from './directives/is-logged-in.directive';
+
 
 @NgModule({
   declarations: [
     EntryCardComponent,
     FavoriteIconComponent,
-    RelativeTimePipe
+    RelativeTimePipe,
+    IsLoggedInDirective,
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
   exports: [
     EntryCardComponent,
     FavoriteIconComponent,
-    RelativeTimePipe
+    RelativeTimePipe,
+    IsLoggedInDirective,
   ]
 })
 export class SharedModule { }
