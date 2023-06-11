@@ -24,7 +24,6 @@
     "Remember me": "Remember me",
     "Forgot your password?": "Forgot your password?",
     "example@student.agh.edu.pl": "your.email@student.agh.edu.pl",
-    "Login failed, please try again later": "Login failed, please try again later",
     "Invalid email or password": "Invalid email or password",
 
     "Already have an account?": "Already have an account?",
@@ -36,6 +35,7 @@
     "Repeat Password": "Repeat Password",
     "You must repeat your password.": "You must repeat your password.",
     "Passwords must match.": "Passwords must match.",
+    "User with this email already exists": "User with this email already exists",
 
     "Contact author": "Contact author",
 

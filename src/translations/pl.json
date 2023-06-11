@@ -24,7 +24,6 @@
     "Remember me": "Zapamiętaj mnie",
     "Forgot your password?": "Zapomniałeś hasła?",
     "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl",
-    "Login failed, please try again later": "Logowanie nie powiodło się, spróbuj ponownie później",
     "Invalid email or password": "Nieprawidłowy email lub hasło",
 
     "Already have an account?": "Masz już konto?",
@@ -36,6 +35,7 @@
     "Repeat Password": "Powtórz hasło",
     "You must repeat your password.": "Musisz powtórzyć hasło.",
     "Passwords must match.": "Hasła muszą być takie same.",
+    "User with this email already exists": "Użytkownik o tym emailu już istnieje",
 
     "Contact author": "Skontaktuj się z autorem",
 
