@@ -24,6 +24,8 @@
     "Remember me": "Zapamiętaj mnie",
     "Forgot your password?": "Zapomniałeś hasła?",
     "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl",
+    "Login failed, please try again later": "Logowanie nie powiodło się, spróbuj ponownie później",
+    "Invalid email or password": "Nieprawidłowy email lub hasło",
 
     "Already have an account?": "Masz już konto?",
     "First Name": "Imię",

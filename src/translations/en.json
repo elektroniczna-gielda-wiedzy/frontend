@@ -24,6 +24,8 @@
     "Remember me": "Remember me",
     "Forgot your password?": "Forgot your password?",
     "example@student.agh.edu.pl": "your.email@student.agh.edu.pl",
+    "Login failed, please try again later": "Login failed, please try again later",
+    "Invalid email or password": "Invalid email or password",
 
     "Already have an account?": "Already have an account?",
     "First Name": "First Name",

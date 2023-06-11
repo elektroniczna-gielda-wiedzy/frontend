@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { AuthService, UserSignInCredentials } from 'src/app/core';
+import { TokenService } from 'src/app/core';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -20,10 +24,48 @@ export class SignInComponent {
     password: ['', Validators.required],
     rememberMe: [false],
   });
+  otherLoginError = false;
+  unauthorize = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private logger: NGXLogger,
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private tokenService: TokenService
+  ) {}
 
   onSubmit() {
-    console.log(this.signInForm.value);
+    this.authService
+      .login(this.signInForm.value as UserSignInCredentials)
+      .subscribe({
+        next: (response) => {
+          this.unauthorize = false;
+          this.otherLoginError = false;
+
+          if (
+            response.success &&
+            response.result.length > 0 &&
+            response.result[0].session_token
+          ) {
+            this.logger.info('login successful');
+            this.tokenService.setToken(response.result[0].session_token);
+            this.router.navigate(['/']);
+          } else {
+            this.logger.info('login failed');
+            this.logger.debug(response);
+
+            this.otherLoginError = true;
+          }
+        },
+        error: (response) => {
+          this.logger.info('login failed');
+          this.logger.debug(response);
+          this.logger.error(response.error.messages);
+
+          this.unauthorize = response.status === 401;
+          this.otherLoginError = response.status !== 401;
+        },
+      });
   }
 }
