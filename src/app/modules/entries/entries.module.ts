@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material-module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { EntriesRoutingModule } from './entries-routing.module';
 import { EntryListComponent } from './components/entry-list/entry-list.component';
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     EntriesRoutingModule,
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class EntriesModule { }

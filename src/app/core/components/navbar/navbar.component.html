@@ -26,9 +26,12 @@
         routerLink="{{ link.url }}"
         routerLinkActive="active-side-nav-item"
         (click)="drawer.close()"
-        >{{ link.label }}</a
+        >{{ link.label | translate }}</a
       >
     </mat-nav-list>
+    
+      <app-language-selector [sideNav]="true" ></app-language-selector>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -40,20 +43,24 @@
         (click)="drawer.open()"
         *ngIf="isHandset$ | async"
       >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon aria-label="Side nav open icon">menu</mat-icon>
       </button>
-      <span>Knowledge Exchange</span>
+      <span translate>Knowledge Exchange</span>
       <span class="spacer"></span>
-      <div *ngIf="!(isHandset$ | async)">
+      <div class="main-nav-list" *ngIf="!(isHandset$ | async)">
         <a
+          mat-button
+          class="main-nav-item"
           *ngFor="let link of links"
           routerLink="{{ link.url }}"
           routerLinkActive="active-nav-item"
-          >{{ link.label }}</a
+          >{{ link.label | translate}}</a
         >
+        <app-language-selector></app-language-selector>
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
+    
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
-import { LanguageService } from './language.service';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private languageService: LanguageService) { }
-
+  constructor(private languageService: LanguageService) {}
 
   getCategoryName(category: Category) {
-    return category.names.find((name) => name.lang_id === this.languageService.language)?.name;
+    return category.names.find(
+      (name) => name.lang_id === this.languageService.language
+    )?.name;
   }
 
-  getCategoryClass(category: {
-    category_id: number;
-    type: number;
-    parent_id: number | null;
-    names: { lang_id: number; name: string }[];
-  }): string[] {
+  getCategoryClass(category: Category): string[] {
     const result: string[] = ['category'];
 
     if (category.parent_id !== null) {

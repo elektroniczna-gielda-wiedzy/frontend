@@ -18,8 +18,8 @@ export class EntryListComponent implements OnInit, OnDestroy {
   entryType!: EntryType;
 
   entries: Entry[] = [];
-  private paramMapSubscription: Subscription | null = null;
-  private entriesSubscription: Subscription | null = null;
+  private paramMapSubscription?: Subscription;
+  private entriesSubscription?: Subscription;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -56,6 +56,6 @@ export class EntryListComponent implements OnInit, OnDestroy {
   }
 
   get entryTypeName(): string {
-    return EntryType[this.entryType];
+    return EntryType[this.entryType].toLowerCase();
   }
 }

@@ -1,0 +1,48 @@
+{
+    "app.title": "Knowledge Exchange",
+    "Knowledge Exchange": "Knowledge Exchange",
+    "Announcements": "Announcements",
+    "Notes": "Notes",
+    "Posts": "Posts",
+    "Sign In": "Sign In",
+    "Sign Up": "Sign Up",
+    
+    "seconds ago": "seconds ago",
+    "minute ago": "minute ago",
+    "minutes ago": "minutes ago",
+    "hour ago": "hour ago",
+    "hours ago": "hours ago",
+    "yesterday": "yesterday",
+    "days ago": "days ago",
+    "added": "added",
+
+    "Don't have an account?": "Don't have an account?",
+    "Email is required.": "Email is required.",
+    "Please enter a valid student email.": "Please enter a valid student email.",
+    "Password": "Password",
+    "Password is required.": "Password is required.",
+    "Remember me": "Remember me",
+    "Forgot your password?": "Forgot your password?",
+    "example@student.agh.edu.pl": "your.email@student.agh.edu.pl",
+
+    "Already have an account?": "Already have an account?",
+    "First Name": "First Name",
+    "First name is required.": "First name is required.",
+    "Last Name": "Last Name",
+    "Last name is required.": "Last name is required.",
+    "Password must be at least 6 characters long.": "Password must be at least 6 characters long.",
+    "Repeat Password": "Repeat Password",
+    "You must repeat your password.": "You must repeat your password.",
+    "Passwords must match.": "Passwords must match.",
+
+    "Contact author": "Contact author",
+
+    "Add new post": "Add new post",
+    "Add new note": "Add new note",
+    "Add new announcement": "Add new announcement"
+
+
+
+
+    
+}

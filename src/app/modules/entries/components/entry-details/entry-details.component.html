@@ -1,63 +1,42 @@
 <mat-card class="responsive-mat-card">
-    <mat-card-header>
-        <mat-card-title>
-            {{ entry?.title }}
-        </mat-card-title>
-        <app-favorite-icon [isFavorite]="entry?.favorite === true" [bigger]="true"></app-favorite-icon>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="content">
-            {{ entry?.content }}
+  <mat-card-header>
+    <mat-card-title>
+      {{ entry?.title }}
+    </mat-card-title>
+    <app-favorite-icon
+      [isFavorite]="entry?.favorite === true"
+      [bigger]="true"
+    ></app-favorite-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="content">
+      {{ entry?.content }}
+    </div>
+
+    <div *ngIf="entry?.image" class="image-container">
+      <img [src]="entry?.image" />
+    </div>
+
+    <div class="card-footer">
+      <button mat-raised-button color="primary" class="contact-button">
+        {{ "Contact author" | translate }}
+      </button>
+      <mat-card-subtitle>
+        <div class="author-container">
+          <span>
+            {{ entry?.author?.first_name }}
+          </span>
+          <span>
+            {{ entry?.author?.last_name }}
+          </span>
         </div>
-
-        <div *ngIf="entry?.image" class="image-container" >
-            <img [src]="entry?.image"/>
+        <div class="date-container">
+          <span translate>added</span>
+          <span>
+            {{ entry?.created_at | relativeTime : currentLanguage }}
+          </span>
         </div>
-
-        <div class="categories">
-            <!-- <span *ngFor="let category of entry?.categories" [ngClass]="getCategoryClass(category)">
-                {{ getCategoryName(category) }}
-            </span> -->
-            <mat-chip-set>
-                <div *ngFor="let category of entry?.categories"  >
-                    <mat-chip  selected class="faculty" *ngIf="category.type==0"  [ngClass]="getCategoryClass(category)" >
-                        {{ getCategoryName(category) }}
-                    </mat-chip>
-                    
-                </div>
-            </mat-chip-set>
-            <mat-chip-set>
-                <div *ngFor="let category of entry?.categories">
-                    <mat-chip selected class="area"  [ngClass]="getCategoryClass(category)"   *ngIf="category.type==1" >
-                        {{ getCategoryName(category) }}
-                    </mat-chip>
-                </div>
-            </mat-chip-set>
-        </div>
-
-        <div class="card-footer">
-
-            <button mat-raised-button color="primary" class="contact-button">
-                CONTACT AUTHOR
-            </button>
-            <mat-card-subtitle>
-                <div class="author-container">
-                    <span>
-                        {{ entry?.author?.first_name }}
-                    </span>
-                    <span>
-                        {{ entry?.author?.last_name }}
-                    </span>
-                </div>
-                <div class="date-container">
-
-                    <span>added</span>
-                    <span>
-                        {{ entry?.created_at | relativeTime}}
-                    </span>
-                </div>
-            </mat-card-subtitle>
-        </div>
-    </mat-card-content>
-    
+      </mat-card-subtitle>
+    </div>
+  </mat-card-content>
 </mat-card>

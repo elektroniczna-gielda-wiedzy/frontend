@@ -7,8 +7,10 @@ import {
   Entry,
   EntryHttpService,
   EntryType,
+  Language,
   stringToEntryType,
 } from 'src/app/core';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-entry-details',
@@ -18,15 +20,24 @@ import {
 export class EntryDetailsComponent {
   entryType!: EntryType;
   entry?: Entry;
-  private entrySubscription: Subscription | null = null;
+  private entrySubscription?: Subscription;
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
 
   constructor(
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
+
     this.entryType = stringToEntryType(
       this.route.snapshot.paramMap.get('entryType')!
     );
@@ -34,6 +45,9 @@ export class EntryDetailsComponent {
   }
 
   ngOnDestroy(): void {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
     if (this.entrySubscription) {
       this.entrySubscription.unsubscribe();
     }
@@ -57,7 +71,6 @@ export class EntryDetailsComponent {
             (entry) =>
               entry.entry_id === Number(this.route.snapshot.paramMap.get('id'))
           );
-          console.log(this.entry);
         });
     }
   }

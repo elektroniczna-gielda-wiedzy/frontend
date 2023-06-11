@@ -1,23 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import {
   Entry,
   Category,
   EntryType,
   CategoryService,
+  Language,
 } from 'src/app/core';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-entry-card',
   templateUrl: './entry-card.component.html',
   styleUrls: ['./entry-card.component.scss'],
 })
-export class EntryCardComponent {
+export class EntryCardComponent implements OnInit, OnDestroy {
   @Input() entry!: Entry;
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
 
   constructor(
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private languageService: LanguageService
   ) {}
 
   getCategoryClass(category: Category): string[] {
@@ -34,5 +40,19 @@ export class EntryCardComponent {
       EntryType[this.entry.entry_type_id].toLowerCase(),
       this.entry.entry_id,
     ]);
+  }
+
+  ngOnInit(): void {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
   }
 }

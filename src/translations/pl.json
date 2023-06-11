@@ -1,0 +1,47 @@
+{
+    "app.title": "Wymiana wiedzy",
+    "Knowledge Exchange": "Wymiana wiedzy",
+    "Announcements": "Ogłoszenia",
+    "Notes": "Notatki",
+    "Posts": "Posty",
+    "Sign In": "Zaloguj się",
+    "Sign Up": "Zarejestruj się",
+
+    "seconds ago": "sekund temu",
+    "miniute ago": "minutę temu",
+    "minutes ago": "minut temu",
+    "hour ago": "godzinę temu",
+    "hours ago": "godzin temu",
+    "yesterday": "wczoraj",
+    "days ago": "dni temu",
+    "added": "dodano",
+
+    "Don't have an account?": "Nie masz konta?",
+    "Email is required.": "Email jest wymagany.",
+    "Please enter a valid student email.": "Proszę podać poprawny email studenta.",
+    "Password": "Hasło",
+    "Password is required.": "Hasło jest wymagane.",
+    "Remember me": "Zapamiętaj mnie",
+    "Forgot your password?": "Zapomniałeś hasła?",
+    "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl",
+
+    "Already have an account?": "Masz już konto?",
+    "First Name": "Imię",
+    "First name is required.": "Imię jest wymagane.",
+    "Last Name": "Nazwisko",
+    "Last name is required.": "Nazwisko jest wymagane.",
+    "Password must be at least 6 characters long.": "Hasło musi mieć co najmniej 6 znaków.",
+    "Repeat Password": "Powtórz hasło",
+    "You must repeat your password.": "Musisz powtórzyć hasło.",
+    "Passwords must match.": "Hasła muszą być takie same.",
+
+    "Contact author": "Skontaktuj się z autorem",
+
+    "Add new post": "Dodaj nowy post",
+    "Add new note": "Dodaj nową notatkę",
+    "Add new announcement": "Dodaj nowe ogłoszenie"
+
+
+
+    
+}
