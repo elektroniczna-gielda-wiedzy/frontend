@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,12 @@ import { TranslateModule } from '@ngx-translate/core';
     BrowserAnimationsModule,
     TranslateModule.forRoot(),
     CoreModule,
+    LoggerModule.forRoot({
+      serverLoggingUrl: `${environment.apiUrl}/logs`,
+      level:environment.logLevel,
+      serverLogLevel: environment.serverLogLevel,
+      disableConsoleLogging: false
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
