@@ -25,13 +25,13 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.logger.error('ErrorInterceptor: ', error);
 
-        this.authService.logout();
+        // this.authService.logout();
 
         // if (error.status === 401) {
         //   this.authService.logout();
         // }
 
-        return throwError((() => new Error(error.message)));
+        return throwError((() => error));
       })
     );
   }

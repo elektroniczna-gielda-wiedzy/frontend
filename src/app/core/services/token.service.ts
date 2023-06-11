@@ -22,8 +22,7 @@ export class TokenService {
     localStorage.removeItem(TOKEN_KEY);
   }
 
-  isTokenExpired(): boolean {
-    const token = TokenService.getToken();
+  isTokenExpired(token: string = TokenService.getToken()): boolean {
     // console.log(this.jwtHelper.decodeToken(token));
     return this.jwtHelper.isTokenExpired(token);
   }

@@ -22,3 +22,7 @@ export * from './models/standard-response';
 export * from './guards/entry-type.guard';
 export * from './guards/auth.guard';
 export * from './guards/not-auth.guard';
+
+// interceptors
+export * from './interceptors/error.interceptor';
+export * from './interceptors/token-expired.interceptor';

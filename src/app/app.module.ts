@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { TokenExpiredInterceptor, ErrorInterceptor } from './core';
 
 @NgModule({
   declarations: [
@@ -29,11 +29,16 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
     })
   ],
   providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ErrorInterceptor,
+    //   multi: true
+    // },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
+      useClass: TokenExpiredInterceptor,
       multi: true
-   }
+    }
   ],
   bootstrap: [AppComponent]
 })
