@@ -4,10 +4,6 @@ export interface UserSignInCredentials {
     remember_me: boolean;
 }
 
-export interface TokenResponse {
-    session_token: string;
-}
-
 export interface UserSignUpCredentials {
     email: string;
     password: string;

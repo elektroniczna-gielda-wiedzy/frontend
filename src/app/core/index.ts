@@ -15,3 +15,9 @@ export * from './enums/language';
 export * from './models/entry';
 export * from './models/category';
 export * from './models/user';
+export * from './models/token';
+export * from './models/standard-response';
+
+// guards
+export * from './guards/entry-type.guard';
+export * from './guards/auth.guard';

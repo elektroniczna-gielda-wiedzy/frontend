@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TokenResponse, UserSignInCredentials, UserSignUpCredentials } from '../models/user';
-import { StandardResponse } from '../models/standard-response';
-import { TokenService } from '../services/token.service';
+import {
+  StandardResponse,
+  TokenResponse,
+  UserSignInCredentials,
+  UserSignUpCredentials,
+  TokenService
+} from 'src/app/core';
 
 @Injectable({
   providedIn: 'root',
