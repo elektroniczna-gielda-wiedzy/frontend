@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { LoggerModule } from 'ngx-logger';
 import { environment } from 'src/environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,13 @@ import { environment } from 'src/environments/environment';
       disableConsoleLogging: false
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+   }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
