@@ -41,8 +41,14 @@
 
     "Add new post": "Dodaj nowy post",
     "Add new note": "Dodaj nową notatkę",
-    "Add new announcement": "Dodaj nowe ogłoszenie"
+    "Add new announcement": "Dodaj nowe ogłoszenie",
+    "Title": "Tytuł",
+    "Description": "Opis",
+    "Categories":"Kategorie",
 
+    
+    "Add": "Dodaj",
+    "Cancel": "Anuluj"
 
 
     

@@ -23,4 +23,6 @@ export class CategoryService {
     category.type === 1 ? result.push('area') : result.push('faculty');
     return result;
   }
+
+  
 }
