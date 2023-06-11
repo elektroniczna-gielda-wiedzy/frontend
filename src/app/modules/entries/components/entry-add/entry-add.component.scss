@@ -1,87 +1,85 @@
-
 @use "@angular/material" as mat;
 @use "src/theme";
 
 
+mat-card {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
 
-.container{
+}
+
+mat-card-header {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+mat-grid-field {
+    width: 100%;
+    padding: auto;
+    display: flex;
+    display: row;
+    justify-content: center;
+    padding-top: 1em;
+}
+
+mat-card-footer {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    
+    padding-right: 2em;
+}
+
+.image_select {
     display: flex;
     justify-content: center;
-    padding: 16px;
-    
-    
-   
 }
 
-mat-card{
-	display:flex;
-	flex-direction: column;
-    justify-content:center;
-    align-items:flex-start;
-    max-width: 1000px;
-    min-width: 800px;
-    padding: 10px;
-
-}
-mat-card-header{
-    justify-content:center;
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 30px;
-    padding-top: 30px;
-    width: 100%;
-}
-mat-card-content{
-   
-    width: 100%;
-   padding: 10px;
-}
-mat-grid-tile {
-    width: 100%;
-   
-  }
-  mat-card-footer{
-    justify-content:left;
-    display: flex;
-    flex-direction: row;
-    justify-content:flex-end;
-    width: 100%;
+.example-full-width {
+    width: 90%;
+    padding: 0;
 }
 
-
-.example-full-width{
-  width: 90%;
-}
-
-.description{
+.description {
     height: 190px;
 }
-textarea{
+
+textarea {
     height: 190px;
     overflow-y: auto;
 }
-.title{
- 
-}
+
 .file-name {
-    margin-left: 1rem; /* or whatever margin you require */
+    margin-left: 1rem;
 }
 
-
-
-.example-section {
-    margin: 3px 0;
-  }
-  
-  .example-margin {
-    margin: 0 3px;
-  }
-  
-  ul {
+ul {
     list-style-type: none;
     margin-top: 4px;
-  }
+}
 
-  mat-pseudo-checkbox{
+mat-pseudo-checkbox {
     visibility: hidden;
-  }
+}
+
+mat-card-title {
+    padding-right: 10px;
+}
+
+mat-grid-list {
+
+
+    width: 100%;
+    margin: 0 0 0 0;
+
+}
+
+mat-grid-tile {
+    padding-top: 1em;
+}

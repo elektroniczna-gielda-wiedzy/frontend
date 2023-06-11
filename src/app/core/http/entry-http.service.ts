@@ -5,7 +5,7 @@ import { Entry } from '../models/entry';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
-import { Category } from '../models/category';
+import { ENTRY_TYPES } from '../mocks/entry_type';
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +37,13 @@ export class EntryHttpService {
 
   }
   
+
+  getCategoryTypeHint(entry_type_id: EntryType | undefined){
+    let result = "";
+
+    ENTRY_TYPES.forEach( c => {if(entry_type_id === c.entry_type_id) result = c.hint });
+
+
+    return result;
+  }
 }

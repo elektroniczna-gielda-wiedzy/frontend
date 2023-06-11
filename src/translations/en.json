@@ -42,8 +42,13 @@
 
     "Add new post": "Add new post",
     "Add new note": "Add new note",
-    "Add new announcement": "Add new announcement"
+    "Add new announcement": "Add new announcement",
+    "Title": "Title",
+    "Description": "Description",
+    "Categories":"Categories",
 
+    "Add": "Add",
+    "Cancel": "Cancel"
 
 
 
