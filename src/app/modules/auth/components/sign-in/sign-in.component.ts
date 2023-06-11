@@ -24,7 +24,6 @@ export class SignInComponent {
     password: ['', Validators.required],
     rememberMe: [false],
   });
-  otherLoginError = false;
   unauthorize = false;
 
   constructor(
@@ -41,7 +40,6 @@ export class SignInComponent {
       .subscribe({
         next: (response) => {
           this.unauthorize = false;
-          this.otherLoginError = false;
 
           if (
             response.success &&
@@ -54,17 +52,13 @@ export class SignInComponent {
           } else {
             this.logger.info('login failed');
             this.logger.debug(response);
-
-            this.otherLoginError = true;
           }
         },
         error: (response) => {
           this.logger.info('login failed');
-          this.logger.debug(response);
-          this.logger.error(response.error.messages);
+          this.logger.error(response);
 
           this.unauthorize = response.status === 401;
-          this.otherLoginError = response.status !== 401;
         },
       });
   }
