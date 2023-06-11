@@ -17,7 +17,7 @@
             <mat-form-field class="example-full-width ">
               <mat-label class="description">Description</mat-label>
               <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
-                formControlName="description"></textarea>
+                formControlName="content"></textarea>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="entryType!==2">
@@ -39,7 +39,7 @@
                     <li *ngFor="let category of categories">
                       <mat-option *ngIf="category1.category_id==category.parent_id" (ngModelChange)="selectCategory()"
                         [value]="category.category_id">
-                        {{category.names[0].name}}
+                        {{getCategoryName(category)}}
                       </mat-option>
                     </li>
                   </ul>
@@ -54,12 +54,12 @@
       <mat-card-footer>
         <div>
           <mat-card-actions>
-            <button mat-raised-button color="primary" type="button" (click)="backClicked()">Cancel</button>
+            <button mat-raised-button type="button" (click)="backClicked()">Cancel</button>
           </mat-card-actions>
         </div>
         <div>
           <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit" (click)="createNewEntry()">Add</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid || sending">Add</button>
           </mat-card-actions>
         </div>
       </mat-card-footer>
