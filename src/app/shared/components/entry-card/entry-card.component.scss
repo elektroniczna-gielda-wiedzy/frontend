@@ -38,5 +38,7 @@ mat-card-title {
 }
 
 .categories {
-    height: $categories-max-height;
+    min-height: 100px;//$categories-max-height;
+    display: flex;
+    flex-direction: column;
 }

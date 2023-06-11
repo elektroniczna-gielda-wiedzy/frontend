@@ -15,8 +15,8 @@
 .category {
     padding: 0 0.4em;
     border-radius: 100px;
-    border-style: solid;
-    border-width: $category-border-width;
+    // border-style: solid;
+    // border-width: $category-border-width;
     white-space: nowrap;
     overflow: hidden;
     line-height: $category-line-height;
@@ -29,10 +29,10 @@
             theme.$app-accent,
             "lighter"
         );
-        border-color: mat.get-color-from-palette(theme.$app-accent, "darker");
+        // border-color: mat.get-color-from-palette(theme.$app-accent, "darker");
 
         &.major {
-            border-color: mat.get-color-from-palette(theme.$app-accent);
+            background-color: mat.get-color-from-palette(theme.$app-accent);
         }
     }
 
@@ -41,10 +41,10 @@
             theme.$app-primary,
             "lighter"
         );
-        border-color: mat.get-color-from-palette(theme.$app-primary, "darker");
+        // border-color: mat.get-color-from-palette(theme.$app-primary, "darker");
 
         &.subarea {
-            border-color: mat.get-color-from-palette(theme.$app-primary);
+            background-color: mat.get-color-from-palette(theme.$app-primary);
         }
     }
 }

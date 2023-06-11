@@ -15,7 +15,7 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
   templateUrl: './entry-card.component.html',
   styleUrls: ['./entry-card.component.scss'],
 })
-export class EntryCardComponent {
+export class EntryCardComponent implements OnInit, OnDestroy {
   @Input() entry!: Entry;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;

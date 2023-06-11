@@ -5,6 +5,7 @@ import { Entry } from '../models/entry';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,13 @@ export class EntryHttpService {
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
 
   }
+
+
+  createEntry(params: {entry_type_id: EntryType , title: string , content: string , categories?: number[] , image?: string }) : Observable<StandardResponse<Entry>>{
+    const url = this.apiUrl;
+    
+    return this.http.post<StandardResponse<Entry>>(url, params);
+
+  }
+  
 }
