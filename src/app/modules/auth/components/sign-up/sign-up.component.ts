@@ -6,6 +6,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { AuthService, UserSignUpCredentials } from 'src/app/core';
 
 function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -29,11 +32,10 @@ function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-
 export class SignUpComponent {
   signUpForm = this.fb.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
+    first_name: ['', Validators.required],
+    last_name: ['', Validators.required],
     email: [
       '',
       [
@@ -53,12 +55,42 @@ export class SignUpComponent {
       ],
     ],
     repeatPassword: ['', [Validators.required, matchValidator('password')]],
-
   });
+  emailTaken = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private logger: NGXLogger,
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   onSubmit() {
-    console.log(this.signUpForm.value);
+    this.authService
+      .register(this.signUpForm.value as UserSignUpCredentials)
+      .subscribe({
+        next: (response) => {
+          this.emailTaken = false;
+          if (response.success) {
+            this.logger.info('register successful');
+            this.router.navigate(['/auth/sign-in']);
+          } else {
+            this.logger.info('register failed');
+            this.logger.debug(response);
+          }
+        },
+        error: (response) => {
+          this.logger.info('register failed');
+          this.logger.error(response);
+
+          if (
+            response.error.messages.some((message: string) =>
+              message.includes('User with given email exists')
+            )
+          ) {
+            this.emailTaken = true;
+          }
+        },
+      });
   }
 }

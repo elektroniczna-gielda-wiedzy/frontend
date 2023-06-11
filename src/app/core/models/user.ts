@@ -7,3 +7,10 @@ export interface UserSignInCredentials {
 export interface TokenResponse {
     session_token: string;
 }
+
+export interface UserSignUpCredentials {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+}

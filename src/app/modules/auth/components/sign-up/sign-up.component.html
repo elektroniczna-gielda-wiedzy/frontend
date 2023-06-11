@@ -9,6 +9,9 @@
         "Sign In" | translate
       }}</a>
     </mat-card-subtitle>
+    <mat-error translate *ngIf="emailTaken">
+      User with this email already exists
+    </mat-error>
   </mat-card-header>
   <mat-card-content>
     <form
@@ -18,10 +21,10 @@
     >
       <mat-form-field appearance="outline">
         <mat-label translate>First Name</mat-label>
-        <input matInput formControlName="firstName" required />
+        <input matInput formControlName="first_name" required />
         <mat-error
           translate
-          *ngIf="signUpForm.get('firstName')?.errors?.['required']"
+          *ngIf="signUpForm.get('first_name')?.errors?.['required']"
         >
           First name is required.
         </mat-error>
@@ -29,10 +32,10 @@
 
       <mat-form-field appearance="outline">
         <mat-label translate>Last Name</mat-label>
-        <input matInput formControlName="lastName" required />
+        <input matInput formControlName="last_name" required />
         <mat-error
           translate
-          *ngIf="signUpForm.get('lastName')?.errors?.['required']"
+          *ngIf="signUpForm.get('last_name')?.errors?.['required']"
         >
           Last name is required.
         </mat-error>
