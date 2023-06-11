@@ -21,3 +21,4 @@ export * from './models/standard-response';
 // guards
 export * from './guards/entry-type.guard';
 export * from './guards/auth.guard';
+export * from './guards/not-auth.guard';
