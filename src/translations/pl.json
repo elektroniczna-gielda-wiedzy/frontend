@@ -49,8 +49,8 @@
 
     
     "Add": "Dodaj",
-    "Cancel": "Anuluj"
+    "Cancel": "Anuluj",
 
-
-    
+    "Bad email or password": "Błędny email lub hasło",
+    "Close":"Zamknij"
 }

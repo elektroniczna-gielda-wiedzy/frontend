@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { AuthService, UserSignInCredentials } from 'src/app/core';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -30,7 +32,9 @@ export class SignInComponent {
     private logger: NGXLogger,
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    private languageService: LanguageService
   ) {}
 
   onSubmit() {
@@ -55,7 +59,11 @@ export class SignInComponent {
         error: (response) => {
           this.logger.info('login failed');
           this.logger.error(response);
-
+       
+          this._snackBar.open(this.languageService.translate('Bad email or password'), this.languageService.translate('Close') ,
+          {  horizontalPosition:'center',
+              verticalPosition: 'top'
+          });
           this.unauthorize = response.status === 401;
         },
       });

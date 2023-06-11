@@ -48,8 +48,10 @@
     "Categories":"Categories",
 
     "Add": "Add",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
 
+    "Bad email or password": "Bad email or password",
+    "Close":"Close"
 
 
     
