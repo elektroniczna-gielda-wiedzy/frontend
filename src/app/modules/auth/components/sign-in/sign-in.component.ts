@@ -59,11 +59,6 @@ export class SignInComponent {
         error: (response) => {
           this.logger.info('login failed');
           this.logger.error(response);
-       
-          this._snackBar.open(this.languageService.translate('Bad email or password'), this.languageService.translate('Close') ,
-          {  horizontalPosition:'center',
-              verticalPosition: 'top'
-          });
           this.unauthorize = response.status === 401;
         },
       });
