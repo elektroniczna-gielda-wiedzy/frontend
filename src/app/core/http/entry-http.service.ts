@@ -6,6 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
 import { ENTRY_TYPES } from '../mocks/entry_type';
+import { ANSWERS } from '../mocks/answers';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class EntryHttpService {
 
   }
   
-
+  
   getCategoryTypeHint(entry_type_id: EntryType | undefined){
     let result = "";
 
@@ -45,5 +46,11 @@ export class EntryHttpService {
 
 
     return result;
+  }
+
+
+  //TODO get from restapi
+  getAnswers(entry: Entry){
+    return ANSWERS.answers;
   }
 }

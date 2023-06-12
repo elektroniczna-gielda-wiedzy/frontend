@@ -9,13 +9,15 @@ import { EntryListComponent } from './components/entry-list/entry-list.component
 import { EntryAddComponent } from './components/entry-add/entry-add.component';
 import { EntryDetailsComponent } from './components/entry-details/entry-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AnswerCardComponent } from '../../shared/components/answer-card/answer-card.component';
 
 
 @NgModule({
   declarations: [
     EntryListComponent,
     EntryAddComponent,
-    EntryDetailsComponent
+    EntryDetailsComponent,
+   
   ],
   imports: [
     CommonModule,

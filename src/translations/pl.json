@@ -49,8 +49,12 @@
 
     
     "Add": "Dodaj",
+    "Add image" : "Załącz plik",
     "Cancel": "Anuluj",
 
     "Bad email or password": "Błędny email lub hasło",
-    "Close":"Zamknij"
+    "Close":"Zamknij",
+
+    "Add your answer": "Dodaj odpowiedź",
+    "Answers": "Odpowiedzi"
 }

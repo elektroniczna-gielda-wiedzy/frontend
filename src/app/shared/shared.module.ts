@@ -6,6 +6,7 @@ import { FavoriteIconComponent } from './components/favorite-icon/favorite-icon.
 import { RelativeTimePipe } from './pipes/relative-time.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { IsLoggedInDirective } from './directives/is-logged-in.directive';
+import { AnswerCardComponent } from './components/answer-card/answer-card.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { IsLoggedInDirective } from './directives/is-logged-in.directive';
     FavoriteIconComponent,
     RelativeTimePipe,
     IsLoggedInDirective,
+   AnswerCardComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { IsLoggedInDirective } from './directives/is-logged-in.directive';
     FavoriteIconComponent,
     RelativeTimePipe,
     IsLoggedInDirective,
+   AnswerCardComponent
   ]
 })
 export class SharedModule { }

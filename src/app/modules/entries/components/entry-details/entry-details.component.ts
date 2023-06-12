@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
+  Answer,
   Category,
   CategoryService,
   Entry,
@@ -23,6 +24,7 @@ export class EntryDetailsComponent {
   private entrySubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
+  answers!: Answer[];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -42,6 +44,7 @@ export class EntryDetailsComponent {
       this.route.snapshot.paramMap.get('entryType')!
     );
     this.loadEntry();
+    
   }
 
   ngOnDestroy(): void {
@@ -70,7 +73,10 @@ export class EntryDetailsComponent {
           this.entry = response.result.find(
             (entry) =>
               entry.entry_id === Number(this.route.snapshot.paramMap.get('id'))
+
           );
+          
+          this.getAnswers(this.entry)
         });
     }
   }
@@ -79,5 +85,11 @@ export class EntryDetailsComponent {
     e.stopPropagation();
     if (!this.entry) return;
     this.entry.favorite = !this.entry?.favorite;
+  }
+
+  getAnswers(entry: Entry | undefined){
+    if (entry){
+      this.answers = this.entryHttpService.getAnswers(entry);
+    }
   }
 }

@@ -17,3 +17,15 @@ export interface Entry {
   content?: string;
   image?: string;
 }
+
+
+export interface Answer {
+  answer_id: number;
+ 
+  author: Author;
+  created_at: string;
+  top_answer: boolean;
+  votes: number,
+  content: string;
+  image?: string;
+}
