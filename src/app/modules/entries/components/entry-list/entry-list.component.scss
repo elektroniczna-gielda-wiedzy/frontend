@@ -6,11 +6,16 @@
 
 .entry-list-container {
     margin-top: 1em;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($max-card-width, 1fr));
     flex-wrap: wrap;
     justify-content: center;
     gap: 1em;
     min-width: min-content;
+    @media (max-width: calc($max-card-width * 1.2)) {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax($min-card-width, 1fr));
+    }
 }
 
 .entry-list-controls {
@@ -20,9 +25,4 @@
 
 .add-entry-button {
     margin-left: auto;
-}
-
-.entry-list-container > * {
-    flex: 0 1 $max-card-width;
-    min-width: $min-card-width;
 }
