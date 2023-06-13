@@ -1,21 +1,7 @@
-@use "src/assets/styles/entry-card-variables.scss" as *;
+@use "src/assets/styles/entry-list.scss";
 
 .entry-list-outer-container {
     margin: 1em;
-}
-
-.entry-list-container {
-    margin-top: 1em;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax($max-card-width, 1fr));
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1em;
-    min-width: min-content;
-    @media (max-width: calc($max-card-width * 1.2)) {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax($min-card-width, 1fr));
-    }
 }
 
 .entry-list-controls {
