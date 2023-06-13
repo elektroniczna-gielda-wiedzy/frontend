@@ -12,7 +12,7 @@
                 [ngClass]="getCategoryClass(category)"
                 >{{ getCategoryName(category) }}</span
             > -->
-            <mat-chip-set>
+            <mat-chip-set class="categories-row">
                 <div *ngFor="let category of entry?.categories"  >
                     <mat-chip  selected class="faculty" *ngIf="category.type==0"  [ngClass]="getCategoryClass(category)" >
                         {{ getCategoryName(category) }}
@@ -20,7 +20,7 @@
                     
                 </div>
             </mat-chip-set>
-            <mat-chip-set>
+            <mat-chip-set class="categories-row">
                 <div *ngFor="let category of entry?.categories">
                     <mat-chip selected class="area"  [ngClass]="getCategoryClass(category)"   *ngIf="category.type==1" >
                         {{ getCategoryName(category) }}
