@@ -54,8 +54,9 @@
           <button type="button" mat-raised-button color="primary" (click)="fileInput.click()"> {{ "Add image" |
             translate }} </button>
           <input formControlName="image" hidden (change)="onFileSelected($event)" #fileInput type="file">
-          <span   class="file-name">{{selectedFile?.name}}</span>
+          <span   class="file-name"   *ngIf="isImageSaved">{{selectedFile?.name}}</span>
         </div>
+        <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
           <button mat-raised-button color="primary" class="contact-button" [disabled]="!form.valid">
             {{ "Add" | translate }}
           </button>

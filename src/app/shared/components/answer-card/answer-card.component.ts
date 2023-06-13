@@ -16,6 +16,11 @@ export class AnswerCardComponent {
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   selectedFile: File | undefined;
+  base64File?: string;
+  imageError!: string;
+  isImageSaved: boolean | null | undefined;
+  cardImageBase64: string | null | undefined;
+
 
   form: FormGroup = this.fb.group({
     answer: [null, [Validators.required]],
@@ -47,9 +52,34 @@ export class AnswerCardComponent {
   }
 
   onFileSelected(event: any): void {
+    const max_size = 20971520;
+    const allowed_types = ['image/png', 'image/jpeg'];
+    const max_height = 15200;
+    const max_width = 25600;
     this.selectedFile = event.target.files[0] ?? null;
+    console.log(event.target.files[0].size)
+    if (event.target.files[0].size > max_size) {
+      this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+     }
+    var fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;       
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.isImageSaved = true;
+        console.log(this.cardImageBase64 )
+    };
+   
+    fileReader.readAsDataURL(event.target.files[0]);
   }
 
+  removeImage(){
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
+  }
+
+ 
   createAnswer(){
     console.log(this.form.value)
     console.log(this.entry);
