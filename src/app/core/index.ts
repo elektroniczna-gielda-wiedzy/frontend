@@ -1,9 +1,10 @@
 // http
 export * from './http/entry-http.service';
 export * from './http/category-http.service';
-export * from './services/auth.service';
 
 // services
+export * from './services/auth.service';
+export * from './services/image.service';
 export * from './services/category.service';
 export * from './services/token.service';
 

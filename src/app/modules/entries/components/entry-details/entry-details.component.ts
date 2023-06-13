@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -7,6 +8,7 @@ import {
   Entry,
   EntryHttpService,
   EntryType,
+  ImageService,
   Language,
   stringToEntryType,
 } from 'src/app/core';
@@ -20,6 +22,7 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 export class EntryDetailsComponent {
   entryType!: EntryType;
   entry?: Entry;
+  image?: SafeUrl;
   private entrySubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
@@ -28,7 +31,8 @@ export class EntryDetailsComponent {
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
     private categoryService: CategoryService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -62,17 +66,22 @@ export class EntryDetailsComponent {
   }
 
   loadEntry(): void {
-    // TODO: change to entryHttpService.getEntry
-    if (this.entryType !== null) {
-      this.entrySubscription = this.entryHttpService
-        .getEntries({ type: this.entryType })
-        .subscribe((response) => {
-          this.entry = response.result.find(
-            (entry) =>
-              entry.entry_id === Number(this.route.snapshot.paramMap.get('id'))
-          );
-        });
-    }
+    if (!this.entryType) return;
+
+    this.entrySubscription = this.entryHttpService
+      .getEntry(Number(this.route.snapshot.paramMap.get('id')))
+      .subscribe((response) => {
+        this.entry = response.result[0];
+        if (this.entry.image) {
+          this.loadImage(this.entry.image);
+        }
+      });
+  }
+
+  loadImage(imageUrl: string): void {
+    this.imageService.getImage(imageUrl).then((response) => {
+      this.image = response;
+    });
   }
 
   handleFavorite(e: MouseEvent) {

@@ -71,6 +71,12 @@ export class EntryHttpService {
     return this.http.post<StandardResponse<Entry>>(url, params);
 
   }
+
+  getEntry(id: number) : Observable<StandardResponse<Entry>>{
+    const url = `${this.apiUrl}/${id}`;
+
+    return this.http.get<StandardResponse<Entry>>(url);
+  }
   
 
   getCategoryTypeHint(entry_type_id: EntryType | undefined){
