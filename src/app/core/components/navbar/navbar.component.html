@@ -1,17 +1,18 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="side-nav-container">
   <mat-sidenav
     #drawer
-    class="sidenav"
+    class="side-nav"
     fixedInViewport
     [attr.role]="'dialog'"
     [mode]="'over'"
     [opened]="false"
     [opened]="(isHandset$ | async) ? drawer.opened : false"
+    (closed)="profileDropdownOpen = false"
   >
     <mat-toolbar>
       <button
         type="button"
-        aria-label="Close sidenav"
+        aria-label="Close side nav"
         mat-icon-button
         (click)="drawer.close()"
         *ngIf="isHandset$ | async"
@@ -20,34 +21,65 @@
       </button>
     </mat-toolbar>
     <mat-nav-list>
-      <a
-        mat-list-item
-        *ngFor="let link of links"
-        routerLink="{{ link.url }}"
-        routerLinkActive="active-side-nav-item"
-        (click)="drawer.close()"
-        >{{ link.label | translate }}</a
-      >
-      <a mat-list-item *appIsLoggedIn mat-list-item (click)="signOut();drawer.close()">{{'Sign Out' | translate}}</a>
+      <div>
+        <a
+          mat-list-item
+          *ngFor="let link of links"
+          routerLink="{{ link.url }}"
+          routerLinkActive="active-side-nav-item"
+          (click)="drawer.close()"
+          >{{ link.label | translate }}</a
+        >
+        <a
+          *appIsLoggedIn
+          mat-list-item
+          (click)="profileDropdownOpen = !profileDropdownOpen"
+        >
+          <div class="profile-side-nav">
+            <span translate>Profile</span>
+            <mat-icon>
+              {{ profileDropdownOpen ? "expand_more" : "chevron_right" }}
+            </mat-icon>
+          </div>
+        </a>
+      </div>
+      <div *ngIf="profileDropdownOpen" class="profile-side-nav-items">
+        <a
+          mat-list-item
+          *ngFor="let link of profileLinks"
+          routerLink="{{ link.url }}"
+          routerLinkActive="active-side-nav-item"
+          (click)="drawer.close()"
+          >{{ link.label | translate }}</a
+        >
+        <a mat-list-item (click)="signOut(); drawer.close()">{{
+          "Sign Out" | translate
+        }}</a>
+      </div>
+      <app-language-selector [sideNav]="true"></app-language-selector>
     </mat-nav-list>
-    
-      <app-language-selector [sideNav]="true" ></app-language-selector>
-
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button
+        class="right-side-nav-item"
         type="button"
-        aria-label="Open sidenav"
+        aria-label="Open side nav"
         mat-icon-button
         (click)="drawer.open()"
         *ngIf="isHandset$ | async"
       >
         <mat-icon aria-label="Side nav open icon">menu</mat-icon>
       </button>
-      <span translate>Knowledge Exchange</span>
-      <span class="spacer"></span>
+
+      <span [class.spacer]="isHandset$ | async"></span>
+      <span class="navbar-logo" [class.right]="isHandset$ | async">
+        <img src="/assets/images/logo.png" alt="Logo" />
+      </span>
+      <span translate class="nav-title">Knowledge Exchange</span>
+      <span [class.spacer]="!(isHandset$ | async)"></span>
+
       <div class="main-nav-list" *ngIf="!(isHandset$ | async)">
         <a
           mat-button
@@ -55,14 +87,35 @@
           *ngFor="let link of links"
           routerLink="{{ link.url }}"
           routerLinkActive="active-nav-item"
-          >{{ link.label | translate}}</a
+          >{{ link.label | translate }}</a
         >
-        <a *appIsLoggedIn mat-button class="main-nav-item" (click)="signOut()">{{'Sign Out' | translate}}</a>
+
+        <button
+          *appIsLoggedIn
+          mat-button
+          [matMenuTriggerFor]="menu"
+          class="main-nav-item"
+        >
+          {{'Profile' | translate}}
+        </button>
+        <mat-menu #menu="matMenu" class="profile-menu">
+          <a
+            mat-menu-item
+            *ngFor="let link of profileLinks"
+            routerLink="{{ link.url }}"
+            routerLinkActive="active-side-nav-item"
+            (click)="drawer.close()"
+            >{{ link.label | translate }}</a
+          >
+          <button mat-menu-item class="main-nav-item" (click)="signOut()">
+            {{ "Sign Out" | translate }}
+          </button>
+        </mat-menu>
         <app-language-selector></app-language-selector>
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
-    
+
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
