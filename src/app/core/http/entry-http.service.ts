@@ -6,6 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
 import { ENTRY_TYPES } from '../mocks/entry_type';
+import { TokenService } from '../services/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { ENTRY_TYPES } from '../mocks/entry_type';
 export class EntryHttpService {
   private readonly apiUrl = `${environment.apiUrl}/entry`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenService: TokenService) { }
 
   getEntries(params: {type?: EntryType}) : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
@@ -27,6 +28,40 @@ export class EntryHttpService {
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
 
+  }
+
+  getMyEntries() : Observable<StandardResponse<Entry>>{
+    const url = this.apiUrl;
+    let queryParams = {
+      params: new HttpParams()
+    };
+
+    const userId = this.tokenService.getUserId();
+    if (userId) {
+      queryParams.params = queryParams.params.set('author', userId);
+    } else {
+      return of({result: [], messages: ["No user id found"], success: false});
+    }
+    
+
+    return this.http.get<StandardResponse<Entry>>(url, queryParams);
+  }
+
+  getMyFavorites() : Observable<StandardResponse<Entry>>{
+    const url = this.apiUrl;
+    let queryParams = {
+      params: new HttpParams()
+    };
+
+    const userId = this.tokenService.getUserId();
+    if (userId) {
+      queryParams.params = queryParams.params.set('favorites', true);
+      // queryParams.params = queryParams.params.set('author', userId);
+    } else {
+      return of({result: [], messages: ["No user id found"], success: false});
+    }
+
+    return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
 
