@@ -95,24 +95,24 @@ export class EntryAddComponent implements OnInit, OnDestroy {
 
   createNewEntry() {
     if (this.entryType) {
-      // this.sending = true;
-      // this.entryService
-      //   .createEntry({
-      //     entry_type_id: this.entryType,
-      //     ...this.form.value,
-      //     image: this.selectedFile?.toString(),
-      //   })
-      //   .subscribe((response) => {
-      //     this.logger.info(response);
-      //     this.sending = false;
-      //     if (response.success && response.result.length > 0) {
-      //       this.router.navigate([
-      //         '/entries',
-      //         this.entryTypeString,
-      //         response.result[0].entry_id,
-      //       ]);
-      //     }
-      //   });
+      this.sending = true;
+      this.entryService
+        .createEntry({
+          entry_type_id: this.entryType,
+          ...this.form.value,
+          image: this.selectedFile?.toString(),
+        })
+        .subscribe((response) => {
+          this.logger.info(response);
+          this.sending = false;
+          if (response.success && response.result.length > 0) {
+            this.router.navigate([
+              '/entries',
+              this.entryTypeString,
+              response.result[0].entry_id,
+            ]);
+          }
+        });
       console.log(this.form.value)
     }
   }

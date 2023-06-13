@@ -33,7 +33,7 @@ mat-card-content {
     display: flex;
     flex-direction: column;
     margin: 1em;
-    padding: 1em;
+    padding: 1em 0em 1em 0em;
     border-top: solid 1px;
 }
 mat-card-footer {
@@ -43,6 +43,12 @@ mat-card-footer {
     align-items: end;
     margin: 1em;
     
+}
+.answer-cont{
+    display: flex;
+    flex-direction: column ;
+    gap:1em;
+    margin:1em ;
 }
 
 .example-full-width {
