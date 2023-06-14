@@ -9,6 +9,7 @@ import {
   CategoryHttpService,
   CategoryService,
   Language,
+  ImageService,
 } from 'src/app/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -35,7 +36,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
 
+  base64Image: string | ArrayBuffer | null = '';
   selectedFile: File | undefined;
+  
   constructor(
     private readonly route: ActivatedRoute,
     private fb: FormBuilder,
@@ -85,8 +88,18 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this.form.value.categories;
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0] ?? null;
+  onFileSelected(event: Event) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.[0];
+    if (!file) return;
+    this.selectedFile = file;
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64ImageString = reader.result as string;
+      this.base64Image = base64ImageString.split(',')[1];;
+    };
   }
 
   backClicked() {
@@ -95,16 +108,14 @@ export class EntryAddComponent implements OnInit, OnDestroy {
 
   createNewEntry() {
     if (this.entryType) {
-      this.sending = true;
       this.entryService
         .createEntry({
           entry_type_id: this.entryType,
           ...this.form.value,
-          image: this.selectedFile?.toString(),
+          image: this.base64Image,
         })
         .subscribe((response) => {
           this.logger.info(response);
-          this.sending = false;
           if (response.success && response.result.length > 0) {
             this.router.navigate([
               '/entries',
@@ -113,7 +124,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
             ]);
           }
         });
-      console.log(this.form.value)
     }
   }
 
