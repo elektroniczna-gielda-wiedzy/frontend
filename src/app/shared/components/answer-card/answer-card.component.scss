@@ -32,8 +32,8 @@ mat-card-header {
 mat-card-content {
     display: flex;
     flex-direction: column;
-    margin: 1em;
-    padding: 1em 0em 1em 0em;
+    margin: 0em 1em 0em 1em;
+    padding: 0em 0em 0em 0em;
     border-top: solid 1px;
 }
 mat-card-footer {
@@ -48,7 +48,7 @@ mat-card-footer {
     display: flex;
     flex-direction: column ;
     gap:1em;
-    margin:1em ;
+    margin:0.5em ;
 }
 
 .example-full-width {
@@ -72,17 +72,15 @@ mat-card-footer {
 
 .card-footer{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 1em;
+ 
+    margin-left: 0em;
 }
 .author-container, .date-container {
     display: inline-block;
-}
-
-.author-container {
-    margin-right: 1em;
+    margin: 0.5em;
 }
 
 .category {
@@ -100,4 +98,15 @@ mat-card-footer {
 
 .file-name {
     margin-left: 1rem;
+
+}
+
+mat-card-subtitle{
+   // display: inline-block;
+    display: flex;
+   
+    justify-content: flex-end;
+}
+app-component-card{
+    margin-left:  1em;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { EntryType } from '../enums/entry-type';
-import { Entry } from '../models/entry';
+import { Entry, EntryAnswer } from '../models/entry';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
@@ -50,7 +50,14 @@ export class EntryHttpService {
 
 
   //TODO get from restapi
-  getAnswers(entry: Entry){
-    return ANSWERS.answers;
+  getEntryAnswers(entry_id: number){
+    console.log(entry_id)
+    const url = this.apiUrl + '/' + entry_id;
+    let queryParams = {
+      params: new HttpParams()
+    };
+    
+    return this.http.get<StandardResponse<EntryAnswer>>(url, queryParams);
+    //return ANSWERS.answers;
   }
 }

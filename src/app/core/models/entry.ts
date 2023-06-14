@@ -21,7 +21,6 @@ export interface Entry {
 
 export interface Answer {
   answer_id: number;
- 
   author: Author;
   created_at: string;
   top_answer: boolean;
@@ -29,3 +28,17 @@ export interface Answer {
   content: string;
   image?: string;
 }
+
+export interface EntryAnswer {
+  answers: Answer[];
+  entry_type_id: number;
+  title: string;
+  favorite: boolean;
+  categories: Category[];
+  author: Author;
+  created_at: string;
+  content?: string;
+  image?: string;
+
+}
+

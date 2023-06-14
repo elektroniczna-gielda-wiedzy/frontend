@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Entry, Language, CategoryService, Category, EntryType, Answer, EntryHttpService } from 'src/app/core';
+import { Entry, Language, CategoryService, Category, EntryType, Answer, EntryHttpService, EntryAnswer } from 'src/app/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,8 +11,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./answer-card.component.scss']
 })
 export class AnswerCardComponent {
-  @Input() answers!: Answer[];
-  @Input() entry!: Entry;
+  answers!: Answer[];
+  @Input() entry!: EntryAnswer;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   selectedFile: File | undefined;
@@ -20,7 +20,7 @@ export class AnswerCardComponent {
   imageError!: string;
   isImageSaved: boolean | null | undefined;
   cardImageBase64: string | null | undefined;
-
+ 
 
   form: FormGroup = this.fb.group({
     answer: [null, [Validators.required]],
@@ -30,6 +30,7 @@ export class AnswerCardComponent {
     private languageService: LanguageService,
     private fb: FormBuilder,    
     private readonly route: ActivatedRoute,
+    private httpEntryService : EntryHttpService
   ) {}
 
 
@@ -42,7 +43,13 @@ export class AnswerCardComponent {
     );
 
    console.log( this.route.snapshot.paramMap.get('id')!)
-    
+   
+   this.httpEntryService.getEntryAnswers(Number(this.route.snapshot.paramMap.get('id')!)).subscribe((e) =>
+    { 
+        this.answers = e.result[0].answers
+        console.log(e.result)
+        console.log(this.answers)
+    })
   }
 
   ngOnDestroy() {
@@ -57,7 +64,7 @@ export class AnswerCardComponent {
     const max_height = 15200;
     const max_width = 25600;
     this.selectedFile = event.target.files[0] ?? null;
-    console.log(event.target.files[0].size)
+
     if (event.target.files[0].size > max_size) {
       this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
      }
@@ -68,7 +75,6 @@ export class AnswerCardComponent {
         const imgBase64Path = e.target.result;
         this.cardImageBase64 = imgBase64Path;
         this.isImageSaved = true;
-        console.log(this.cardImageBase64 )
     };
    
     fileReader.readAsDataURL(event.target.files[0]);
@@ -77,6 +83,7 @@ export class AnswerCardComponent {
   removeImage(){
     this.cardImageBase64 = null;
     this.isImageSaved = false;
+    this.form.value.image = null;
   }
 
  
@@ -95,13 +102,15 @@ export class AnswerCardComponent {
       created_at: "11:06:2023 21:40",
       top_answer: false,
       votes: 3,
-      image: this.form.value.image
+      image: this.cardImageBase64!
   });
    this.form.reset()
    this.selectedFile = undefined;
+   this.isImageSaved = null;
    console.log(this.answers)
   }
 
+  
 }
   
 

@@ -6,6 +6,7 @@ import {
   Category,
   CategoryService,
   Entry,
+  EntryAnswer,
   EntryHttpService,
   EntryType,
   Language,
@@ -20,11 +21,11 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 })
 export class EntryDetailsComponent {
   entryType!: EntryType;
-  entry?: Entry;
+  entry!: EntryAnswer ;
   private entrySubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
-  answers!: Answer[];
+  //answers!: Answer;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -68,15 +69,13 @@ export class EntryDetailsComponent {
     // TODO: change to entryHttpService.getEntry
     if (this.entryType !== null) {
       this.entrySubscription = this.entryHttpService
-        .getEntries({ type: this.entryType })
+        .getEntryAnswers(Number(this.route.snapshot.paramMap.get('id')))
         .subscribe((response) => {
-          this.entry = response.result.find(
-            (entry) =>
-              entry.entry_id === Number(this.route.snapshot.paramMap.get('id'))
-
-          );
           
-          this.getAnswers(this.entry)
+          this.entry = response.result[0]
+
+          console.log( response)
+          //this.getAnswers(this.entry)
         });
     }
   }
@@ -87,9 +86,9 @@ export class EntryDetailsComponent {
     this.entry.favorite = !this.entry?.favorite;
   }
 
-  getAnswers(entry: Entry | undefined){
-    if (entry){
-      this.answers = this.entryHttpService.getAnswers(entry);
-    }
-  }
+  // getAnswers(entry: Entry | undefined){
+  //   if (entry){
+  //     this.answers = this.entryHttpService.getAnswers(entry);
+  //   }
+  // }
 }

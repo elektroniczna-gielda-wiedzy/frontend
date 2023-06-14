@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IsLoggedInDirective } from './directives/is-logged-in.directive';
 import { AnswerCardComponent } from './components/answer-card/answer-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommentsCardComponent } from './components/comments-card/comments-card.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RelativeTimePipe,
     IsLoggedInDirective,
    AnswerCardComponent,
+   CommentsCardComponent,
 
   ],
   imports: [

@@ -56,5 +56,10 @@
     "Close":"Zamknij",
 
     "Add your answer": "Dodaj odpowiedź",
-    "Answers": "Odpowiedzi"
+    "Answers": "Odpowiedzi",
+    "Remove": "Usuń",
+    "Show comments": "Pokaż komentarze",
+    "Hide comments": "Ukryj komentarze",
+    "Add first comment" : "Dodaj pierwszy komentarz",
+    "answered" : "odpowiedź"
 }
