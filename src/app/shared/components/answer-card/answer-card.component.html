@@ -11,8 +11,8 @@
           {{ answer?.content }}
         </div>
     
-        <div *ngIf="answer?.image" class="image-container">
-          <img [src]="answer?.image" />
+        <div *ngIf="answer?.imageSrc" class="image-container">
+          <img [src]="answer?.imageSrc" />
         </div>
     
       </div>

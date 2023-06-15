@@ -1,14 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {  Language, Answer } from 'src/app/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
+import { Language, Answer, ImageService } from 'src/app/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-answer-card',
   templateUrl: './answer-card.component.html',
-  styleUrls: ['./answer-card.component.scss']
+  styleUrls: ['./answer-card.component.scss'],
 })
 export class AnswerCardComponent {
   @Input()
@@ -20,18 +25,33 @@ export class AnswerCardComponent {
   imageError!: string;
   isImageSaved: boolean | null | undefined;
   cardImageBase64: string | null | undefined;
- 
 
   form: FormGroup = this.fb.group({
     answer: [null, [Validators.required]],
-    image: [null ]
+    image: [null],
   });
   constructor(
     private languageService: LanguageService,
-    private fb: FormBuilder,    
+    private fb: FormBuilder,
     private logger: NGXLogger,
+    private im: ImageService
   ) {}
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['answers'] && this.answers) {
+      this.logger.trace(this.answers);
+      this.loadImages();
+    }
+  }
+
+  loadImages() {
+    this.answers?.forEach((answer) => {
+      if (!answer.image) return;
+      this.im.getImage(answer?.image).then((res) => {
+        answer.imageSrc = res;
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
@@ -39,7 +59,6 @@ export class AnswerCardComponent {
         this.currentLanguage = this.languageService.language;
       }
     );
-    this.logger.trace(this.answers)
   }
 
   ngOnDestroy() {
@@ -56,49 +75,44 @@ export class AnswerCardComponent {
     this.selectedFile = event.target.files[0] ?? null;
 
     if (event.target.files[0].size > max_size) {
-      this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-     }
+      this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+    }
     var fileReader = new FileReader();
     fileReader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;       
-        const imgBase64Path = e.target.result;
-        this.cardImageBase64 = imgBase64Path;
-        this.isImageSaved = true;
+      const image = new Image();
+      image.src = e.target.result;
+      const imgBase64Path = e.target.result;
+      this.cardImageBase64 = imgBase64Path;
+      this.isImageSaved = true;
     };
-   
+
     fileReader.readAsDataURL(event.target.files[0]);
   }
 
-  removeImage(){
+  removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     this.form.value.image = null;
   }
 
- 
-  createAnswer(){
-    this.logger.trace(this.form.value)
-    this.answers?.push( {
+  createAnswer() {
+    this.logger.trace(this.form.value);
+    this.answers?.push({
       answer_id: 1,
       author: {
-          user_id: 1,
-          first_name: 'Adam',
-          last_name: 'Kowalski',
+        user_id: 1,
+        first_name: 'Adam',
+        last_name: 'Kowalski',
       },
       content: this.form.value.answer,
-      created_at: "11:06:2023 21:40",
+      created_at: '11:06:2023 21:40',
       top_answer: false,
       votes: 3,
-      image: this.cardImageBase64!
-  });
-   this.form.reset();
-   this.selectedFile = undefined;
-   this.isImageSaved = null;
-   this.logger.trace(this.answers)
+      image: this.cardImageBase64!,
+    });
+    this.form.reset();
+    this.selectedFile = undefined;
+    this.isImageSaved = null;
+    this.logger.trace(this.answers);
   }
-
-  
 }
-  
-

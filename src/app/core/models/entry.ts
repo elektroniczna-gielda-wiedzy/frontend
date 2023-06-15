@@ -28,5 +28,6 @@ export interface Answer {
   votes: number,
   content: string;
   image?: string;
+  imageSrc?: string;
 }
 
