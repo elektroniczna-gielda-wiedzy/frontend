@@ -1,30 +1,52 @@
-
 <div class="entry-list-outer-container">
   <div class="entry-list-controls">
-    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="applyFilter()"
+      class="filter-form"
+    >
       <div class="inputs-container">
-        <!-- <mat-form-field class="search-field" appearance="outline">
+        <mat-form-field class="search-field" appearance="outline">
           <mat-label>{{ "Search" | translate }}</mat-label>
           <input matInput formControlName="search" />
-        </mat-form-field> -->
-        
+        </mat-form-field>
+
         <div class="categories-filter">
-          <app-category-selector [formGroup]="filterForm"></app-category-selector>
+          <app-category-selector
+            [formGroup]="filterForm"
+          ></app-category-selector>
         </div>
       </div>
-      
-      
-        <button 
-        mat-raised-button 
-        color="primary" 
-        type="submit"
-        class="apply-filter-button"
-        >{{'Apply filters' | translate}}</button>
+
+      <div class="buttons-container">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="apply-filter-button"
+        >
+          {{ "Apply filters" | translate }}
+        </button>
+
+        <button
+          *ngIf="
+            filterForm.value.search ||
+            (filterForm.value.categories &&
+              filterForm.value.categories.length > 0)
+          "
+          mat-raised-button
+          type="button"
+          class="clear-filter-button"
+          (click)="clearFilter()"
+        >
+          {{ "Clear filters" | translate }}
+        </button>
+      </div>
     </form>
     <a
       color="primary"
       mat-fab
-      matTooltip="{{'Add new ' + entryTypeName  | translate}}"
+      matTooltip="{{ 'Add new ' + entryTypeName | translate }}"
       routerLink="add"
       aria-label="Add entry button"
       class="add-entry-button"

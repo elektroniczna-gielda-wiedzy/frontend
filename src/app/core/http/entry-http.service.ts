@@ -16,7 +16,7 @@ export class EntryHttpService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) { }
 
-  getEntries(params: {type?: EntryType, categories?: Number[]}) : Observable<StandardResponse<Entry>>{
+  getEntries(params: {type?: EntryType, categories?: Number[], query?: string}) : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
     let queryParams = {
       params: new HttpParams()
@@ -28,6 +28,10 @@ export class EntryHttpService {
 
     if (params.categories && params.categories.length > 0) {
       queryParams.params = queryParams.params.set('category_ids', params.categories.join(','));
+    }
+
+    if (params.query) {
+      queryParams.params = queryParams.params.set('query', params.query);
     }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);

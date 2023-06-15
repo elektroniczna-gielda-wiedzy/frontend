@@ -24,7 +24,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
   private entriesSubscription?: Subscription;
 
   filterForm = new FormGroup({
-    // search: new FormControl(''),
+    search: new FormControl(''),
     categories: new FormControl([]),
   });
 
@@ -56,9 +56,9 @@ export class EntryListComponent implements OnInit, OnDestroy {
   loadEntries(): void {
     if (this.entryType !== null) {
       const categories = this.filterForm.value.categories || [];
-
+      const query = this.filterForm.value.search || '';
       this.entriesSubscription = this.entryHttpService
-        .getEntries({ type: this.entryType, categories })
+        .getEntries({ type: this.entryType, categories, query })
         .subscribe((response) => {
           this.entries = response.result;
           console.log(response);
@@ -72,6 +72,10 @@ export class EntryListComponent implements OnInit, OnDestroy {
 
   applyFilter() {
     this.logger.info(this.filterForm.value);
+    this.loadEntries();
+  }
+  clearFilter() {
+    this.filterForm.reset();
     this.loadEntries();
   }
 }
