@@ -1,0 +1,76 @@
+
+<mat-card class="responsive-mat-card">
+    
+    <mat-card-header>
+        <h3> {{answers?.length}} {{ "Answers" | translate }}</h3>
+    </mat-card-header>
+    <mat-card-content *ngFor="let answer of answers">
+     
+      <div class = "answer-cont">
+        <div class="content">
+          {{ answer?.content }}
+        </div>
+    
+        <div *ngIf="answer?.image" class="image-container">
+          <img [src]="answer?.image" />
+        </div>
+    
+      </div>
+      
+  
+      <div class="card-footer">
+       
+        <mat-card-subtitle>
+          <div class="author-container">
+            <span>
+              {{ answer?.author?.first_name }}
+            </span>
+            <span>
+              {{ answer?.author?.last_name }}
+            </span>
+          </div>
+          <div class="date-container">
+            <span translate>answered</span>
+            <span>
+              {{ answer?.created_at | relativeTime : currentLanguage }}
+            </span>
+          </div>
+         
+        </mat-card-subtitle>
+        <app-comments-card></app-comments-card>
+      </div>
+       
+    </mat-card-content>
+    <form  [formGroup]="form" (ngSubmit)="createAnswer()" class="form"> 
+      
+    <mat-card-footer>
+   
+
+      
+      <mat-form-field class="example-full-width " appearance="outline">
+        <mat-label class="answer">{{ "Add your answer" | translate }}</mat-label>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+          formControlName="answer"></textarea>
+      </mat-form-field>
+      
+      <div class="buttons"> 
+        <div>
+          <button type="button" mat-raised-button color="primary" (click)="fileInput.click()"> {{ "Add image" |
+            translate }} </button>
+          
+          <input formControlName="image" hidden (change)="onFileSelected($event)" #fileInput type="file">
+          <a mat-raised-button (click)="removeImage()" *ngIf="isImageSaved"> {{"Remove" | translate }}</a>
+
+          <span   class="file-name"   *ngIf="isImageSaved">{{selectedFile?.name}}</span>
+        </div>
+       
+          <button mat-raised-button color="primary" type="submit" class="contact-button" [disabled]="!form.valid">
+            {{ "Add" | translate }}
+          </button>
+      </div> 
+
+             
+    </mat-card-footer>
+    
+  </form>
+  </mat-card>

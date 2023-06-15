@@ -19,7 +19,8 @@ $max-card-width: 1000px;
 
 .responsive-mat-card {
     max-width: $max-card-width;
-    margin: 0 auto;
+    margin: 0 auto 1em;
+
 }
 
 mat-card-header {

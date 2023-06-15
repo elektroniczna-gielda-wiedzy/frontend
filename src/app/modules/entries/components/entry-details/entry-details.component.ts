@@ -3,6 +3,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
+  Answer,
   Category,
   CategoryService,
   Entry,
@@ -46,6 +47,7 @@ export class EntryDetailsComponent {
       this.route.snapshot.paramMap.get('entryType')!
     );
     this.loadEntry();
+    
   }
 
   ngOnDestroy(): void {
@@ -89,4 +91,5 @@ export class EntryDetailsComponent {
     if (!this.entry) return;
     this.entry.favorite = !this.entry?.favorite;
   }
+
 }

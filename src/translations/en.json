@@ -52,11 +52,19 @@
     "Categories":"Categories",
 
     "Add": "Add",
+    "Add image": "Add image",
     "Cancel": "Cancel",
 
     "Bad email or password": "Bad email or password",
-    "Close":"Close"
+    "Close":"Close",
 
+    "Add your answer": "Add your answer",
+    "Answers": "Answers",
+    "Remove": "Remove",
+    "Show comments": "Show comments",
+    "Hide comments": "Hide comments",
+    "Add first comment": "Add first comment",
+    "answered": "aswered"
 
     
 }

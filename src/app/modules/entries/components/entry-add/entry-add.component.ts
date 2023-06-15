@@ -34,6 +34,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   });
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
+  imageError!: string;
+  isImageSaved: boolean | null | undefined;
+  cardImageBase64: string | null | undefined;
 
   selectedFile: File | undefined;
   constructor(
@@ -86,8 +89,29 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any): void {
+    const max_size = 20971520;
+    const allowed_types = ['image/png', 'image/jpeg'];
+    const max_height = 15200;
+    const max_width = 25600;
     this.selectedFile = event.target.files[0] ?? null;
+
+    // if (event.target.files[0].size > max_size) {
+    //   this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+    //  }
+    var fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;       
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.cardImageBase64 = this.cardImageBase64?.substring(this.cardImageBase64.indexOf(',') + 1);
+        
+        this.isImageSaved = true;
+    };
+   
+    fileReader.readAsDataURL(event.target.files[0]);
   }
+
 
   backClicked() {
     this._location.back();
@@ -100,7 +124,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         .createEntry({
           entry_type_id: this.entryType,
           ...this.form.value,
-          image: this.selectedFile?.toString(),
+          image: this.cardImageBase64?.toString(),
         })
         .subscribe((response) => {
           this.logger.info(response);
@@ -113,7 +137,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
             ]);
           }
         });
-      console.log(this.form.value)
     }
   }
 
