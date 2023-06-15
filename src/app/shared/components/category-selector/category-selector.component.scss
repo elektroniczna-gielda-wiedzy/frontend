@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+:host {
+    width: 100%;
+    // margin: 1em;
+    // min-width: 300px;
+}
+.form-container{
+    // width: 100%;
+    // min-width: 300px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+}
+
+mat-pseudo-checkbox {
+    visibility: hidden;
+}

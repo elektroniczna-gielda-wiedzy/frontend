@@ -9,6 +9,7 @@ import { IsLoggedInDirective } from './directives/is-logged-in.directive';
 import { AnswerCardComponent } from './components/answer-card/answer-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
+import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { CommentsCardComponent } from './components/comments-card/comments-card.
     IsLoggedInDirective,
    AnswerCardComponent,
    CommentsCardComponent,
+   CategorySelectorComponent,
 
   ],
   imports: [
@@ -34,7 +36,8 @@ import { CommentsCardComponent } from './components/comments-card/comments-card.
     FavoriteIconComponent,
     RelativeTimePipe,
     IsLoggedInDirective,
-    AnswerCardComponent
+    AnswerCardComponent,
+    CategorySelectorComponent
   ]
 })
 export class SharedModule { }

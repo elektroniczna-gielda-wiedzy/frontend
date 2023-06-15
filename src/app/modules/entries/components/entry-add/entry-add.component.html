@@ -14,52 +14,36 @@
   <mat-card-content>
 
     
-      <mat-grid-list cols="2" rowHeight="80px">
+      <mat-grid-list [cols]="2" rowHeight="80px" >
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-form-field class="example-full-width" appearance="outline">
+        <mat-grid-tile>
+          <mat-form-field class="example-full-width " appearance="outline">
             <mat-label class="">{{"Title" | translate }}</mat-label>
             <input matInput formControlName="title">
           </mat-form-field>
         </mat-grid-tile>
-
-        <mat-grid-tile [colspan]="1" [rowspan]="3">
+        
+        <mat-grid-tile [rowspan]="3">
           <mat-form-field class="example-full-width " appearance="outline">
             <mat-label class="description">{{ "Description" | translate }}</mat-label>
             <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
               formControlName="content"></textarea>
           </mat-form-field>
         </mat-grid-tile>
+        
 
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>{{ "Categories" | translate }}</mat-label>
-            <mat-select formControlName="categories" multiple>
-              <div *ngFor="let category1 of categories">
-                <mat-option *ngIf="category1.parent_id==null" [value]="category1.category_id">
-                  {{category1.names[0].name}}
-                </mat-option>
-                <ul>
-                  <li *ngFor="let category of categories">
-                    <mat-option *ngIf="category1.category_id==category.parent_id" (ngModelChange)="selectCategory()"
-                      [value]="category.category_id">
-                      {{getCategoryName(category)}}
-                    </mat-option>
-                  </li>
-                </ul>
-              </div>
-            </mat-select>
-          </mat-form-field>
+        <mat-grid-tile>
+          <app-category-selector [formGroup]="form"></app-category-selector>
         </mat-grid-tile>
 
-        <mat-grid-tile class="image_select" [colspan]="1" [rowspan]="1" *ngIf="entryType!==2">
+        <mat-grid-tile class="image_select" *ngIf="entryType!==2">
           <button type="button" mat-raised-button color="primary" (click)="fileInput.click()"> {{ "Add image" |
             translate }} </button>
           <input hidden (change)="onFileSelected($event)" #fileInput type="file">
           <span class="file-name">{{selectedFile?.name}}</span>
         </mat-grid-tile>
-
+        
       </mat-grid-list>
    
   </mat-card-content>

@@ -1,0 +1,22 @@
+<form [formGroup]="formGroup" class="form-container">
+    <mat-form-field class="full-width" appearance="outline">
+        <mat-label>{{ "Categories" | translate }}</mat-label>
+        <mat-select formControlName="categories" multiple>
+            <mat-optgroup *ngFor="let group of categoryGroups" [label]="translate(group.name)">
+                <div *ngFor="let category1 of group.categories">
+                    <mat-option *ngIf="category1.parent_id==null" [value]="category1.category_id">
+                        {{getCategoryName(category1)}}
+                    </mat-option>
+                    <ul>
+                        <li *ngFor="let category of group.categories">
+                            <mat-option *ngIf="category1.category_id==category.parent_id" (ngModelChange)="selectCategory()"
+                                [value]="category.category_id">
+                                {{getCategoryName(category)}}
+                            </mat-option>
+                        </li>
+                    </ul>
+                </div>
+            </mat-optgroup>
+        </mat-select>
+    </mat-form-field>
+</form>
