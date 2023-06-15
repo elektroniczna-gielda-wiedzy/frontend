@@ -34,6 +34,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     categories: [null, [Validators.required]],
   });
   private langChangeSubscription?: Subscription;
+  private breakpointSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   imageError!: string;
   isImageSaved: boolean | null | undefined;
@@ -77,7 +78,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.logger.info(this.categories);
       });
 
-    this.breakpointObserver.observe([
+    this.breakpointSubscription = this.breakpointObserver.observe([
       '(max-width: 599px)',
     ]).subscribe(result => {
       this.cols = result.matches ? 1 : 2;
@@ -90,6 +91,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     }
     if (this.langChangeSubscription) {
       this.langChangeSubscription.unsubscribe();
+    }
+    if (this.breakpointSubscription) {
+      this.breakpointSubscription.unsubscribe();
     }
   }
 
