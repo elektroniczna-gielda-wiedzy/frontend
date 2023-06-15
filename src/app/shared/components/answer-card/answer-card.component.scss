@@ -34,13 +34,12 @@ mat-card-content {
     flex-direction: column;
     margin: 0em 1em 0em 1em;
     padding: 0em 0em 0em 0em;
-    border-top: solid 1px;
 }
 mat-card-footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
     margin: 1em;
     
 }
@@ -109,4 +108,10 @@ mat-card-subtitle{
 }
 app-component-card{
     margin-left:  1em;
+}
+
+mat-divider {
+    padding: 1em; // = margin-bottom 
+    margin-top: 1em; 
+    // margin-bottom: 1em; nie działa w card-content
 }

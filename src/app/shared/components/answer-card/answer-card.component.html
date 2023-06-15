@@ -1,6 +1,6 @@
 
-<mat-card class="responsive-mat-card">
-    
+
+<mat-divider></mat-divider>
     <mat-card-header>
         <h3> {{answers?.length}} {{ "Answers" | translate }}</h3>
     </mat-card-header>
@@ -39,7 +39,7 @@
         </mat-card-subtitle>
         <app-comments-card></app-comments-card>
       </div>
-       
+       <mat-divider></mat-divider>
     </mat-card-content>
     <form  [formGroup]="form" (ngSubmit)="createAnswer()" class="form"> 
       
@@ -73,4 +73,4 @@
     </mat-card-footer>
     
   </form>
-  </mat-card>
+

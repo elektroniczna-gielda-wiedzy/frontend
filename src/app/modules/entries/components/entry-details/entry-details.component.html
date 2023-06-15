@@ -60,6 +60,6 @@
       </mat-card-subtitle>
     </div>
   </mat-card-content>
+  
+  <app-answer-card *ngIf="entryType===3" [answers]="entry?.answers"></app-answer-card>
 </mat-card>
-
-<app-answer-card *ngIf="entryType===3" [answers]="entry?.answers"></app-answer-card>
