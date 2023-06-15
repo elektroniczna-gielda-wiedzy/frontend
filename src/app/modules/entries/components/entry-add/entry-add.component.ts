@@ -14,6 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { NGXLogger } from 'ngx-logger';
 import { LanguageService } from 'src/app/modules/translate/language.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-entry-add',
@@ -37,6 +38,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   imageError!: string;
   isImageSaved: boolean | null | undefined;
   cardImageBase64: string | null | undefined;
+  cols = 2;
 
   selectedFile: File | undefined;
   constructor(
@@ -48,7 +50,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private logger: NGXLogger,
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private breakpointObserver: BreakpointObserver,
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +76,12 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.categories = category.result;
         this.logger.info(this.categories);
       });
+
+    this.breakpointObserver.observe([
+      '(max-width: 599px)',
+    ]).subscribe(result => {
+      this.cols = result.matches ? 1 : 2;
+    });
   }
 
   ngOnDestroy(): void {
