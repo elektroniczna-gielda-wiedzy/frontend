@@ -9,19 +9,17 @@ import { ENTRY_TYPES } from '../mocks/entry_type';
 import { TokenService } from '../services/token.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class EntryHttpService {
   private readonly apiUrl = `${environment.apiUrl}/entry`;
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) { }
 
-  getEntries(params: {
-    type?: EntryType;
-  }): Observable<StandardResponse<Entry>> {
+  getEntries(params: {type?: EntryType}) : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
     let queryParams = {
-      params: new HttpParams(),
+      params: new HttpParams()
     };
 
     if (params.type) {
@@ -29,28 +27,30 @@ export class EntryHttpService {
     }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
+
   }
 
-  getMyEntries(): Observable<StandardResponse<Entry>> {
+  getMyEntries() : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
     let queryParams = {
-      params: new HttpParams(),
+      params: new HttpParams()
     };
 
     const userId = this.tokenService.getUserId();
     if (userId) {
       queryParams.params = queryParams.params.set('author', userId);
     } else {
-      return of({ result: [], messages: ['No user id found'], success: false });
+      return of({result: [], messages: ["No user id found"], success: false});
     }
+    
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
-  getMyFavorites(): Observable<StandardResponse<Entry>> {
+  getMyFavorites() : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
     let queryParams = {
-      params: new HttpParams(),
+      params: new HttpParams()
     };
 
     const userId = this.tokenService.getUserId();
@@ -58,36 +58,32 @@ export class EntryHttpService {
       queryParams.params = queryParams.params.set('favorites', true);
       // queryParams.params = queryParams.params.set('author', userId);
     } else {
-      return of({ result: [], messages: ['No user id found'], success: false });
+      return of({result: [], messages: ["No user id found"], success: false});
     }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
-  createEntry(params: {
-    entry_type_id: EntryType;
-    title: string;
-    content: string;
-    categories?: number[];
-    image?: string | ArrayBuffer | null;
-  }): Observable<StandardResponse<Entry>> {
-    const url = this.apiUrl;
 
+  createEntry(params: {entry_type_id: EntryType , title: string , content: string , categories?: number[] , image?: string }) : Observable<StandardResponse<Entry>>{
+    const url = this.apiUrl;
+    
     return this.http.post<StandardResponse<Entry>>(url, params);
+
   }
 
-  getEntry(id: number): Observable<StandardResponse<Entry>> {
+  getEntry(id: number) : Observable<StandardResponse<Entry>>{
     const url = `${this.apiUrl}/${id}`;
 
     return this.http.get<StandardResponse<Entry>>(url);
   }
+  
 
-  getCategoryTypeHint(entry_type_id: EntryType | undefined) {
-    let result = '';
+  getCategoryTypeHint(entry_type_id: EntryType | undefined){
+    let result = "";
 
-    ENTRY_TYPES.forEach((c) => {
-      if (entry_type_id === c.entry_type_id) result = c.hint;
-    });
+    ENTRY_TYPES.forEach( c => {if(entry_type_id === c.entry_type_id) result = c.hint });
+
 
     return result;
   }
