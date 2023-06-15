@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
   Answer,
@@ -31,6 +31,7 @@ export class EntryDetailsComponent {
   currentLanguage: Language = this.languageService.language;
 
   constructor(
+    private router: Router,
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
     private categoryService: CategoryService,
@@ -40,6 +41,12 @@ export class EntryDetailsComponent {
   ) {}
 
   ngOnInit(): void {
+    const idParam = Number(this.route.snapshot.paramMap.get('id'));
+    if (isNaN(idParam)) {
+      this.router.navigate(['/']);
+      return;
+    }
+
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
       () => {
         this.currentLanguage = this.languageService.language;
@@ -49,8 +56,7 @@ export class EntryDetailsComponent {
     this.entryType = stringToEntryType(
       this.route.snapshot.paramMap.get('entryType')!
     );
-    this.loadEntry();
-    
+    this.loadEntry(idParam);
   }
 
   ngOnDestroy(): void {
@@ -70,17 +76,30 @@ export class EntryDetailsComponent {
     return this.categoryService.getCategoryName(category);
   }
 
-  loadEntry(): void {
+  loadEntry(id: number): void {
     if (!this.entryType) return;
 
-    this.entrySubscription = this.entryHttpService
-      .getEntry(Number(this.route.snapshot.paramMap.get('id')))
-      .subscribe((response) => {
+    this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
+      next: (response) => {
         this.entry = response.result[0];
+        if (this.entry.entry_type_id !== this.entryType) {
+          this.router.navigate([
+            'entries',
+            EntryType[this.entry.entry_type_id].toLowerCase(),
+            this.entry.entry_id,
+          ]);
+          this.entryType = this.entry.entry_type_id;
+          return;
+        }
+
         if (this.entry.image) {
           this.loadImage(this.entry.image);
         }
-      });
+      },
+      error: (response) => {
+        this.router.navigate(['/']);
+      },
+    });
   }
 
   loadImage(imageUrl: string): void {
@@ -94,11 +113,11 @@ export class EntryDetailsComponent {
     if (!this.entry) return;
     this.entry.favorite = !this.entry?.favorite;
   }
-  
+
   openDialog(): void {
     this.dialog.open(FullscreenImageDialogComponent, {
       data: { image: this.image },
-      panelClass: 'fullscreen-dialog'
+      panelClass: 'fullscreen-dialog',
     });
   }
 }

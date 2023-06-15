@@ -61,5 +61,5 @@
     </div>
   </mat-card-content>
   
-  <app-answer-card *ngIf="entryType===3" [answers]="entry?.answers"></app-answer-card>
+  <app-answer-card *ngIf="entry?.entry_type_id===3" [answers]="entry?.answers"></app-answer-card>
 </mat-card>
