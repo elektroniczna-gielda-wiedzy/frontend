@@ -1,6 +1,26 @@
 
 <div class="entry-list-outer-container">
   <div class="entry-list-controls">
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filter-form">
+      <div class="inputs-container">
+        <!-- <mat-form-field class="search-field" appearance="outline">
+          <mat-label>{{ "Search" | translate }}</mat-label>
+          <input matInput formControlName="search" />
+        </mat-form-field> -->
+        
+        <div class="categories-filter">
+          <app-category-selector [formGroup]="filterForm"></app-category-selector>
+        </div>
+      </div>
+      
+      
+        <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit"
+        class="apply-filter-button"
+        >{{'Apply filters' | translate}}</button>
+    </form>
     <a
       color="primary"
       mat-fab

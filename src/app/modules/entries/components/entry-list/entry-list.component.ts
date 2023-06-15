@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import {
   EntryType,
@@ -21,9 +23,15 @@ export class EntryListComponent implements OnInit, OnDestroy {
   private paramMapSubscription?: Subscription;
   private entriesSubscription?: Subscription;
 
+  filterForm = new FormGroup({
+    // search: new FormControl(''),
+    categories: new FormControl([]),
+  });
+
   constructor(
     private readonly route: ActivatedRoute,
-    private entryHttpService: EntryHttpService
+    private entryHttpService: EntryHttpService,
+    private logger: NGXLogger
   ) {}
 
   ngOnInit(): void {
@@ -47,15 +55,23 @@ export class EntryListComponent implements OnInit, OnDestroy {
 
   loadEntries(): void {
     if (this.entryType !== null) {
+      const categories = this.filterForm.value.categories || [];
+
       this.entriesSubscription = this.entryHttpService
-        .getEntries({ type: this.entryType })
+        .getEntries({ type: this.entryType, categories })
         .subscribe((response) => {
           this.entries = response.result;
+          console.log(response);
         });
     }
   }
 
   get entryTypeName(): string {
     return EntryType[this.entryType].toLowerCase();
+  }
+
+  applyFilter() {
+    this.logger.info(this.filterForm.value);
+    this.loadEntries();
   }
 }
