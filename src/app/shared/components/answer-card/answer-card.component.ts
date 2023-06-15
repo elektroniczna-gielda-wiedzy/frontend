@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Entry, Language, CategoryService, Category, EntryType, Answer, EntryHttpService, EntryAnswer } from 'src/app/core';
+import {  Language, Answer } from 'src/app/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { LanguageService } from 'src/app/modules/translate/language.service';
-import { ActivatedRoute } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-answer-card',
@@ -11,8 +11,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./answer-card.component.scss']
 })
 export class AnswerCardComponent {
-  answers!: Answer[];
-  @Input() entry!: EntryAnswer;
+  @Input()
+  answers?: Answer[] = [];
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   selectedFile: File | undefined;
@@ -29,27 +29,17 @@ export class AnswerCardComponent {
   constructor(
     private languageService: LanguageService,
     private fb: FormBuilder,    
-    private readonly route: ActivatedRoute,
-    private httpEntryService : EntryHttpService
+    private logger: NGXLogger,
   ) {}
 
 
   ngOnInit(): void {
-   console.log(this.answers);
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
       () => {
         this.currentLanguage = this.languageService.language;
       }
     );
-
-   console.log( this.route.snapshot.paramMap.get('id')!)
-   
-   this.httpEntryService.getEntryAnswers(Number(this.route.snapshot.paramMap.get('id')!)).subscribe((e) =>
-    { 
-        this.answers = e.result[0].answers
-        console.log(e.result)
-        console.log(this.answers)
-    })
+    this.logger.trace(this.answers)
   }
 
   ngOnDestroy() {
@@ -88,10 +78,8 @@ export class AnswerCardComponent {
 
  
   createAnswer(){
-    console.log(this.form.value)
-    console.log(this.entry);
-
-    this.answers.push( {
+    this.logger.trace(this.form.value)
+    this.answers?.push( {
       answer_id: 1,
       author: {
           user_id: 1,
@@ -104,10 +92,10 @@ export class AnswerCardComponent {
       votes: 3,
       image: this.cardImageBase64!
   });
-   this.form.reset()
+   this.form.reset();
    this.selectedFile = undefined;
    this.isImageSaved = null;
-   console.log(this.answers)
+   this.logger.trace(this.answers)
   }
 
   

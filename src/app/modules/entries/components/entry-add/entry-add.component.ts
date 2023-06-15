@@ -107,7 +107,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.cardImageBase64 = this.cardImageBase64?.substring(this.cardImageBase64.indexOf(',') + 1);
         
         this.isImageSaved = true;
-        console.log(this.cardImageBase64 )
     };
    
     fileReader.readAsDataURL(event.target.files[0]);
@@ -138,7 +137,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
             ]);
           }
         });
-      console.log(this.form.value)
     }
   }
 

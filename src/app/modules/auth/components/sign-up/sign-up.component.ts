@@ -57,6 +57,8 @@ export class SignUpComponent {
     repeatPassword: ['', [Validators.required, matchValidator('password')]],
   });
   emailTaken = false;
+  hidePassword = true;
+  hideRepeatPassword = true;
 
   constructor(
     private logger: NGXLogger,

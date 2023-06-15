@@ -1,5 +1,5 @@
 export interface StandardResponse<T> {
     success: boolean;
-    message: string[];
+    messages: string[];
     result: T[];
 }

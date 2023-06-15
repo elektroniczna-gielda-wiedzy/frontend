@@ -3,3 +3,10 @@ export interface TokenResponse {
 }
 
 export const TOKEN_KEY = 'sessionToken';
+
+export interface TokenPayload {
+    subject: number;
+    role: string;
+    iat: number;
+    exp: number;
+}

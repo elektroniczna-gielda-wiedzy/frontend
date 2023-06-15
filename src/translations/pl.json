@@ -1,9 +1,13 @@
 {
     "app.title": "Giełda wiedzy",
     "Knowledge Exchange": "Giełda wiedzy",
+    "All": "Wszystkie",
     "Announcements": "Ogłoszenia",
     "Notes": "Notatki",
     "Posts": "Posty",
+    "Profile": "Profil",
+    "My favorites": "Ulubione",
+    "My entries": "Moje wpisy",
     "Sign In": "Zaloguj się",
     "Sign Up": "Zarejestruj się",
     "Sign Out": "Wyloguj się",

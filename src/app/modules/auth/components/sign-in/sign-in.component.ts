@@ -27,7 +27,8 @@ export class SignInComponent {
     rememberMe: [false],
   });
   unauthorize = false;
-
+  hidePassword = true;
+  
   constructor(
     private logger: NGXLogger,
     private fb: FormBuilder,

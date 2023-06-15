@@ -16,6 +16,7 @@ export interface Entry {
   created_at: string;
   content?: string;
   image?: string;
+  answers?: Answer[];
 }
 
 
@@ -27,18 +28,5 @@ export interface Answer {
   votes: number,
   content: string;
   image?: string;
-}
-
-export interface EntryAnswer {
-  answers: Answer[];
-  entry_type_id: number;
-  title: string;
-  favorite: boolean;
-  categories: Category[];
-  author: Author;
-  created_at: string;
-  content?: string;
-  image?: string;
-
 }
 

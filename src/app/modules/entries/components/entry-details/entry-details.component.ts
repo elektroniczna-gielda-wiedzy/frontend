@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -6,9 +7,9 @@ import {
   Category,
   CategoryService,
   Entry,
-  EntryAnswer,
   EntryHttpService,
   EntryType,
+  ImageService,
   Language,
   stringToEntryType,
 } from 'src/app/core';
@@ -21,17 +22,18 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 })
 export class EntryDetailsComponent {
   entryType!: EntryType;
-  entry!: EntryAnswer ;
+  entry?: Entry;
+  image?: SafeUrl;
   private entrySubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
-  //answers!: Answer;
 
   constructor(
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
     private categoryService: CategoryService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -66,18 +68,22 @@ export class EntryDetailsComponent {
   }
 
   loadEntry(): void {
-    // TODO: change to entryHttpService.getEntry
-    if (this.entryType !== null) {
-      this.entrySubscription = this.entryHttpService
-        .getEntryAnswers(Number(this.route.snapshot.paramMap.get('id')))
-        .subscribe((response) => {
-          
-          this.entry = response.result[0]
+    if (!this.entryType) return;
 
-          console.log( response)
-          //this.getAnswers(this.entry)
-        });
-    }
+    this.entrySubscription = this.entryHttpService
+      .getEntry(Number(this.route.snapshot.paramMap.get('id')))
+      .subscribe((response) => {
+        this.entry = response.result[0];
+        if (this.entry.image) {
+          this.loadImage(this.entry.image);
+        }
+      });
+  }
+
+  loadImage(imageUrl: string): void {
+    this.imageService.getImage(imageUrl).then((response) => {
+      this.image = response;
+    });
   }
 
   handleFavorite(e: MouseEvent) {
@@ -86,9 +92,4 @@ export class EntryDetailsComponent {
     this.entry.favorite = !this.entry?.favorite;
   }
 
-  // getAnswers(entry: Entry | undefined){
-  //   if (entry){
-  //     this.answers = this.entryHttpService.getAnswers(entry);
-  //   }
-  // }
 }
