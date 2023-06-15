@@ -1,21 +1,7 @@
 @use "src/assets/styles/categories";
 
-$image-max-width: 400px;
 $max-card-width: 1000px;
 
-.image-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-
-  &>img {
-    width: min(100%, $image-max-width);
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-}
 
 .responsive-mat-card {
     max-width: $max-card-width;

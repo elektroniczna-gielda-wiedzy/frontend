@@ -12,7 +12,7 @@
         </div>
     
         <div *ngIf="answer?.imageSrc" class="image-container">
-          <img [src]="answer?.imageSrc" />
+          <img [src]="answer?.imageSrc" (click)="openDialog(answer?.imageSrc)" />
         </div>
     
       </div>

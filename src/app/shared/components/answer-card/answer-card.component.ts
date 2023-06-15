@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { NGXLogger } from 'ngx-logger';
+import { MatDialog } from '@angular/material/dialog';
+import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fullscreen-image-dialog.component';
 
 @Component({
   selector: 'app-answer-card',
@@ -34,7 +36,8 @@ export class AnswerCardComponent {
     private languageService: LanguageService,
     private fb: FormBuilder,
     private logger: NGXLogger,
-    private im: ImageService
+    private im: ImageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -114,5 +117,13 @@ export class AnswerCardComponent {
     this.selectedFile = undefined;
     this.isImageSaved = null;
     this.logger.trace(this.answers);
+  }
+
+  openDialog(image?: string): void {
+    if (!image) return;
+    this.dialog.open(FullscreenImageDialogComponent, {
+      data: { image },
+      panelClass: 'fullscreen-dialog'
+    });
   }
 }

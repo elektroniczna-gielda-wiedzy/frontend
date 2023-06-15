@@ -10,7 +10,7 @@ import { AnswerCardComponent } from './components/answer-card/answer-card.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
-
+import { FullscreenImageDialogComponent } from './components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,18 +18,18 @@ import { CategorySelectorComponent } from './components/category-selector/catego
     FavoriteIconComponent,
     RelativeTimePipe,
     IsLoggedInDirective,
-   AnswerCardComponent,
-   CommentsCardComponent,
-   CategorySelectorComponent,
-
+    AnswerCardComponent,
+    CommentsCardComponent,
+    CategorySelectorComponent,
+    FullscreenImageDialogComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     TranslateModule,
-    
-   FormsModule,
-   ReactiveFormsModule
+
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     EntryCardComponent,
@@ -37,7 +37,8 @@ import { CategorySelectorComponent } from './components/category-selector/catego
     RelativeTimePipe,
     IsLoggedInDirective,
     AnswerCardComponent,
-    CategorySelectorComponent
-  ]
+    CategorySelectorComponent,
+    FullscreenImageDialogComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

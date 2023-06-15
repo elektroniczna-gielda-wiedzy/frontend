@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,6 +15,7 @@ import {
   stringToEntryType,
 } from 'src/app/core';
 import { LanguageService } from 'src/app/modules/translate/language.service';
+import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 
 @Component({
   selector: 'app-entry-details',
@@ -33,7 +35,8 @@ export class EntryDetailsComponent {
     private entryHttpService: EntryHttpService,
     private categoryService: CategoryService,
     private languageService: LanguageService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -91,5 +94,11 @@ export class EntryDetailsComponent {
     if (!this.entry) return;
     this.entry.favorite = !this.entry?.favorite;
   }
-
+  
+  openDialog(): void {
+    this.dialog.open(FullscreenImageDialogComponent, {
+      data: { image: this.image },
+      panelClass: 'fullscreen-dialog'
+    });
+  }
 }
