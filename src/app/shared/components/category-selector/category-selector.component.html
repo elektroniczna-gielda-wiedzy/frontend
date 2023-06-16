@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" class="form-container">
   <mat-form-field class="full-width" appearance="outline">
     <mat-label>{{ "Categories" | translate }}</mat-label>
-    <mat-select formControlName="categories" multiple>
+    <mat-select formControlName="{{controlName}}" multiple>
         <mat-optgroup
         *ngFor="let group of categoryGroups; trackBy: trackByFn"
         [label]="translate(group.name)"
