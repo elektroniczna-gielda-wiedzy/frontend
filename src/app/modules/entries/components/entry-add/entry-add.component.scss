@@ -4,9 +4,7 @@
 
 mat-card {
     max-width: 1000px;
-    width: 100%;
     margin: 0 auto;
-
 }
 
 mat-card-header {
@@ -16,23 +14,12 @@ mat-card-header {
     justify-content: center;
     align-items: center;
     margin-bottom: 1em;
-}
-
-mat-grid-field {
-    width: 100%;
-    padding: auto;
-    display: flex;
-    display: row;
-    justify-content: center;
-    padding-top: 1em;
+    gap: 1em;
 }
 
 mat-card-footer {
-
     display: flex;
-    flex-direction: row;
     justify-content: flex-end;
-    
     padding-right: 2em;
 }
 
@@ -42,43 +29,22 @@ mat-card-footer {
 }
 
 .example-full-width {
-    width: 100%;
+    width: 99%;
 }
 
-.description {
-    height: 190px;
-}
 
 textarea {
-    height: 190px;
-    overflow-y: auto;
+    height: 190px !important;
 }
 
 .file-name {
     margin-left: 1rem;
 }
 
-ul {
-    list-style-type: none;
-    margin-top: 4px;
-}
-
-mat-pseudo-checkbox {
-    visibility: hidden;
-}
-
-mat-card-title {
-    padding-right: 10px;
-}
-
-mat-grid-list {
-
-
-    width: 100%;
-    margin: 0 0 0 0;
-
-}
-
 mat-grid-tile {
     padding-top: 1em;
+}
+
+.help-guide {
+    scale: 1.4;
 }
