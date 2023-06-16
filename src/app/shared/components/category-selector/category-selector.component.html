@@ -1,22 +1,33 @@
 <form [formGroup]="formGroup" class="form-container">
-    <mat-form-field class="full-width" appearance="outline">
-        <mat-label>{{ "Categories" | translate }}</mat-label>
-        <mat-select formControlName="categories" multiple>
-            <mat-optgroup *ngFor="let group of categoryGroups" [label]="translate(group.name)">
-                <div *ngFor="let category1 of group.categories">
-                    <mat-option *ngIf="category1.parent_id==null" [value]="category1.category_id">
-                        {{getCategoryName(category1)}}
-                    </mat-option>
-                    <ul>
-                        <li *ngFor="let category of group.categories">
-                            <mat-option *ngIf="category1.category_id==category.parent_id" (ngModelChange)="selectCategory()"
-                                [value]="category.category_id">
-                                {{getCategoryName(category)}}
-                            </mat-option>
-                        </li>
-                    </ul>
-                </div>
-            </mat-optgroup>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{ "Categories" | translate }}</mat-label>
+    <mat-select formControlName="categories" multiple>
+        <mat-optgroup
+        *ngFor="let group of categoryGroups; trackBy: trackByFn"
+        [label]="translate(group.name)"
+      >
+        <ng-container
+          *ngFor="let category of group.categories; trackBy: trackByFn"
+        >
+          <mat-option
+            *ngIf="category.parent_id == null"
+            [value]="category.category_id"
+          >
+            {{ getCategoryName(category) }}
+          </mat-option>
+          <ng-container
+            *ngFor="let subCategory of group.categories; trackBy: trackByFn"
+          >
+            <mat-option
+              *ngIf="category.category_id == subCategory.parent_id"
+              class="indentation"
+              [value]="subCategory.category_id"
+            >
+              {{ getCategoryName(subCategory) }}
+            </mat-option>
+          </ng-container>
+        </ng-container>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
 </form>

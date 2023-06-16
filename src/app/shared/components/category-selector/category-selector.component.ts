@@ -29,12 +29,12 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
         const categories = response.result;
         this.categoryGroups = [
           {
-            name: 'Areas',
-            categories: categories.filter(category => category.type === 1)
-          },
-          {
             name: 'Faculties',
             categories: categories.filter(category => category.type === 0)
+          },
+          {
+            name: 'Areas',
+            categories: categories.filter(category => category.type === 1)
           },
           
         ];
@@ -47,11 +47,6 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectCategory() {
-    this.control.value;
-    console.log(this.control.value);
-  }
-
   getCategoryName(category: Category) {
     return this.categoryService.getCategoryName(category);
   }
@@ -59,4 +54,9 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
   translate(text: string) {
     return this.translateService.instant(text);
   }
+
+  trackByFn(index: any, item: any) {
+    return item.category_id; 
+  }
+
 }

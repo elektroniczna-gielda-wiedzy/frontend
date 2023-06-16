@@ -61,7 +61,6 @@ export class EntryListComponent implements OnInit, OnDestroy {
         .getEntries({ type: this.entryType, categories, query })
         .subscribe((response) => {
           this.entries = response.result;
-          console.log(response);
         });
     }
   }
@@ -74,6 +73,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.logger.info(this.filterForm.value);
     this.loadEntries();
   }
+  
   clearFilter() {
     this.filterForm.reset();
     this.loadEntries();

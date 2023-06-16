@@ -111,7 +111,7 @@ export class AnswerCardComponent {
       created_at: '11:06:2023 21:40',
       top_answer: false,
       votes: 3,
-      image: this.cardImageBase64!,
+      imageSrc: this.cardImageBase64!,
     });
     this.form.reset();
     this.selectedFile = undefined;
