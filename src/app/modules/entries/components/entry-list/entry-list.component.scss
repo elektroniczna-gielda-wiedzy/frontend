@@ -1,28 +1,38 @@
-@use "src/assets/styles/entry-card-variables.scss" as *;
+@use "src/assets/styles/entry-list.scss";
 
 .entry-list-outer-container {
     margin: 1em;
 }
 
-.entry-list-container {
-    margin-top: 1em;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1em;
-    min-width: min-content;
-}
-
 .entry-list-controls {
     display: flex;
-
+    width: 100%;
+    justify-content: space-between;
+    gap: 2em;
 }
 
 .add-entry-button {
     margin-left: auto;
 }
 
-.entry-list-container > * {
-    flex: 0 1 $max-card-width;
-    min-width: $min-card-width;
+.filter-form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.inputs-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: content;
+
+    & > * {
+        flex: 1 1 50%;
+    }
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
 }

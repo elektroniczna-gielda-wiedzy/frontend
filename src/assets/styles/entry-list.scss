@@ -1,0 +1,15 @@
+@use "src/assets/styles/entry-card-variables.scss" as *;
+
+.entry-list-container {
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($card-width-snap-point, 1fr));
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    min-width: min-content;
+    @media (max-width: calc($card-width-snap-point * 1.2)) {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax($min-card-width, 1fr));
+    }
+}

@@ -1,0 +1,50 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+
+mat-card {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+mat-card-header {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    gap: 1em;
+}
+
+mat-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2em;
+}
+
+.image_select {
+    display: flex;
+    justify-content: center;
+}
+
+.example-full-width {
+    width: 99%;
+}
+
+
+textarea {
+    height: 190px !important;
+}
+
+.file-name {
+    margin-left: 1rem;
+}
+
+mat-grid-tile {
+    padding-top: 1em;
+}
+
+.help-guide {
+    scale: 1.4;
+}

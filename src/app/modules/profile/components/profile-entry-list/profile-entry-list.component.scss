@@ -1,0 +1,13 @@
+@use "src/assets/styles/entry-list.scss";
+
+
+.entry-list-outer-container {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+}

@@ -1,0 +1,33 @@
+<form [formGroup]="formGroup" class="form-container">
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{ "Categories" | translate }}</mat-label>
+    <mat-select formControlName="categories" multiple>
+        <mat-optgroup
+        *ngFor="let group of categoryGroups; trackBy: trackByFn"
+        [label]="translate(group.name)"
+      >
+        <ng-container
+          *ngFor="let category of group.categories; trackBy: trackByFn"
+        >
+          <mat-option
+            *ngIf="category.parent_id == null"
+            [value]="category.category_id"
+          >
+            {{ getCategoryName(category) }}
+          </mat-option>
+          <ng-container
+            *ngFor="let subCategory of group.categories; trackBy: trackByFn"
+          >
+            <mat-option
+              *ngIf="category.category_id == subCategory.parent_id"
+              class="indentation"
+              [value]="subCategory.category_id"
+            >
+              {{ getCategoryName(subCategory) }}
+            </mat-option>
+          </ng-container>
+        </ng-container>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
+</form>

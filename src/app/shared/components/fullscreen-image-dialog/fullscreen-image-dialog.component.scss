@@ -1,0 +1,37 @@
+.dialog-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button {
+  position: fixed;
+  top: 1em;
+  right: 2em;
+  z-index: 999;
+}
+
+.dialog-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.2);
+}
+.dialog-container:has(.dialog-image.zoomed) {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.dialog-image.zoomed {
+  cursor: zoom-out;
+  transform-origin: 0 0;
+  scale: 2;
+  zoom: 1.5;
+}
+
+.dialog-image:not(.zoomed) {
+  cursor: zoom-in;
+}

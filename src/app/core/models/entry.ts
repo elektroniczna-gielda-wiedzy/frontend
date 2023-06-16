@@ -11,8 +11,23 @@ export interface Entry {
   entry_type_id: number;
   title: string;
   favorite: boolean;
-  content: string;
   categories: Category[];
   author: Author;
   created_at: string;
+  content?: string;
+  image?: string;
+  answers?: Answer[];
 }
+
+
+export interface Answer {
+  answer_id: number;
+  author: Author;
+  created_at: string;
+  top_answer: boolean;
+  votes: number,
+  content: string;
+  image?: string;
+  imageSrc?: string;
+}
+

@@ -5,6 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from 'src/environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenExpiredInterceptor, ErrorInterceptor } from './core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -13,9 +19,27 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CoreModule
+    TranslateModule.forRoot(),
+    CoreModule,
+    LoggerModule.forRoot({
+      serverLoggingUrl: `${environment.apiUrl}/logs`,
+      level:environment.logLevel,
+      serverLogLevel: environment.serverLogLevel,
+      disableConsoleLogging: false
+    })
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ErrorInterceptor,
+    //   multi: true
+    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenExpiredInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,12 @@
+<div class="dialog-container">
+  <button mat-mini-fab class="close-button" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <img
+    [src]="data.image"
+    class="dialog-image"
+    [ngClass]="{ zoomed: isZoomed }"
+    (click)="toggleZoom()"
+    draggable="false"
+  />
+</div>

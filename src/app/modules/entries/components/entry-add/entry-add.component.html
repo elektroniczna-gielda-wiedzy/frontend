@@ -1,2 +1,82 @@
-<p>entry-add works!</p>
-<span>Entry Type {{entryType}}</span>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <h3>{{ "Add new " + entryTypeString | translate }}</h3>
+    </mat-card-title>
+    <mat-icon
+      color="primary"
+      matTooltip="{{ getEntryTypeHint(entryType) }}"
+      aria-label="Help guide"
+      class="help-guide"
+      >help</mat-icon
+    >
+  </mat-card-header>
+  <form [formGroup]="form" (ngSubmit)="createNewEntry()" class="form">
+    <mat-card-content>
+      <mat-grid-list [cols]="cols" rowHeight="80px">
+        <mat-grid-tile>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label class="">{{ "Title" | translate }}</mat-label>
+            <input matInput formControlName="title" />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile [rowspan]="3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label class="description">{{
+              "Description" | translate
+            }}</mat-label>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="5"
+              formControlName="content"
+            ></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <app-category-selector [formGroup]="form"></app-category-selector>
+        </mat-grid-tile>
+
+        <mat-grid-tile class="image_select" *ngIf="entryType !== 2">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="fileInput.click()"
+          >
+            {{ "Add image" | translate }}
+          </button>
+          <input
+            hidden
+            (change)="onFileSelected($event)"
+            #fileInput
+            type="file"
+          />
+          <span class="file-name">{{ selectedFile?.name }}</span>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <mat-card-actions>
+        <button mat-raised-button type="button" (click)="backClicked()">
+          {{ "Cancel" | translate }}
+        </button>
+      </mat-card-actions>
+
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid || sending"
+        >
+          {{ "Add" | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </form>
+</mat-card>

@@ -1,35 +1,37 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Entry, Category, EntryType, Language } from 'src/app/core';
+import { Subscription } from 'rxjs';
+import {
+  Entry,
+  Category,
+  EntryType,
+  CategoryService,
+  Language,
+} from 'src/app/core';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-entry-card',
   templateUrl: './entry-card.component.html',
   styleUrls: ['./entry-card.component.scss'],
 })
-export class EntryCardComponent {
+export class EntryCardComponent implements OnInit, OnDestroy {
   @Input() entry!: Entry;
-  language = Language.Polish;
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private categoryService: CategoryService,
+    private languageService: LanguageService
+  ) {}
 
-  getCategoryClass(category: {
-    category_id: number;
-    type: number;
-    parent_id: number | null;
-    names: { lang_id: number; name: string }[];
-  }): string[] {
-    const result: string[] = ['category'];
-
-    if (category.parent_id !== null) {
-      category.type === 1 ? result.push('subarea') : result.push('major');
-    }
-    category.type === 1 ? result.push('area') : result.push('faculty');
-    return result;
+  getCategoryClass(category: Category): string[] {
+    return this.categoryService.getCategoryClass(category);
   }
 
   getCategoryName(category: Category) {
-    return category.names.find((name) => name.lang_id === this.language)?.name;
+    return this.categoryService.getCategoryName(category);
   }
 
   navigateToDetails(): void {
@@ -39,9 +41,18 @@ export class EntryCardComponent {
       this.entry.entry_id,
     ]);
   }
-  
-  handleFavorite(e: MouseEvent) {
-    e.stopPropagation();
-    this.entry.favorite = !this.entry.favorite;
+
+  ngOnInit(): void {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
   }
 }

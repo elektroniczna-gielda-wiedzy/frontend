@@ -1,0 +1,17 @@
+<button mat-button color="primary" (click)="toggle()">{{step ? ('Hide comments' |  translate) : ('Show comments'|  translate)}}</button>
+    
+<mat-expansion-panel class="remove-mat-expansion-panel-padding" [expanded]="step === 1" hideToggle *ngIf="step" >
+    <form  class="form"> 
+
+  <mat-form-field class="example-full-width " appearance="outline">
+    <mat-label class="comment">{{ "Add first comment" | translate }}</mat-label>
+    <textarea  matInput (keydown)="$event.stopPropagation()" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
+     ></textarea>
+     <button mat-icon-button matSuffix color="primary" class="contact-button"><mat-icon  class="icon-display">send</mat-icon></button>
+  </mat-form-field>
+  
+    
+
+  </form>
+
+</mat-expansion-panel>

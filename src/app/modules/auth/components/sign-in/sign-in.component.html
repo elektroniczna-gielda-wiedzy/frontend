@@ -1,14 +1,17 @@
 <mat-card class="responsive-mat-card">
   <mat-card-header class="card-header">
     <mat-card-title class="card-title">
-      <h2>Sign In</h2>
+      <h2 translate>Sign In</h2>
     </mat-card-title>
     <mat-card-subtitle class="card-center-row">
-      <span>Don't have an account?</span>
+      <span translate>Don't have an account?</span>
       <a class="link" mat-button color="primary" routerLink="/auth/sign-up"
-        >Sign Up</a
+        >{{'Sign Up' | translate}}</a
       >
     </mat-card-subtitle>
+    <mat-error translate *ngIf="unauthorize">
+      Invalid email or password
+    </mat-error>
   </mat-card-header>
   <mat-card-content>
     <form
@@ -19,28 +22,32 @@
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input
+          translate="yes"
           matInput
           formControlName="email"
-          placeholder="example@student.agh.edu.pl"
+          placeholder="{{'example@student.agh.edu.pl' | translate}}"
           required
         />
-        <mat-error *ngIf="signInForm.get('email')?.errors?.['required']">
+        <mat-error translate *ngIf="signInForm.get('email')?.errors?.['required']">
           Email is required.
         </mat-error>
-        <mat-error *ngIf="signInForm.get('email')?.errors?.['pattern']">
+        <mat-error translate *ngIf="signInForm.get('email')?.errors?.['pattern']">
           Please enter a valid student email.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" required />
-        <mat-error *ngIf="signInForm.get('password')?.errors?.['required']">
+        <mat-label translate>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'"formControlName="password" required />
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error translate *ngIf="signInForm.get('password')?.errors?.['required']">
           Password is required.
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+      <mat-checkbox formControlName="rememberMe">{{'Remember me' | translate}}</mat-checkbox>
 
       <button
         mat-raised-button
@@ -48,13 +55,13 @@
         type="submit"
         [disabled]="!signInForm.valid"
       >
-        Sign In
+      {{'Sign In' | translate}}
       </button>
     </form>
   </mat-card-content>
   <mat-card-footer class="card-center-row">
     <a mat-button color="primary" href="#"
-      >Forgot your password?</a
+      >{{'Forgot your password?' | translate}}</a
     >
   </mat-card-footer>
 </mat-card>

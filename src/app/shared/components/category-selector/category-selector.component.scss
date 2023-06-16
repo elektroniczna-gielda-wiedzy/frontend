@@ -1,0 +1,14 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+:host {
+    width: 99%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.indentation {
+    margin-left: 2em;
+}

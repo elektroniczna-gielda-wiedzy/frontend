@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 @use "src/theme";
-@use "src/assets/styles/entry-card-variables.scss" as *;
+@use "src/assets/styles/entry-card-variables" as *;
+@use "src/assets/styles/categories";
 
 .entry-card {
     box-shadow: 2px 2px 5px 2px rgba(mat.get-color-from-palette(theme.$app-primary), 0.5);
@@ -31,66 +32,18 @@ mat-card-title {
     }
 }
 
-.favorite-icon {
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-        scale: 1.3;
-        color: mat.get-color-from-palette(theme.$app-primary);
-    }
-}
-
 .card-footer {
     display: flex;
     justify-content: space-between;
 }
 
 .categories {
-    $line-height: 2.2em;
+    min-height: 100px;//$categories-max-height;
     display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    overflow: hidden;
-    gap: $categories-gap;
-    margin: 1em 0;
-    height: $categories-max-height;
+    flex-direction: column;
 }
 
-.category {
-    padding: 0 0.4em;
-    border-radius: 100px;
-    border-style: solid;
-    border-width: $category-border-width;
-    white-space: nowrap;
+.categories-row {
     overflow: hidden;
-    line-height: $category-line-height;
-    max-width: calc($max-card-width - 2em);
-    height: $category-line-height;
-    color: black;
-
-    &.faculty {
-        background-color: mat.get-color-from-palette(
-            theme.$app-accent,
-            "lighter"
-        );
-        border-color: mat.get-color-from-palette(theme.$app-accent, "darker");
-
-        &.major {
-            border-color: mat.get-color-from-palette(theme.$app-accent);
-        }
-    }
-
-    &.area {
-        background-color: mat.get-color-from-palette(
-            theme.$app-primary,
-            "lighter"
-        );
-        border-color: mat.get-color-from-palette(theme.$app-primary, "darker");
-
-        &.subarea {
-            border-color: mat.get-color-from-palette(theme.$app-primary);
-        }
-    }
+    height: 40px;
 }

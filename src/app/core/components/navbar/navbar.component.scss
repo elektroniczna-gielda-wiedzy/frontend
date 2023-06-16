@@ -1,22 +1,33 @@
 @use "@angular/material" as mat;
 @use "src/theme";
 
-.sidenav-container {
+.side-nav-container {
   height: 100%;
 }
 
-.sidenav {
+.side-nav {
   width: 200px;
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
 }
 
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 100;
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 64px);
+  padding: 0;
+
+  @media (max-width: 599px) {
+    height: calc(100% - 56px);
+  }
+}
+
+.side-nav .mat-toolbar {
+  background: inherit;
 }
 
 .spacer {
@@ -31,9 +42,59 @@ mat-toolbar a {
 }
 
 .active-nav-item {
-  color: black !important;
+  color: mat.get-color-from-palette(theme.$app-accent) !important;
 }
 
 .active-side-nav-item {
-  background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
+  background-color: mat.get-color-from-palette(theme.$app-accent, lighter);
+}
+
+a.main-nav-item, button.main-nav-item  {
+  font-size: .9em;
+}
+
+::ng-deep .profile-menu {
+  margin-top: 1em !important;
+}
+
+.profile-side-nav {
+  display: flex;
+  align-items: center;
+}
+
+.profile-side-nav-items > a {
+  padding-left: 2em;
+}
+
+.navbar-logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  margin-right: 0.5em;
+  min-width: max-content;
+  & > img {
+    height: calc(100% - 1em);
+    width: 100%;
+  }
+  &.right {
+    margin-inline: 0.5em;
+    order: 1;
+  }
+}
+
+.nav-title {
+  @media (max-width: 300px) {
+    display: none;
+  }
+}
+
+// if we want to move hamburger menu and side-nav to the right
+.right-side-nav {
+  left: auto;
+  right: 0;
+  transform: translateX(100%);
+}
+
+.right-side-nav-item {
+  margin-inline-start: auto;
 }
