@@ -10,6 +10,9 @@ import {
   CategoryService,
   Language,
   EntryRequest,
+  ImageService,
+  StandardResponse,
+  Entry,
 } from 'src/app/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -23,6 +26,10 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./entry-add.component.scss'],
 })
 export class EntryAddComponent implements OnInit, OnDestroy {
+  entry?: EntryRequest;
+  entryId?: number;
+  entryImage?: string | null;
+  defaultImage?: string;
   entryType: EntryType | null = null;
   entryTypeString: string | null = null;
   hide = true;
@@ -36,10 +43,12 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   });
   private langChangeSubscription?: Subscription;
   private breakpointSubscription?: Subscription;
+  private entrySubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   imageError!: string;
   isImageSaved: boolean | null | undefined;
   cardImageBase64: string | null | undefined;
+  filename = '';
   cols = 2;
 
   selectedFile: File | undefined;
@@ -47,13 +56,14 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private fb: FormBuilder,
     private _location: Location,
-    private entryService: EntryHttpService,
     private categoryHttpService: CategoryHttpService,
     private categoryService: CategoryService,
     private logger: NGXLogger,
     private router: Router,
     private languageService: LanguageService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private entryHttpService: EntryHttpService,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -62,14 +72,22 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.currentLanguage = this.languageService.language;
       }
     );
+    const entryType = this.route.snapshot.paramMap.get('entryType');
+    if (entryType) {
+      this.entryType = stringToEntryType(entryType);
+      this.entryTypeString = entryType;
+    }
 
-    this.route.paramMap.pipe(first()).subscribe((paramMap) => {
-      const entryType = paramMap.get('entryType');
-      if (entryType) {
-        this.entryType = stringToEntryType(entryType);
-        this.entryTypeString = entryType;
+    if (this.route.snapshot.url.at(-1)?.path === 'edit') {
+      console.log('edit');
+      const entryId = Number(this.route.snapshot.paramMap.get('id'));
+      if (isNaN(entryId)) {
+        this.router.navigate(['entries', this.entryTypeString, 'add']);
+      } else {
+        this.entryId = entryId;
+        this.loadEntry(entryId);
       }
-    });
+    }
 
     this.categorySubscription = this.categoryHttpService
       .getCategories()
@@ -95,11 +113,58 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     if (this.breakpointSubscription) {
       this.breakpointSubscription.unsubscribe();
     }
+    if (this.entrySubscription) {
+      this.entrySubscription.unsubscribe();
+    }
   }
 
-  selectCategory() {
-    this.form.value.categories;
+  loadEntry(id: number): void {
+    if (!this.entryType) return;
+
+    this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
+      next: (response) => {
+        if (!(response.success && response.result?.length > 0)) {
+          this.router.navigate(['entries', this.entryTypeString, 'add']);
+          return;
+        }
+
+        const entry = response.result[0];
+
+        if (entry.entry_type_id !== this.entryType) {
+          
+          this.router.navigate([
+            'entries',
+            EntryType[entry.entry_type_id].toLowerCase(),
+            entry.entry_id,
+            'edit'
+          ]);
+          this.entryType = entry.entry_type_id;
+          this.entryTypeString = EntryType[entry.entry_type_id].toLowerCase();
+        }
+
+        this.form.patchValue({
+          title: entry.title,
+          content: entry.content,
+          categories: entry.categories.map((category) => category.category_id),
+        });
+        console.log(this.form.value);
+        if (entry.image) {
+          this.loadImage(entry.image);
+        }
+      },
+      error: (response) => {
+        this.router.navigate(['entries', this.entryTypeString, 'add']);
+      },
+    });
   }
+
+  loadImage(imageUrl: string): void {
+    this.imageService.getImage(imageUrl).then((response) => {
+      this.entryImage = response;
+      this.defaultImage = response;
+    });
+  }
+
 
   onFileSelected(event: any): void {
     const max_size = 20971520;
@@ -119,8 +184,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       this.cardImageBase64 = imgBase64Path?.substring(
         imgBase64Path.indexOf(',') + 1
       );
-
+      this.entryImage = imgBase64Path;
       this.isImageSaved = true;
+      this.filename = this.selectedFile?.name ?? '';
     };
 
     fileReader.readAsDataURL(event.target.files[0]);
@@ -130,7 +196,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  createNewEntry() {
+  onSubmit() {
     if (!this.entryType || !this.form.valid) {
       return;
     }
@@ -141,8 +207,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       image: this.cardImageBase64,
     };
     this.sending = true;
-    this.entryService.createEntry(entry).subscribe({
-      next: (res) => {
+
+    const handleResponse = {
+      next: (res: StandardResponse<Entry>) => {
         this.logger.info(res);
         this.sending = false;
         if (res.success && res.result.length > 0) {
@@ -153,11 +220,17 @@ export class EntryAddComponent implements OnInit, OnDestroy {
           ]);
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         this.sending = false;
         this.logger.error(err);
-      },
-    });
+      }
+    }
+
+    if (this.entryId) {
+      this.entryHttpService.updateEntry(this.entryId, entry).subscribe(handleResponse);
+    } else {
+      this.entryHttpService.createEntry(entry).subscribe(handleResponse);
+    }
   }
 
   getCategoryName(category: Category) {
@@ -167,8 +240,15 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   getEntryTypeHint(entry_type: EntryType | null) {
     let result: string = '';
     if (entry_type) {
-      result = this.entryService.getCategoryTypeHint(entry_type);
+      result = this.entryHttpService.getCategoryTypeHint(entry_type);
     }
     return result;
+  }
+
+  removeImage() {
+    this.entryImage = this.defaultImage ?? null;
+    this.cardImageBase64 = null;
+    this.isImageSaved = false;
+    this.filename = '';
   }
 }
