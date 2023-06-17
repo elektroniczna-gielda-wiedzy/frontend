@@ -18,28 +18,39 @@
     </div>
 
     <div class="categories">
-      <!-- <span *ngFor="let category of entry?.categories" [ngClass]="getCategoryClass(category)">
-          {{ getCategoryName(category) }}
-      </span> -->
       <mat-chip-set>
-          <div *ngFor="let category of entry?.categories"  >
-              <mat-chip  selected class="faculty" *ngIf="category.type==0"  [ngClass]="getCategoryClass(category)" >
-                  {{ getCategoryName(category) }}
-              </mat-chip>
-              
-          </div>
+        <div *ngFor="let category of entry?.categories">
+          <mat-chip
+            selected
+            class="faculty"
+            *ngIf="category.type == 0"
+            [ngClass]="getCategoryClass(category)"
+          >
+            {{ getCategoryName(category) }}
+          </mat-chip>
+        </div>
       </mat-chip-set>
       <mat-chip-set>
-          <div *ngFor="let category of entry?.categories">
-              <mat-chip selected class="area"  [ngClass]="getCategoryClass(category)"   *ngIf="category.type==1" >
-                  {{ getCategoryName(category) }}
-              </mat-chip>
-          </div>
+        <div *ngFor="let category of entry?.categories">
+          <mat-chip
+            selected
+            class="area"
+            [ngClass]="getCategoryClass(category)"
+            *ngIf="category.type == 1"
+          >
+            {{ getCategoryName(category) }}
+          </mat-chip>
+        </div>
       </mat-chip-set>
-  </div>
+    </div>
 
     <div class="card-footer">
-      <button *ngIf="entry?.entry_type_id!==3" mat-raised-button color="primary" class="contact-button">
+      <button
+        *ngIf="entry?.entry_type_id !== 3"
+        mat-raised-button
+        color="primary"
+        class="contact-button"
+      >
         {{ "Contact author" | translate }}
       </button>
       <mat-card-subtitle>
@@ -60,6 +71,15 @@
       </mat-card-subtitle>
     </div>
   </mat-card-content>
-  
-  <app-answer-card *ngIf="entry?.entry_type_id===3" [answers]="entry?.answers" [entryId]="entry?.entry_id"></app-answer-card>
+  <app-entry-action-buttons
+    *ngIf="entry"
+    [entryId]="entry.entry_id"
+    [entryType]="entry.entry_type_id"
+    (entryDeleted)="entryDeleted($event)"
+  ></app-entry-action-buttons>
+  <app-answer-card
+    *ngIf="entry?.entry_type_id === 3"
+    [answers]="entry?.answers"
+    [entryId]="entry?.entry_id"
+  ></app-answer-card>
 </mat-card>
