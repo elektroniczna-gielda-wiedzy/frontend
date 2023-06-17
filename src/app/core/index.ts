@@ -1,6 +1,7 @@
 // http
 export * from './http/entry-http.service';
 export * from './http/category-http.service';
+export * from './http/answer-http.service';
 
 // services
 export * from './services/auth.service';
@@ -14,6 +15,7 @@ export * from './enums/language';
 
 // models
 export * from './models/entry';
+export * from './models/answer';
 export * from './models/category';
 export * from './models/user';
 export * from './models/token';

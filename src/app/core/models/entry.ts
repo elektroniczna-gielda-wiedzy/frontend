@@ -1,10 +1,6 @@
 import { Category } from './category';
-
-interface Author {
-  user_id: number;
-  first_name: string;
-  last_name: string;
-}
+import { Author } from './user';
+import { Answer } from './answer';
 
 export interface Entry {
   entry_id: number;
@@ -19,15 +15,11 @@ export interface Entry {
   answers?: Answer[];
 }
 
-
-export interface Answer {
-  answer_id: number;
-  author: Author;
-  created_at: string;
-  top_answer: boolean;
-  votes: number,
+export interface EntryRequest {
+  entry_type_id: number;
+  title: string;
   content: string;
   image?: string;
-  imageSrc?: string;
+  categories: number[];
 }
 

@@ -1,6 +1,12 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Language, Answer, ImageService } from 'src/app/core';
+import {
+  Language,
+  Answer,
+  ImageService,
+  AnswerHttpService,
+  AnswerRequest,
+} from 'src/app/core';
 import {
   FormGroup,
   FormBuilder,
@@ -19,13 +25,15 @@ import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fulls
 })
 export class AnswerCardComponent {
   @Input()
+  entryId?: number;
+  @Input()
   answers?: Answer[] = [];
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   selectedFile: File | undefined;
   base64File?: string;
   imageError!: string;
-  isImageSaved: boolean | null | undefined;
+  isImageSaved: boolean = false;
   cardImageBase64: string | null | undefined;
 
   form: FormGroup = this.fb.group({
@@ -37,22 +45,26 @@ export class AnswerCardComponent {
     private fb: FormBuilder,
     private logger: NGXLogger,
     private im: ImageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private answerService: AnswerHttpService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['answers'] && this.answers) {
-      this.logger.trace(this.answers);
       this.loadImages();
     }
   }
 
+  loadImage(answer: Answer) {
+    if (!answer.image) return;
+    this.im.getImage(answer?.image).then((res) => {
+      answer.imageSrc = res;
+    });
+  }
+
   loadImages() {
     this.answers?.forEach((answer) => {
-      if (!answer.image) return;
-      this.im.getImage(answer?.image).then((res) => {
-        answer.imageSrc = res;
-      });
+      this.loadImage(answer);
     });
   }
 
@@ -85,7 +97,9 @@ export class AnswerCardComponent {
       const image = new Image();
       image.src = e.target.result;
       const imgBase64Path = e.target.result;
-      this.cardImageBase64 = imgBase64Path;
+      this.cardImageBase64 = imgBase64Path.substring(
+        imgBase64Path.indexOf(',') + 1
+      );
       this.isImageSaved = true;
     };
 
@@ -99,31 +113,42 @@ export class AnswerCardComponent {
   }
 
   createAnswer() {
-    this.logger.trace(this.form.value);
-    this.answers?.push({
-      answer_id: 1,
-      author: {
-        user_id: 1,
-        first_name: 'Adam',
-        last_name: 'Kowalski',
-      },
+    if (this.form.invalid || !this.entryId) {
+      return;
+    }
+    const answer: AnswerRequest = {
       content: this.form.value.answer,
-      created_at: '11:06:2023 21:40',
-      top_answer: false,
-      votes: 3,
-      imageSrc: this.cardImageBase64!,
+    };
+    if (this.isImageSaved && this.cardImageBase64) {
+      answer.image = this.cardImageBase64;
+    }
+
+    this.answerService.addAnswer(this.entryId, answer).subscribe({
+      next: (res) => {
+        this.logger.trace(res);
+        if (res.success && res.result?.length > 0) {
+          this.answers?.push(res.result[0]);
+          this.loadImage(res.result[0]);
+          this.form.reset();
+          this.selectedFile = undefined;
+          this.isImageSaved = false;
+          
+          Object.values(this.form.controls).forEach(control => {
+            control.setErrors(null);
+          });
+        }
+      },
+      error: (err) => {
+        this.logger.error(err);
+      },
     });
-    this.form.reset();
-    this.selectedFile = undefined;
-    this.isImageSaved = null;
-    this.logger.trace(this.answers);
   }
 
   openDialog(image?: string): void {
     if (!image) return;
     this.dialog.open(FullscreenImageDialogComponent, {
       data: { image },
-      panelClass: 'fullscreen-dialog'
+      panelClass: 'fullscreen-dialog',
     });
   }
 }
