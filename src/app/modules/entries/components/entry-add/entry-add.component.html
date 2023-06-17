@@ -1,7 +1,14 @@
 <mat-card class="card">
   <mat-card-header>
     <mat-card-title>
-      <h3>{{ "Add new " + entryTypeString | translate }}</h3>
+      <!-- <h3>{{ "Add new " + entryTypeString | translate }}</h3> -->
+      <h3>
+        {{
+          !entryId
+            ? ("Add new " + entryTypeString | translate)
+            : ("Edit " + entryTypeString | translate)
+        }}
+      </h3>
     </mat-card-title>
     <mat-icon
       color="primary"
@@ -11,7 +18,7 @@
       >help</mat-icon
     >
   </mat-card-header>
-  <form [formGroup]="form" (ngSubmit)="createNewEntry()" class="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
     <mat-card-content>
       <mat-grid-list [cols]="cols" rowHeight="80px">
         <mat-grid-tile>
@@ -21,7 +28,7 @@
           </mat-form-field>
         </mat-grid-tile>
 
-        <mat-grid-tile [rowspan]="3">
+        <mat-grid-tile [rowspan]="4">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label class="description">{{
               "Description" | translate
@@ -37,46 +44,58 @@
         </mat-grid-tile>
 
         <mat-grid-tile>
-          <app-category-selector [formGroup]="form" [parentAutoAdd]="true"></app-category-selector>
+          <app-category-selector
+            [formGroup]="form"
+            [parentAutoAdd]="true"
+          ></app-category-selector>
         </mat-grid-tile>
 
-        <mat-grid-tile class="image_select" *ngIf="entryType !== 2">
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            (click)="fileInput.click()"
-          >
-            {{ "Add image" | translate }}
-          </button>
-          <input
-            hidden
-            (change)="onFileSelected($event)"
-            #fileInput
-            type="file"
-          />
-          <span class="file-name">{{ selectedFile?.name }}</span>
+        <mat-grid-tile [rowspan]="3" *ngIf="entryType !== 2">
+          <div class="image-select-container">
+            <div class="image-buttons">
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="fileInput.click()"
+              >
+                {{ "Add image" | translate }}
+              </button>
+              <button
+                mat-raised-button
+                (click)="removeImage()"
+                *ngIf="isImageSaved"
+              >
+                {{ "Remove" | translate }}
+              </button>
+              <span class="file-name">{{ filename }}</span>
+            </div>
+            <input
+              hidden
+              (change)="onFileSelected($event)"
+              #fileInput
+              type="file"
+            />
+            <div class="current-image-container" *ngIf="entryImage">
+              <img class="current-image" [src]="entryImage" />
+            </div>
+          </div>
         </mat-grid-tile>
       </mat-grid-list>
     </mat-card-content>
 
-    <mat-card-footer>
-      <mat-card-actions>
-        <button mat-raised-button type="button" (click)="backClicked()">
-          {{ "Cancel" | translate }}
-        </button>
-      </mat-card-actions>
-
-      <mat-card-actions>
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="!form.valid || sending"
-        >
-          {{ "Add" | translate }}
-        </button>
-      </mat-card-actions>
-    </mat-card-footer>
+    <mat-card-actions class="entry-action-buttons-container">
+      <button mat-raised-button type="button" (click)="backClicked()">
+        {{ "Cancel" | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!form.valid || sending"
+      >
+        {{ !entryId ? "Add" : ("Save" | translate) }}
+      </button>
+    </mat-card-actions>
   </form>
 </mat-card>

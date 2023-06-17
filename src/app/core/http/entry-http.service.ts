@@ -96,5 +96,16 @@ export class EntryHttpService {
     return result;
   }
 
+  updateEntry(id: number, params: EntryRequest) : Observable<StandardResponse<Entry>>{
+    const url = `${this.apiUrl}/${id}`;
+    
+    return this.http.put<StandardResponse<Entry>>(url, params);
+  }
+
+  deleteEntry(id: number) : Observable<StandardResponse<Entry>>{
+    const url = `${this.apiUrl}/${id}`;
+    
+    return this.http.delete<StandardResponse<Entry>>(url);
+  }
 
 }

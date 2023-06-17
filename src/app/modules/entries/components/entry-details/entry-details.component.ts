@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import {
   Answer,
@@ -37,7 +38,8 @@ export class EntryDetailsComponent {
     private categoryService: CategoryService,
     private languageService: LanguageService,
     private imageService: ImageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private logger: NGXLogger
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +99,7 @@ export class EntryDetailsComponent {
         }
       },
       error: (response) => {
+        console.error(response);
         this.router.navigate(['/']);
       },
     });
@@ -120,4 +123,11 @@ export class EntryDetailsComponent {
       panelClass: 'fullscreen-dialog',
     });
   }
+ 
+  entryDeleted(id: number) {
+    if (this.entry && this.entry.entry_id === id) {
+      this.router.navigate(['/']);
+    }
+  }
+
 }
