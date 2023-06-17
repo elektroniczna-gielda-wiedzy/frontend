@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
 import { FullscreenImageDialogComponent } from './components/fullscreen-image-dialog/fullscreen-image-dialog.component';
+import { EntryActionButtonsComponent } from './components/entry-action-buttons/entry-action-buttons.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FullscreenImageDialogComponent } from './components/fullscreen-image-di
     CommentsCardComponent,
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
+    EntryActionButtonsComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { FullscreenImageDialogComponent } from './components/fullscreen-image-di
     AnswerCardComponent,
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
+    EntryActionButtonsComponent,
   ],
 })
 export class SharedModule {}
