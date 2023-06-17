@@ -79,7 +79,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     }
 
     if (this.route.snapshot.url.at(-1)?.path === 'edit') {
-      console.log('edit');
       const entryId = Number(this.route.snapshot.paramMap.get('id'));
       if (isNaN(entryId)) {
         this.router.navigate(['entries', this.entryTypeString, 'add']);
@@ -147,7 +146,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
           content: entry.content,
           categories: entry.categories.map((category) => category.category_id),
         });
-        console.log(this.form.value);
         if (entry.image) {
           this.loadImage(entry.image);
         }
