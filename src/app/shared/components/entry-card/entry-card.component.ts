@@ -17,6 +17,7 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 })
 export class EntryCardComponent implements OnInit, OnDestroy {
   @Input() entry!: Entry;
+  @Input() myEntries = false;
   @Output() entryDeleted = new EventEmitter<number>();
 
   private langChangeSubscription?: Subscription;

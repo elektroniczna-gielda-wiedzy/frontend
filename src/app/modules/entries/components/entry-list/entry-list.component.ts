@@ -79,7 +79,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.loadEntries();
   }
 
-  onEntryDeleted(id: number) {
-    this.loadEntries();
-  }
+  // onEntryDeleted(id: number) {
+  //   this.loadEntries();
+  // }
 }

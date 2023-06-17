@@ -42,6 +42,7 @@
     </mat-card-subtitle>
   </mat-card-content>
   <app-entry-action-buttons
+    *ngIf="myEntries"
     [entryId]="entry.entry_id"
     [entryType]="entry.entry_type_id"
     (entryDeleted)="propagateDeletion($event)"
