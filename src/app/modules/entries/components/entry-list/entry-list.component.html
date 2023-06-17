@@ -58,6 +58,7 @@
     <app-entry-card
       *ngFor="let entry of entries"
       [entry]="entry"
+      (entryDeleted)="onEntryDeleted($event)"
     ></app-entry-card>
   </div>
 </div>

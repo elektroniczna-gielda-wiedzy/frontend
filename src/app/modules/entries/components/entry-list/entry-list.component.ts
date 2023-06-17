@@ -78,4 +78,8 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.filterForm.reset();
     this.loadEntries();
   }
+
+  onEntryDeleted(id: number) {
+    this.loadEntries();
+  }
 }

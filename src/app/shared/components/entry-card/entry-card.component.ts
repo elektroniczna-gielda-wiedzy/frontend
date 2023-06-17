@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -17,6 +17,8 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 })
 export class EntryCardComponent implements OnInit, OnDestroy {
   @Input() entry!: Entry;
+  @Output() entryDeleted = new EventEmitter<number>();
+
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
 
@@ -55,4 +57,8 @@ export class EntryCardComponent implements OnInit, OnDestroy {
       this.langChangeSubscription.unsubscribe();
     }
   }
+
+  propagateDeletion(id: number) {
+    this.entryDeleted.emit(id);
+  } 
 }
