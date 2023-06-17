@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { EntryType } from '../enums/entry-type';
-import { Entry } from '../models/entry';
+import { Entry, EntryRequest } from '../models/entry';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
@@ -73,7 +73,7 @@ export class EntryHttpService {
   }
 
 
-  createEntry(params: {entry_type_id: EntryType , title: string , content: string , categories?: number[] , image?: string }) : Observable<StandardResponse<Entry>>{
+  createEntry(params: EntryRequest) : Observable<StandardResponse<Entry>>{
     const url = this.apiUrl;
     
     return this.http.post<StandardResponse<Entry>>(url, params);

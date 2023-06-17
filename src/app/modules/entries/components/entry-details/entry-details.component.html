@@ -39,7 +39,7 @@
   </div>
 
     <div class="card-footer">
-      <button *ngIf="entry?.entry_type_id!==3"at-raised-button color="primary" class="contact-button">
+      <button *ngIf="entry?.entry_type_id!==3" mat-raised-button color="primary" class="contact-button">
         {{ "Contact author" | translate }}
       </button>
       <mat-card-subtitle>
@@ -61,5 +61,5 @@
     </div>
   </mat-card-content>
   
-  <app-answer-card *ngIf="entry?.entry_type_id===3" [answers]="entry?.answers"></app-answer-card>
+  <app-answer-card *ngIf="entry?.entry_type_id===3" [answers]="entry?.answers" [entryId]="entry?.entry_id"></app-answer-card>
 </mat-card>

@@ -9,6 +9,7 @@ import {
   CategoryHttpService,
   CategoryService,
   Language,
+  EntryRequest,
 } from 'src/app/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -22,7 +23,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./entry-add.component.scss'],
 })
 export class EntryAddComponent implements OnInit, OnDestroy {
-  entryType: EntryType | null  = null;
+  entryType: EntryType | null = null;
   entryTypeString: string | null = null;
   hide = true;
   sending = false;
@@ -52,7 +53,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     private logger: NGXLogger,
     private router: Router,
     private languageService: LanguageService,
-    private breakpointObserver: BreakpointObserver,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +62,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.currentLanguage = this.languageService.language;
       }
     );
-
 
     this.route.paramMap.pipe(first()).subscribe((paramMap) => {
       const entryType = paramMap.get('entryType');
@@ -78,11 +78,11 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         this.logger.info(this.categories);
       });
 
-    this.breakpointSubscription = this.breakpointObserver.observe([
-      '(max-width: 599px)',
-    ]).subscribe(result => {
-      this.cols = result.matches ? 1 : 2;
-    });
+    this.breakpointSubscription = this.breakpointObserver
+      .observe(['(max-width: 599px)'])
+      .subscribe((result) => {
+        this.cols = result.matches ? 1 : 2;
+      });
   }
 
   ngOnDestroy(): void {
@@ -113,54 +113,61 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     //  }
     var fileReader = new FileReader();
     fileReader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;       
-        const imgBase64Path = e.target.result;
-        this.cardImageBase64 = imgBase64Path;
-        this.cardImageBase64 = this.cardImageBase64?.substring(this.cardImageBase64.indexOf(',') + 1);
-        
-        this.isImageSaved = true;
+      const image = new Image();
+      image.src = e.target.result;
+      const imgBase64Path = e.target.result;
+      this.cardImageBase64 = imgBase64Path?.substring(
+        imgBase64Path.indexOf(',') + 1
+      );
+
+      this.isImageSaved = true;
     };
-   
+
     fileReader.readAsDataURL(event.target.files[0]);
   }
-
 
   backClicked() {
     this._location.back();
   }
 
   createNewEntry() {
-    if (this.entryType) {
-      this.sending = true;
-      this.entryService
-        .createEntry({
-          entry_type_id: this.entryType,
-          ...this.form.value,
-          image: this.cardImageBase64?.toString(),
-        })
-        .subscribe((response) => {
-          this.logger.info(response);
-          this.sending = false;
-          if (response.success && response.result.length > 0) {
-            this.router.navigate([
-              '/entries',
-              this.entryTypeString,
-              response.result[0].entry_id,
-            ]);
-          }
-        });
+    if (!this.entryType || !this.form.valid) {
+      return;
     }
+
+    const entry: EntryRequest = {
+      entry_type_id: this.entryType,
+      ...this.form.value,
+      image: this.cardImageBase64,
+    };
+    this.sending = true;
+    this.entryService.createEntry(entry).subscribe({
+      next: (res) => {
+        this.logger.info(res);
+        this.sending = false;
+        if (res.success && res.result.length > 0) {
+          this.router.navigate([
+            '/entries',
+            this.entryTypeString,
+            res.result[0].entry_id,
+          ]);
+        }
+      },
+      error: (err) => {
+        this.sending = false;
+        this.logger.error(err);
+      },
+    });
   }
 
   getCategoryName(category: Category) {
     return this.categoryService.getCategoryName(category);
   }
 
-  getEntryTypeHint(entry_type : EntryType | null){
-    let result: string = ""; 
+  getEntryTypeHint(entry_type: EntryType | null) {
+    let result: string = '';
     if (entry_type) {
-      result =  this.entryService.getCategoryTypeHint(entry_type);
+      result = this.entryService.getCategoryTypeHint(entry_type);
     }
     return result;
   }
