@@ -11,7 +11,7 @@ export class RelativeTimePipe implements PipeTransform {
 
   transform(value: any, lang: Language = Language.en): any {
     if (!value) return ''
-
+    
     const [date, time] = value.split(' ');
     const [day, month, year] = date.split(':');
     const [hour, minute] = time.split(':');
@@ -27,12 +27,8 @@ export class RelativeTimePipe implements PipeTransform {
     const msPerYear: number = msPerDay * 365;
 
 
-    if (elapsed < msPerMinute) {
-      return Math.round(elapsed / msPerSecond) + " " + this.languageService.translate('seconds ago');   
-    }
-
-    else if (elapsed < msPerMinute * 2) {
-      return '1 ' + this.languageService.translate('minute ago');
+    if (elapsed < msPerMinute * 2) {
+      return this.languageService.translate('now');
     }
 
     else if (elapsed < msPerHour) {

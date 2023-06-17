@@ -106,4 +106,8 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
         return 'All';
     }
   }
+
+  onEntryDeleted(entryId: number): void {
+    this.loadMyEntries()
+  }
 }

@@ -22,6 +22,11 @@ const routes: Routes = [
     component: EntryDetailsComponent,
     canActivate: [entryTypeGuard, authGuard],
   },
+  {
+    path: ':entryType/:id/edit',
+    component: EntryAddComponent,
+    canActivate: [entryTypeGuard, authGuard],
+  }
 ];
 
 @NgModule({

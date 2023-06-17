@@ -41,4 +41,8 @@ export class TokenService {
     const decodedToken = this.getDecodedToken(token);
     return decodedToken ? decodedToken.role : null;
   }
+
+  isAdmin(token: string = TokenService.getToken()): boolean {
+    return this.getUserRole(token) === 'ADMIN';
+  }
 }
