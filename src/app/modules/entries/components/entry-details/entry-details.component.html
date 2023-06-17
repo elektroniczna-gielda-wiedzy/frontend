@@ -71,12 +71,14 @@
       </mat-card-subtitle>
     </div>
   </mat-card-content>
-  <app-entry-action-buttons
+  <div *appIfAuthorOrAdmin="entry?.author?.user_id">
+    <app-entry-action-buttons
     *ngIf="entry"
     [entryId]="entry.entry_id"
     [entryType]="entry.entry_type_id"
     (entryDeleted)="entryDeleted($event)"
-  ></app-entry-action-buttons>
+    ></app-entry-action-buttons>
+  </div>
   <app-answer-card
     *ngIf="entry?.entry_type_id === 3"
     [answers]="entry?.answers"

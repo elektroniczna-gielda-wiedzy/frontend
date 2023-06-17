@@ -12,6 +12,7 @@ import { CommentsCardComponent } from './components/comments-card/comments-card.
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
 import { FullscreenImageDialogComponent } from './components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 import { EntryActionButtonsComponent } from './components/entry-action-buttons/entry-action-buttons.component';
+import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.directive';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EntryActionButtonsComponent } from './components/entry-action-buttons/e
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    IfAuthorOrAdminDirective,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { EntryActionButtonsComponent } from './components/entry-action-buttons/e
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    IfAuthorOrAdminDirective,
   ],
 })
 export class SharedModule {}
