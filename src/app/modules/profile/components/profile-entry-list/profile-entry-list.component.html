@@ -11,7 +11,7 @@
         <app-entry-card
         *ngFor="let entry of entries$ | async"
         [entry]="entry"
-        [myEntries]="true"
+        [myEntries]="page === 'entries'"
         (entryDeleted)="onEntryDeleted($event)"
         ></app-entry-card>
     </div>
