@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatDetailsComponent } from './components/chat-details/chat-details.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material-module';
 
 @NgModule({
@@ -14,7 +14,8 @@ import { MaterialModule } from './material-module';
   imports: [
     CommonModule,
     ChatRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
   ]
 })
 export class ChatModule { }

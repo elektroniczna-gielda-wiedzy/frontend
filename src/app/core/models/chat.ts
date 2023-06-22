@@ -12,7 +12,7 @@ export interface ChatMessage {
 export interface ChatListItem {
     chat_id: number;
     other_user: Author;
-    last_message: ChatMessage;
+    last_message?: ChatMessage;
 }
 
 export interface Chat {

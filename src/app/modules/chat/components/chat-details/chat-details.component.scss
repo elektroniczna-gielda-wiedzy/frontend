@@ -7,6 +7,7 @@
     flex-direction: column;
     margin: 1em;
     gap: 1em;
+    min-width: 200px;
 }
 
 .message-container {
@@ -22,6 +23,7 @@
 }
 
 .message-content {
+    white-space: pre-wrap;
     padding: 0.5em;
     background-color: mat.get-color-from-palette(theme.$app-primary, 'lighter');
     border-radius: 0.5em;
@@ -43,4 +45,9 @@
 
 .message-time.own-message {
     order: -1;
+}
+
+.message-form-field {
+    display: flex;
+    margin-top: 1em;
 }

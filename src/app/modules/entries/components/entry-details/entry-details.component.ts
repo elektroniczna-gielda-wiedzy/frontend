@@ -15,6 +15,7 @@ import {
   Language,
   stringToEntryType,
 } from 'src/app/core';
+import { ChatService } from 'src/app/modules/chat/services/chat.service';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 
@@ -39,7 +40,8 @@ export class EntryDetailsComponent {
     private languageService: LanguageService,
     private imageService: ImageService,
     private dialog: MatDialog,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -130,4 +132,9 @@ export class EntryDetailsComponent {
     }
   }
 
+  contactAuthor() {
+    if (!this.entry) return;
+    this.chatService.startChatWithUser(this.entry.author);
+    this.router.navigate(['/chat']);
+  }
 }

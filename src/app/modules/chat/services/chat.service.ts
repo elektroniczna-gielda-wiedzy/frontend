@@ -4,6 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { RxStompService } from './rx-stomp.service';
 import { myRxStompConfig } from './my-rx-stomp.config';
 import { NGXLogger } from 'ngx-logger';
+import { Author } from 'src/app/core';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 export class ChatService {
   private chatSubscriptions: Map<number, Subscription> = new Map();
   private messageSubject = new Subject<any>();
-
+  user?: Author | null = null;
   constructor(
     private rxStompService: RxStompService,
     private logger: NGXLogger
@@ -58,5 +59,17 @@ export class ChatService {
 
   getMessageSubject(): Subject<any> {
     return this.messageSubject;
+  }
+
+  startChatWithUser(user: Author) {
+    this.user = user;
+  }
+  
+  getUser() {
+    return this.user;
+  }
+
+  stopChatWithUser() {
+    this.user = null;
   }
 }

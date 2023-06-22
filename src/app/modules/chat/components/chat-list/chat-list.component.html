@@ -1,5 +1,3 @@
-<button (click)="sendMessage()">send</button>
-
 <div *ngFor="let message of messages">
   <div>{{ message }}</div>
 </div>
@@ -18,11 +16,16 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-card-subtitle>
+      <mat-card-subtitle *ngIf="chat.last_message; else startConversation">
         <span> {{ senderName(chat) }}: </span>
         <span mat-line class="message">{{ chat.last_message.content }}</span>
       </mat-card-subtitle>
+        <ng-template #startConversation>
+            <mat-card-subtitle>
+                <span mat-line class="message">Start a conversation!</span>
+            </mat-card-subtitle>
+        </ng-template>
     </mat-card-content>
   </mat-card>
 </mat-list>
-<app-chat-details [chatId]="currentChatId"></app-chat-details>
+<app-chat-details [chatId]="currentChatId" [newMessage]="newMessage"></app-chat-details>

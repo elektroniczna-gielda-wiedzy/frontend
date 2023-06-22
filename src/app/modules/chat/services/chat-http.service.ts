@@ -21,4 +21,9 @@ export class ChatHttpService {
     // return this.http.get<StandardResponse<Chat>>(this.baseUrl + '/' + chatId);
     return of({result: [CHAT], messages: [], success: false});
   }
+
+  createChat(other_user_id: number, message: string): Observable<StandardResponse<Chat>> {
+    // return this.http.post<StandardResponse<Chat>>(this.baseUrl, {other_user_id, message});
+    return of({result: [CHAT], messages: [], success: false});
+  }
 }
