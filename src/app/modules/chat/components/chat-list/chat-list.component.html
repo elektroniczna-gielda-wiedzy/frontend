@@ -1,5 +1,28 @@
-<button (click)="sendMessage()" >send</button>
+<button (click)="sendMessage()">send</button>
 
 <div *ngFor="let message of messages">
-    <div>{{message}}</div>
+  <div>{{ message }}</div>
 </div>
+
+<mat-list>
+  <mat-card
+    mat-list-item
+    *ngFor="let chat of chatList"
+    class="chat-card"
+    [class.open]="currentChatId === chat.chat_id"
+    (click)="goToChat(chat.chat_id)"
+  >
+    <mat-card-header>
+      <mat-card-title class="card-title">
+        {{ chat.other_user.first_name }} {{ chat.other_user.last_name }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-subtitle>
+        <span> {{ senderName(chat) }}: </span>
+        <span mat-line class="message">{{ chat.last_message.content }}</span>
+      </mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+</mat-list>
+<app-chat-details [chatId]="currentChatId"></app-chat-details>

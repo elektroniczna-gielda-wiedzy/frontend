@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+mat-card-subtitle,
+mat-card-title {
+  $title-row-count: 1;
+  $line-height: 1.5em;
+
+  display: -webkit-box;
+  -webkit-line-clamp: $title-row-count;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5em;
+  height: calc($line-height * $title-row-count);
+  transition: all 0.2s ease-in-out;
+}
+
+.chat-card {
+  cursor: pointer;
+  border: 1px solid rgba(mat.get-color-from-palette(theme.$app-accent), 0.5);
+  &.open {
+    background-color: mat.get-color-from-palette(theme.$app-accent, "lighter");
+  }
+}

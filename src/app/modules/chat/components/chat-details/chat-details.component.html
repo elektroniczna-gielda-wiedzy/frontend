@@ -1,1 +1,19 @@
-<p>chat-details works!</p>
+<mat-list *ngIf="chat" class="chat-container">
+  <div
+    mat-list-item
+    *ngFor="let message of chat.messages"
+    class="message-container"
+    [class.own-message]="isOwnMessage(message)"
+  >
+    <div class="message-info">
+      <span class="message-author"> {{ senderName(message) }} </span>
+      <span class="message-time" [class.own-message]="isOwnMessage(message)">{{
+        message.date_sent
+      }}</span>
+    </div>
+    <div class="message-content" [class.own-message]="isOwnMessage(message)">
+      {{ message.content }}
+    </div>
+  </div>
+
+</mat-list>

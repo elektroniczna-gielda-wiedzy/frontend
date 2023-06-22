@@ -1,0 +1,46 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+.chat-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    gap: 1em;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+
+    width: fit-content;
+    max-width: 80%;
+
+    &.own-message {
+        align-self: flex-end;
+    }
+}
+
+.message-content {
+    padding: 0.5em;
+    background-color: mat.get-color-from-palette(theme.$app-primary, 'lighter');
+    border-radius: 0.5em;
+    
+    &.own-message {
+        background-color: mat.get-color-from-palette(theme.$app-accent, 'lighter');
+        border-radius: 0.5em ;
+    }
+}
+
+.message-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.message-time.own-message {
+    order: -1;
+}

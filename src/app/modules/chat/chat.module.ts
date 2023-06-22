@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatDetailsComponent } from './components/chat-details/chat-details.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
-
+import { MaterialModule } from './material-module';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { ChatListComponent } from './components/chat-list/chat-list.component';
   ],
   imports: [
     CommonModule,
-    ChatRoutingModule
+    ChatRoutingModule,
+    MaterialModule
   ]
 })
 export class ChatModule { }
