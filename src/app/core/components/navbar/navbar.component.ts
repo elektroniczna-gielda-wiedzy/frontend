@@ -3,6 +3,9 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+import { ChatService } from 'src/app/modules/chat/services/chat.service';
+import { NGXLogger } from 'ngx-logger';
+import { Message } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private isLoggedInSubscription?: Subscription;
+  private notificationsSubscription?: Subscription;
   profileDropdownOpen = false;
   links: { url: string; label: string }[] = [];
   profileLinks = [
@@ -23,6 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { url: '/entries/post', label: 'Posts' },
     { url: '/entries/note', label: 'Notes' },
     { url: '/entries/announcement', label: 'Announcements' },
+    { url: '/chat', label: 'Chat' },
   ];
   notLoggedInLinks = [
     { url: '/auth/sign-in', label: 'Sign In' },
@@ -35,10 +40,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       shareReplay()
     );
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService,
+    private logger: NGXLogger
+  ) {}
 
   signOut(): void {
     this.authService.logout();
+    this.chatService.disconnect();
   }
 
   ngOnInit(): void {
@@ -46,6 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (isLoggedIn) => {
         if (isLoggedIn) {
           this.links = this.loggedInLinks;
+          this.initChat();
         } else {
           this.links = this.notLoggedInLinks;
         }
@@ -57,5 +68,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.isLoggedInSubscription) {
       this.isLoggedInSubscription.unsubscribe();
     }
+    if (this.notificationsSubscription) {
+      this.notificationsSubscription.unsubscribe();
+    }
+    this.chatService.disconnect();
+  }
+
+  initChat(): void {
+    this.chatService.connect();
+    this.notificationsSubscription = this.chatService
+      .notifications()
+      .subscribe((notification: Message) => {
+        this.logger.trace('notification', notification.body);
+      });
   }
 }
