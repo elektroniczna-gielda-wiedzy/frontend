@@ -4,6 +4,8 @@ import {
   Input,
   Output,
   SimpleChanges,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { ChatHttpService } from '../../services/chat-http.service';
 import { Chat, ChatMessage } from 'src/app/core';
@@ -17,6 +19,7 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./chat-details.component.scss'],
 })
 export class ChatDetailsComponent {
+  @ViewChild('scrollMe') private myScrollContainer?: ElementRef;
   @Input() chatId: number | null | undefined = null;
   @Input() newMessage: ChatMessage | null | undefined = null;
   @Output() createChatCompleted: EventEmitter<number> =
@@ -34,6 +37,20 @@ export class ChatDetailsComponent {
   ) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    if (!this.myScrollContainer) {
+      return;
+    }
+    try {
+      this.myScrollContainer.nativeElement.scrollTop =
+        this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
+  }
 
   ngOnDestroy(): void {
     this.chatSubscription?.unsubscribe();

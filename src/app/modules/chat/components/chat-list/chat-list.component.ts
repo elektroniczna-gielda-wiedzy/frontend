@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { Author, ChatListItem, ChatMessage } from 'src/app/core';
 import { ChatHttpService } from '../../services/chat-http.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-chat-list',
@@ -14,18 +15,22 @@ export class ChatListComponent {
   currentChatId: number | null | undefined = null;
   newMessage: ChatMessage | null | undefined = null;
   chatList: ChatListItem[] = [];
+  displayChatList: ChatListItem[] = [];
   private chatListSubscription?: Subscription;
   private notificationSubscription?: Subscription;
   private chatSubscription?: Subscription;
+  private breakpointSubscription?: Subscription;
   noChats = false;
-  otherUser?: Author;
+  isMobile = false;
 
   constructor(
     private chatService: ChatService,
-    private chatHttpService: ChatHttpService
+    private chatHttpService: ChatHttpService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
+    this.initBreakPoint();
     this.initReceiveMessage();
     this.initChatList();
   }
@@ -60,8 +65,9 @@ export class ChatListComponent {
       .getChatList()
       .subscribe((response) => {
         this.chatList = response.result;
+        this.displayChatList = this.chatList;
         this.noChats = this.chatList.length === 0;
-        if (this.currentChatId === null && this.chatList.length > 0) {
+        if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
           this.currentChatId = this.chatList[0].chat_id;
         }
         this.subscribeToChats();
@@ -84,11 +90,10 @@ export class ChatListComponent {
 
     if (otherUser) {
       this.noChats = false;
-      this.otherUser = otherUser;
       this.chatList = [
         {
           chat_id: -1,
-          other_user: this.otherUser,
+          other_user: { ...otherUser },
         },
         ...this.chatList,
       ];
@@ -111,6 +116,23 @@ export class ChatListComponent {
     });
   }
 
+  initBreakPoint() {
+    this.breakpointSubscription = this.breakpointObserver
+      .observe('(max-width: 800px)')
+      .subscribe((result) => {
+        this.isMobile = result.matches;
+        if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
+          this.currentChatId = this.chatList[0].chat_id;
+        } else if (this.isMobile && this.currentChatId) {
+          this.displayChatList = this.chatList.filter(
+            (chat) => chat.chat_id === this.currentChatId
+          );
+        } else {
+          this.displayChatList = this.chatList;
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     this.chatService.stopChatWithUser();
     this.chatService.unsubscribeFromAllChats();
@@ -118,6 +140,7 @@ export class ChatListComponent {
     this.messagesSubscription?.unsubscribe();
     this.chatListSubscription?.unsubscribe();
     this.chatSubscription?.unsubscribe();
+    this.breakpointSubscription?.unsubscribe();
   }
 
   senderName(chat: ChatListItem) {
@@ -128,6 +151,21 @@ export class ChatListComponent {
 
   goToChat(chatId: number) {
     this.currentChatId = chatId;
+    this.newMessage = null;
+    if (this.isMobile) {
+      this.displayChatList = this.chatList.filter(
+        (chat) => chat.chat_id === chatId
+      );
+    }
+  }
+
+  goToList(event: Event) {
+    event.stopPropagation();
+    this.currentChatId = null;
+    this.newMessage = null;
+    if (this.isMobile) {
+      this.displayChatList = this.chatList;
+    }
   }
 
   createChatCompleted(chatId: number) {

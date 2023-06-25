@@ -1,6 +1,15 @@
 @use "@angular/material" as mat;
 @use "src/theme";
 
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 64px);
+  @media (max-width: 599px) {
+    height: calc(100% - 56px);
+  }
+}
+
 mat-card-subtitle,
 mat-card-title {
   $title-row-count: 1;
@@ -16,6 +25,7 @@ mat-card-title {
 }
 
 .chat-card {
+  position: relative;
   cursor: pointer;
   border: 1px solid rgba(mat.get-color-from-palette(theme.$app-accent), 0.5);
   &.open {
@@ -27,8 +37,47 @@ mat-card-title {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
   font-size: 1.5em;
   color: mat.get-color-from-palette(theme.$app-accent);
   text-align: center;
+}
+
+.chat-outer-container {
+  display: flex;
+
+  &.desktop {
+    flex-direction: row;
+    gap: 1em;
+    & > .chat-list {
+      width: 500px;
+    }
+  }
+  &:not(.desktop) {
+    flex-direction: column;
+    min-height: 200px;
+  }
+}
+
+.back-to-list-button {
+  position: absolute;
+  top: 50%;
+  right: 0.5em;
+  transform: translateY(-50%);
+}
+
+.chat-outer-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-list,
+app-chat-details {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.chat-list {
+  min-height: 100px;
+  max-height: 100%;
+  overflow-y: auto;
 }

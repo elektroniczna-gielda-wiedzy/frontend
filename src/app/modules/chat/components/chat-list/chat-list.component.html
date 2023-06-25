@@ -1,12 +1,25 @@
-<ng-container *ngIf="!noChats; else noChatsTemplate">
-  <mat-list>
+<div
+  class="chat-outer-container"
+  [class.desktop]="currentChatId && !isMobile"
+  *ngIf="!noChats; else noChatsTemplate"
+>
+  <mat-list class="chat-list">
     <mat-card
       mat-list-item
-      *ngFor="let chat of chatList"
+      *ngFor="let chat of displayChatList"
       class="chat-card"
       [class.open]="currentChatId === chat.chat_id"
       (click)="goToChat(chat.chat_id)"
     >
+      <button
+        *ngIf="isMobile && currentChatId === chat.chat_id"
+        mat-mini-fab
+        color="accent"
+        class="back-to-list-button"
+        (click)="goToList($event)"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
       <mat-card-header>
         <mat-card-title class="card-title">
           {{ chat.other_user.first_name }} {{ chat.other_user.last_name }}
@@ -26,11 +39,12 @@
     </mat-card>
   </mat-list>
   <app-chat-details
+    *ngIf="currentChatId"
     [chatId]="currentChatId"
     [newMessage]="newMessage"
     (createChatCompleted)="createChatCompleted($event)"
   ></app-chat-details>
-</ng-container>
+</div>
 
 <ng-template #noChatsTemplate>
   <div class="no-chats">

@@ -1,5 +1,5 @@
-<mat-list class="chat-container">
-  <ng-container *ngIf="chat">
+<mat-list class="chat-outer-container">
+  <div #scrollMe class="chat-container" *ngIf="chat">
     <div
       mat-list-item
       *ngFor="let message of chat.messages"
@@ -18,8 +18,12 @@
         {{ message.content }}
       </div>
     </div>
-  </ng-container>
-  <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+  </div>
+  <form
+    [formGroup]="messageForm"
+    (ngSubmit)="sendMessage()"
+    class="message-form"
+  >
     <mat-form-field class="message-form-field" appearance="outline">
       <textarea
         matInput
