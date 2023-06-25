@@ -27,6 +27,8 @@
           *ngFor="let link of links"
           routerLink="{{ link.url }}"
           routerLinkActive="active-side-nav-item"
+          [attr.data-badge]="link.badge | async"
+          [class.badge]="(link.badge | async)"
           (click)="drawer.close()"
           >{{ link.label | translate }}</a
         >
