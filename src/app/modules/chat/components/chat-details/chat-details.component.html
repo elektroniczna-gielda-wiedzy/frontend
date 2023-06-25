@@ -7,7 +7,7 @@
       [class.own-message]="isOwnMessage(message)"
     >
       <div class="message-info">
-        <span class="message-author"> {{ senderName(message) }} </span>
+        <span class="message-author"> {{ senderName(message) | translate }} </span>
         <span
           class="message-time"
           [class.own-message]="isOwnMessage(message)"

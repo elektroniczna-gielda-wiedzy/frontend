@@ -73,5 +73,11 @@
     "Faculties": "Wydziały",
     "Apply filters": "Zastosuj filtry",
     "Clear filters": "Wyczyść filtry",
-    "Search": "Szukaj"
+    "Search": "Szukaj",
+
+    "You": "Ty",
+    "Start a conversation!": "Zacznij rozmowę!",
+    "You currently have no chats started!": "Nie masz żadnych rozpoczętych rozmów!",
+    "You can start a chat by clicking": "Możesz rozpocząć rozmowę klikając",
+    "in the note or announcement details view": "w widoku szczegółów notatki lub ogłoszenia"
 }

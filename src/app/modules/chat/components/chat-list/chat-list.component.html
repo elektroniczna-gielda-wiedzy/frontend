@@ -27,12 +27,12 @@
       </mat-card-header>
       <mat-card-content>
         <mat-card-subtitle *ngIf="chat.last_message; else startConversation">
-          <span> {{ senderName(chat) }}: </span>
+          <span> {{ senderName(chat) | translate }}: </span>
           <span mat-line class="message">{{ chat.last_message.content }}</span>
         </mat-card-subtitle>
         <ng-template #startConversation>
           <mat-card-subtitle>
-            <span mat-line class="message">Start a conversation!</span>
+            <span mat-line class="message">{{'Start a conversation!' | translate}}</span>
           </mat-card-subtitle>
         </ng-template>
       </mat-card-content>
@@ -48,13 +48,13 @@
 
 <ng-template #noChatsTemplate>
   <div class="no-chats">
-    <h2>You currently have no chats started!</h2>
+    <h2 translate>You currently have no chats started!</h2>
     <div class="chat-start-info">
-      <p>You can start a chat by clicking</p>
+      <p translate>You can start a chat by clicking</p>
       <button mat-raised-button color="primary" class="contact-button">
         {{ "Contact author" | translate }}
       </button>
-      <p>in the note or announcement details</p>
+      <p translate>in the note or announcement details view</p>
     </div>
   </div>
 </ng-template>
