@@ -25,7 +25,7 @@ export class ChatDetailsComponent {
   @Input() newMessage: ChatMessage | null | undefined = null;
   @Output() createChatCompleted: EventEmitter<number> =
     new EventEmitter<number>();
-  chat?: Chat;
+  chat: Chat | null | undefined;
   private chatSubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
@@ -78,7 +78,10 @@ export class ChatDetailsComponent {
     ) {
       if (changes['chatId'].currentValue !== -1) {
         this.loadChatDetails();
+      } else {
+        this.chat = null;
       }
+      this.messageForm.reset();
     }
 
     if (

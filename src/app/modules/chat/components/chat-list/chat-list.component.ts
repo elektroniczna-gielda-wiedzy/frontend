@@ -167,7 +167,10 @@ export class ChatListComponent {
 
   createChatCompleted(chatId: number) {
     this.chatService.stopChatWithUser();
-    this.chatList[0].chat_id = chatId;
+    const chat = this.chatList.find((chat) => chat.chat_id === -1)
+    if (chat) {
+      chat.chat_id = chatId;
+    }
     this.currentChatId = chatId;
     this.chatService.subscribeToChat(chatId);
   }

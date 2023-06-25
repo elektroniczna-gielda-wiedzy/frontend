@@ -1,8 +1,8 @@
 <mat-list class="chat-outer-container">
-  <div #scrollMe class="chat-container" *ngIf="chat">
+  <div #scrollMe class="chat-container">
     <div
       mat-list-item
-      *ngFor="let message of chat.messages"
+      *ngFor="let message of chat?.messages"
       class="message-container"
       [class.own-message]="isOwnMessage(message)"
     >
