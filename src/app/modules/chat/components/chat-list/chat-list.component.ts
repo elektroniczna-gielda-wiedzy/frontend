@@ -90,13 +90,10 @@ export class ChatListComponent {
 
     if (otherUser) {
       this.noChats = false;
-      this.chatList = [
-        {
-          chat_id: -1,
-          other_user: { ...otherUser },
-        },
-        ...this.chatList,
-      ];
+      this.chatList.unshift({
+        chat_id: -1,
+        other_user: { ...otherUser },
+      });
       this.currentChatId = -1;
     }
   }
