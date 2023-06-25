@@ -7,6 +7,8 @@ import { ChatService } from 'src/app/modules/chat/services/chat.service';
 import { NGXLogger } from 'ngx-logger';
 import { Message } from '@stomp/stompjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -47,7 +49,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private chatService: ChatService,
     private logger: NGXLogger,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService,
   ) {}
 
   signOut(): void {
@@ -91,8 +95,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   displayNotification() {
-    this.logger.trace('displayNotification');
-    alert('You have a new message!\nTemp notification');
-  
+    const snackBarRef = this.snackBar.open(
+      this.translateService.instant('You have a new message!'),
+      this.translateService.instant('Go to chat'),
+      {
+        duration: 7000,
+        verticalPosition: 'top',
+        horizontalPosition: 'left',
+      });
+    snackBarRef.onAction().subscribe(() => {
+      this.router.navigate(['/chat']);
+    });
   }
 }
