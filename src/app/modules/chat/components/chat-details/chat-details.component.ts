@@ -8,10 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ChatHttpService } from '../../services/chat-http.service';
-import { Chat, ChatMessage } from 'src/app/core';
+import { Chat, ChatMessage, Language } from 'src/app/core';
 import { Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { ChatService } from '../../services/chat.service';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-chat-details',
@@ -26,6 +27,8 @@ export class ChatDetailsComponent {
     new EventEmitter<number>();
   chat?: Chat;
   private chatSubscription?: Subscription;
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
   messageForm = this.fb.group({
     messageContent: [''],
   });
@@ -33,10 +36,21 @@ export class ChatDetailsComponent {
   constructor(
     private chatHttpService: ChatHttpService,
     private chatService: ChatService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private languageService: LanguageService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initLanguage();
+  }
+
+  initLanguage() {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
+  }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -54,6 +68,7 @@ export class ChatDetailsComponent {
 
   ngOnDestroy(): void {
     this.chatSubscription?.unsubscribe();
+    this.langChangeSubscription?.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -11,7 +11,8 @@
         <span
           class="message-time"
           [class.own-message]="isOwnMessage(message)"
-          >{{ message.date_sent }}</span
+          >{{ message.date_sent | relativeTime : currentLanguage }}
+          </span
         >
       </div>
       <div class="message-content" [class.own-message]="isOwnMessage(message)">

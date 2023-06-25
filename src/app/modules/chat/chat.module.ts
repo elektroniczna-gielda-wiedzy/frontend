@@ -6,6 +6,7 @@ import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material-module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ChatRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    SharedModule
   ]
 })
 export class ChatModule { }
