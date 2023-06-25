@@ -13,6 +13,7 @@ export interface ChatListItem {
     chat_id: number;
     other_user: Author;
     last_message?: ChatMessage;
+    is_read?: boolean;
 }
 
 export interface Chat {

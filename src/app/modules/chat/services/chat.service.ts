@@ -85,4 +85,8 @@ export class ChatService {
       }
     );
   }
+
+  decrementUnreadCount() {
+    this.unreadCount.next(this.unreadCount.value - 1);
+  }
 }

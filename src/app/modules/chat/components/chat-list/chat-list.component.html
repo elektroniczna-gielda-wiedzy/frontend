@@ -8,14 +8,27 @@
       mat-list-item
       *ngFor="let chat of displayChatList"
       class="chat-card"
+      [class.not-read]="!chat.is_read"
       [class.open]="currentChatId === chat.chat_id"
       (click)="goToChat(chat.chat_id)"
     >
+      <mat-icon
+        *ngIf="!chat.is_read"
+        class="chat-card-right-item"
+        color="accent"
+        >markunread</mat-icon
+      >
+      <mat-icon
+        *ngIf="chat.is_read"
+        class="chat-card-right-item"
+        color="accent"
+        >drafts</mat-icon
+      >
       <button
         *ngIf="isMobile && currentChatId === chat.chat_id"
         mat-mini-fab
         color="accent"
-        class="back-to-list-button"
+        class="chat-card-right-item"
         (click)="goToList($event)"
       >
         <mat-icon>arrow_back</mat-icon>
@@ -32,7 +45,9 @@
         </mat-card-subtitle>
         <ng-template #startConversation>
           <mat-card-subtitle>
-            <span mat-line class="message">{{'Start a conversation!' | translate}}</span>
+            <span mat-line class="message">{{
+              "Start a conversation!" | translate
+            }}</span>
           </mat-card-subtitle>
         </ng-template>
       </mat-card-content>

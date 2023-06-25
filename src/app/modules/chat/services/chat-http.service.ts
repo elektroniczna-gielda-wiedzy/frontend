@@ -26,4 +26,9 @@ export class ChatHttpService {
   getUnreadCount(): Observable<StandardResponse<number>> {
     return this.http.get<StandardResponse<number>>(this.baseUrl + '/unread');
   }
+
+  markAsRead(chatId: number): Observable<StandardResponse<Chat>> {
+    const url = `${this.baseUrl}/${chatId}/read`
+    return this.http.put<StandardResponse<Chat>>(url, {});
+  }
 }

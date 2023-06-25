@@ -49,6 +49,7 @@ export class ChatListComponent {
 
     if (message.chat_id === this.currentChatId) {
       this.newMessage = message;
+      this.markAsRead(chat);
     }
   }
 
@@ -154,6 +155,27 @@ export class ChatListComponent {
         (chat) => chat.chat_id === chatId
       );
     }
+    if (chatId && chatId !== -1) {
+      const chat = this.chatList.find((chat) => chat.chat_id === chatId);
+      if (chat) {
+        this.markAsRead(chat);
+      }
+    }
+  }
+
+  markAsRead(chat: ChatListItem) {
+    if (chat.is_read) {
+      return;
+    }
+
+    this.chatHttpService.markAsRead(chat.chat_id).subscribe(
+      (response) => {
+        if (response.success){
+          chat.is_read = true;
+          this.chatService.decrementUnreadCount();
+        }
+      }
+    );
   }
 
   goToList(event: Event) {

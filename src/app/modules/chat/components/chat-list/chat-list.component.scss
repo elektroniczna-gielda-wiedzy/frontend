@@ -31,6 +31,9 @@ mat-card-title {
   &.open {
     background-color: mat.get-color-from-palette(theme.$app-accent, "lighter");
   }
+  &.not-read {
+    color: mat.get-color-from-palette(theme.$app-accent, 900);
+  }
 }
 
 .no-chats {
@@ -58,7 +61,7 @@ mat-card-title {
   }
 }
 
-.back-to-list-button {
+.chat-card-right-item {
   position: absolute;
   top: 50%;
   right: 0.5em;
