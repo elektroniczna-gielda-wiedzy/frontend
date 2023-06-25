@@ -5,6 +5,7 @@ import { ChatDetailsComponent } from './components/chat-details/chat-details.com
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material-module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MaterialModule } from './material-module';
     ChatRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class ChatModule { }

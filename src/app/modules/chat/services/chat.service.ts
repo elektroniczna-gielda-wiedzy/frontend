@@ -11,14 +11,14 @@ import { Author } from 'src/app/core';
 })
 export class ChatService {
   private chatSubscriptions: Map<number, Subscription> = new Map();
-  private messageSubject = new Subject<any>();
+  private messageSubject = new Subject<string>();
   user?: Author | null = null;
   constructor(
     private rxStompService: RxStompService,
     private logger: NGXLogger
   ) {}
 
-  sendMessage(chatId: number, message: any) {
+  sendMessage(chatId: number, message: string) {
     this.rxStompService.publish({
       destination: `/api/v1/chat/${chatId}`,
       body: message,
@@ -57,7 +57,7 @@ export class ChatService {
     this.rxStompService.deactivate();
   }
 
-  getMessageSubject(): Subject<any> {
+  getMessageSubject(): Subject<string> {
     return this.messageSubject;
   }
 

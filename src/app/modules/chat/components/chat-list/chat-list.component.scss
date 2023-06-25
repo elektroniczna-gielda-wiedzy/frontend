@@ -22,3 +22,13 @@ mat-card-title {
     background-color: mat.get-color-from-palette(theme.$app-accent, "lighter");
   }
 }
+
+.no-chats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  font-size: 1.5em;
+  color: mat.get-color-from-palette(theme.$app-accent);
+  text-align: center;
+}

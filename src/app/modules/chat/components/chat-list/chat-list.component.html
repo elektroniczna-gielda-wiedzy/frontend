@@ -1,31 +1,46 @@
-<div *ngFor="let message of messages">
-  <div>{{ message }}</div>
-</div>
-
-<mat-list>
-  <mat-card
-    mat-list-item
-    *ngFor="let chat of chatList"
-    class="chat-card"
-    [class.open]="currentChatId === chat.chat_id"
-    (click)="goToChat(chat.chat_id)"
-  >
-    <mat-card-header>
-      <mat-card-title class="card-title">
-        {{ chat.other_user.first_name }} {{ chat.other_user.last_name }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-card-subtitle *ngIf="chat.last_message; else startConversation">
-        <span> {{ senderName(chat) }}: </span>
-        <span mat-line class="message">{{ chat.last_message.content }}</span>
-      </mat-card-subtitle>
+<ng-container *ngIf="!noChats; else noChatsTemplate">
+  <mat-list>
+    <mat-card
+      mat-list-item
+      *ngFor="let chat of chatList"
+      class="chat-card"
+      [class.open]="currentChatId === chat.chat_id"
+      (click)="goToChat(chat.chat_id)"
+    >
+      <mat-card-header>
+        <mat-card-title class="card-title">
+          {{ chat.other_user.first_name }} {{ chat.other_user.last_name }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card-subtitle *ngIf="chat.last_message; else startConversation">
+          <span> {{ senderName(chat) }}: </span>
+          <span mat-line class="message">{{ chat.last_message.content }}</span>
+        </mat-card-subtitle>
         <ng-template #startConversation>
-            <mat-card-subtitle>
-                <span mat-line class="message">Start a conversation!</span>
-            </mat-card-subtitle>
+          <mat-card-subtitle>
+            <span mat-line class="message">Start a conversation!</span>
+          </mat-card-subtitle>
         </ng-template>
-    </mat-card-content>
-  </mat-card>
-</mat-list>
-<app-chat-details [chatId]="currentChatId" [newMessage]="newMessage"></app-chat-details>
+      </mat-card-content>
+    </mat-card>
+  </mat-list>
+  <app-chat-details
+    [chatId]="currentChatId"
+    [newMessage]="newMessage"
+    (createChatCompleted)="createChatCompleted($event)"
+  ></app-chat-details>
+</ng-container>
+
+<ng-template #noChatsTemplate>
+  <div class="no-chats">
+    <h2>You currently have no chats started!</h2>
+    <div class="chat-start-info">
+      <p>You can start a chat by clicking</p>
+      <button mat-raised-button color="primary" class="contact-button">
+        {{ "Contact author" | translate }}
+      </button>
+      <p>in the note or announcement details</p>
+    </div>
+  </div>
+</ng-template>

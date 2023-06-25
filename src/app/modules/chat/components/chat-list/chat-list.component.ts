@@ -12,65 +12,97 @@ import { ChatHttpService } from '../../services/chat-http.service';
 export class ChatListComponent {
   private messagesSubscription?: Subscription;
   currentChatId: number | null | undefined = null;
-  messages: any[] = [];
   newMessage: ChatMessage | null | undefined = null;
-  chatList: ChatListItem[] = []
+  chatList: ChatListItem[] = [];
   private chatListSubscription?: Subscription;
-
+  private notificationSubscription?: Subscription;
+  private chatSubscription?: Subscription;
+  noChats = false;
   otherUser?: Author;
 
-  constructor(private chatService: ChatService, private chatHttpService: ChatHttpService) {}
+  constructor(
+    private chatService: ChatService,
+    private chatHttpService: ChatHttpService
+  ) {}
 
   ngOnInit(): void {
     this.initReceiveMessage();
     this.initChatList();
-    this.initNewChat();
   }
 
   handleNewMessage(message: ChatMessage) {
-    this.chatList.forEach((chat) => {
-      if (chat.chat_id === message.chat_id) {
-        chat.last_message = message;
-      }
-    });
+    const chatIndex = this.chatList.findIndex(
+      (chat) => chat.chat_id === message.chat_id
+    );
+    if (chatIndex === -1) {
+      return;
+    }
+
+    const chat = this.chatList.splice(chatIndex, 1)[0];
+    chat.last_message = message;
+    this.chatList.unshift(chat);
+
     if (message.chat_id === this.currentChatId) {
       this.newMessage = message;
     }
   }
 
-
   initReceiveMessage() {
     this.messagesSubscription = this.chatService
-    .getMessageSubject()
-    .subscribe((message: any) => {
-      const messageParsed = JSON.parse(message);
-      this.handleNewMessage(messageParsed);
-    });
+      .getMessageSubject()
+      .subscribe((message: string) => {
+        this.handleNewMessage(JSON.parse(message));
+      });
   }
 
   initChatList() {
-    this.chatListSubscription = this.chatHttpService.getChatList().subscribe((response) => {
-      this.chatList = response.result;
-      if (this.currentChatId === null && this.chatList.length > 0) {
-        this.currentChatId = this.chatList[0].chat_id;
-      }
-      this.subscribeToChats();
-    });
+    this.chatListSubscription = this.chatHttpService
+      .getChatList()
+      .subscribe((response) => {
+        this.chatList = response.result;
+        this.noChats = this.chatList.length === 0;
+        if (this.currentChatId === null && this.chatList.length > 0) {
+          this.currentChatId = this.chatList[0].chat_id;
+        }
+        this.subscribeToChats();
+        this.initNotification();
+        this.initNewChat();
+      });
   }
 
   initNewChat() {
-    const otherUser = this.chatService.getUser()
+    const otherUser = this.chatService.getUser();
+
+    const chat = this.chatList.find((chat) => {
+      return chat.other_user.user_id === otherUser?.user_id;
+    });
+
+    if (chat && otherUser) {
+      this.currentChatId = chat.chat_id;
+      return;
+    }
+
     if (otherUser) {
-      this.otherUser = {...otherUser};
+      this.noChats = false;
+      this.otherUser = otherUser;
       this.chatList = [
         {
           chat_id: -1,
           other_user: this.otherUser,
         },
-        ...this.chatList
-      ]
+        ...this.chatList,
+      ];
       this.currentChatId = -1;
     }
+  }
+
+  initNotification() {
+    this.notificationSubscription = this.chatService
+      .notifications()
+      .subscribe((notification) => {
+        const { chat_id } = JSON.parse(notification.body);
+        this.handleNewChatStarted(chat_id);
+      });
   }
 
   subscribeToChats() {
@@ -82,16 +114,48 @@ export class ChatListComponent {
   ngOnDestroy(): void {
     this.chatService.stopChatWithUser();
     this.chatService.unsubscribeFromAllChats();
+    this.notificationSubscription?.unsubscribe();
     this.messagesSubscription?.unsubscribe();
     this.chatListSubscription?.unsubscribe();
+    this.chatSubscription?.unsubscribe();
   }
-
 
   senderName(chat: ChatListItem) {
-    return chat.last_message?.sender.user_id === chat.other_user.user_id ? chat.other_user.first_name : 'You';
+    return chat.last_message?.sender.user_id === chat.other_user.user_id
+      ? chat.other_user.first_name
+      : 'You';
   }
-  
+
   goToChat(chatId: number) {
     this.currentChatId = chatId;
+  }
+
+  createChatCompleted(chatId: number) {
+    this.chatService.stopChatWithUser();
+    this.chatList[0].chat_id = chatId;
+    this.currentChatId = chatId;
+    this.chatService.subscribeToChat(chatId);
+  }
+
+  handleNewChatStarted(chatId: number) {
+    if (
+      this.chatSubscription ||
+      this.chatList.find((chat) => chat.chat_id === chatId)
+    ) {
+      return;
+    }
+
+    this.chatSubscription = this.chatHttpService
+      .getChat(chatId)
+      .subscribe((response) => {
+        this.noChats = false;
+        const chat = response.result[0];
+        this.chatList.unshift({
+          chat_id: chat.chat_id,
+          other_user: chat.messages[0].sender,
+          last_message: chat.messages.at(-1),
+        });
+        this.chatService.subscribeToChat(chatId);
+      });
   }
 }

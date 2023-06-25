@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ChatService } from 'src/app/modules/chat/services/chat.service';
 import { NGXLogger } from 'ngx-logger';
 import { Message } from '@stomp/stompjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -39,11 +40,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       map((result) => result.matches),
       shareReplay()
     );
+    
+  currentPath?: string;
 
   constructor(
     private authService: AuthService,
     private chatService: ChatService,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private router: Router
   ) {}
 
   signOut(): void {
@@ -80,6 +84,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .notifications()
       .subscribe((notification: Message) => {
         this.logger.trace('notification', notification.body);
+        if (this.router.url !== '/chat') {
+          this.displayNotification();
+        }
       });
+  }
+
+  displayNotification() {
+    this.logger.trace('displayNotification');
+    alert('You have a new message!\nTemp notification');
+  
   }
 }

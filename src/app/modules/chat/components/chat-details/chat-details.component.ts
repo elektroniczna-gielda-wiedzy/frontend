@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ChatHttpService } from '../../services/chat-http.service';
 import { Chat, ChatMessage } from 'src/app/core';
 import { Subscription } from 'rxjs';
@@ -13,6 +19,8 @@ import { ChatService } from '../../services/chat.service';
 export class ChatDetailsComponent {
   @Input() chatId: number | null | undefined = null;
   @Input() newMessage: ChatMessage | null | undefined = null;
+  @Output() createChatCompleted: EventEmitter<number> =
+    new EventEmitter<number>();
   chat?: Chat;
   private chatSubscription?: Subscription;
   messageForm = this.fb.group({
@@ -55,7 +63,7 @@ export class ChatDetailsComponent {
       return;
     }
     this.chatHttpService.getChat(this.chatId).subscribe((response) => {
-      this.chat = JSON.parse(JSON.stringify(response.result[0]));
+      this.chat = response.result[0];
     });
   }
 
@@ -74,32 +82,35 @@ export class ChatDetailsComponent {
     if (!this.messageForm.value.messageContent) {
       return;
     }
-    if (this.chatId && this.chatId !== -1) {
-      const message: ChatMessage = {
-        message_id: 1,
-        content: this.messageForm.value.messageContent,
-        chat_id: this.chatId,
-        sender: {
-          user_id: 1,
-          first_name: 'Adam',
-          last_name: 'Kowalski',
-        },
-        date_sent: new Date().toISOString(),
-      };
+    const message = {
+      content: this.messageForm.value.messageContent,
+    };
+    const parsedMessage = JSON.stringify(message);
 
-      this.chatService.sendMessage(this.chatId, JSON.stringify(message));
-      this.messageForm.reset();
-    } else {
-      console.log('new chat');
-      const otherUserId = this.chatService.getUser()?.user_id;
-      if (otherUserId) {
-        this.chatHttpService
-          .createChat(otherUserId, this.messageForm.value.messageContent)
-          .subscribe((response) => {
-            console.log(response);
-            this.messageForm.reset();
-          });
-      }
+    if (this.chatId === -1) {
+      this.createChat(parsedMessage);
+      return;
     }
+    this.sendMessageToChat(parsedMessage);
+  }
+
+  private sendMessageToChat(message: string) {
+    if (this.chatId && this.chatId !== -1) {
+      this.chatService.sendMessage(this.chatId, message);
+      this.messageForm.reset();
+    }
+  }
+
+  private createChat(message: string) {
+    const otherUserId = this.chatService.getUser()?.user_id;
+    if (!otherUserId) {
+      return;
+    }
+
+    this.chatHttpService.createChat(otherUserId).subscribe((response) => {
+      this.chatId = response.result[0].chat_id;
+      this.createChatCompleted.emit(this.chatId);
+      this.sendMessageToChat(message);
+    });
   }
 }
