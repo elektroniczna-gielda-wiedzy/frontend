@@ -87,6 +87,8 @@
           *ngFor="let link of links"
           routerLink="{{ link.url }}"
           routerLinkActive="active-nav-item"
+          [matBadge]="(link.badge | async) ? (link.badge | async) : null"
+          matBadgeColor="accent"
           >{{ link.label | translate }}</a
         >
 

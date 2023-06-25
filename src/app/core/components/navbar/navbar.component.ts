@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private isLoggedInSubscription?: Subscription;
   private notificationsSubscription?: Subscription;
   profileDropdownOpen = false;
-  links: { url: string; label: string }[] = [];
+  links: { url: string; label: string, badge?: Observable<number> }[] = [];
   profileLinks = [
     { url: '/profile/entries', label: 'My entries' },
     { url: '/profile/favorites', label: 'My favorites' },
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { url: '/entries/post', label: 'Posts' },
     { url: '/entries/note', label: 'Notes' },
     { url: '/entries/announcement', label: 'Announcements' },
-    { url: '/chat', label: 'Chat' },
+    { url: '/chat', label: 'Chat', badge: this.chatService.unreadCount$ },
   ];
   notLoggedInLinks = [
     { url: '/auth/sign-in', label: 'Sign In' },
@@ -70,6 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.chatService.initUnreadCount();
   }
 
   ngOnDestroy(): void {

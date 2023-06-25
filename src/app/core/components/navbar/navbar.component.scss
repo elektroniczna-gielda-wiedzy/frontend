@@ -40,6 +40,9 @@ mat-toolbar a {
   color: white;
   text-decoration: none;
 }
+mat-toolbar a:last-of-type {
+  margin-inline-end: 20px;
+}
 
 .active-nav-item {
   color: mat.get-color-from-palette(theme.$app-accent) !important;

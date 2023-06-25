@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
         MatListModule,
         MatCardModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
     ]
 })
 export class MaterialModule { }

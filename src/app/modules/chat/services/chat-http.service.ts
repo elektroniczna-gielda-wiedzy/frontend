@@ -22,4 +22,8 @@ export class ChatHttpService {
   createChat(other_user_id: number): Observable<StandardResponse<Chat>> {
     return this.http.post<StandardResponse<Chat>>(this.baseUrl, {other_user_id});
   }
+
+  getUnreadCount(): Observable<StandardResponse<number>> {
+    return this.http.get<StandardResponse<number>>(this.baseUrl + '/unread');
+  }
 }
