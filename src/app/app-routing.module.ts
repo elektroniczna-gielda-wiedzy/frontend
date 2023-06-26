@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)},
@@ -7,7 +8,7 @@ const routes: Routes = [
   { path: 'chat', loadChildren: () => import('./modules/chat/chat.module').then(m => m.ChatModule) },
   { path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
   { path: '', redirectTo: '/entries/announcement', pathMatch: 'full' },
-  // { path: '**', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 

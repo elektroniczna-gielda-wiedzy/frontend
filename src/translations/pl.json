@@ -81,5 +81,9 @@
     "You can start a chat by clicking": "Możesz rozpocząć rozmowę klikając",
     "in the note or announcement details view": "w widoku szczegółów notatki lub ogłoszenia",
     "You have a new message!": "Masz nową wiadomość!",
-    "Go to chat": "Przejdź do chatu"
+    "Go to chat": "Przejdź do chatu",
+
+    "Page Not Found!": "Strona nie znaleziona!",
+    "Sorry, the page you are looking for does not exist.": "Przepraszamy, ale strona, której szukasz nie istnieje.",
+    "Go to Home": "Przejdź do strony głównej"
 }

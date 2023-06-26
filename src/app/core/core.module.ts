@@ -9,9 +9,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { TokenService } from './services/token.service';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
     RouterModule,
