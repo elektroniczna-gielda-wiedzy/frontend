@@ -1,4 +1,8 @@
-{
+{   
+    "Note.hint": "Notes are for support materials you would like to share. You can add them as a link in the description along with an illustrative photo or simply as a photo when the notes are short. You can also put information about contact via chat and agreeing on the method of sharing notes, e.g. when you want to share notebooks.",
+    "Post.hint": "The post should be about a specific problem or a one-time quick help. For example, with solving a task, explaining an issue or a question about the professors at the university.",
+    "Announcement.hint": "The announcement should be about tutoring or a request for help in learning in a given field.",
+    
     "app.title": "Knowledge Exchange",
     "Knowledge Exchange": "Knowledge Exchange",
     "All": "All",

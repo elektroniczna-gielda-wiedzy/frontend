@@ -1,4 +1,8 @@
 {
+    "Note.hint": "Notatki dotyczą materiałów pomocniczych, którymi chciałbyś się podzielić. Możesz je dodać jako link w opisie wraz z poglądowym zdjęciem lub po prostu jako zdjęcie, gdy notatki są krótkie. Możesz również umieścić informację o kontakcie przez chat oraz uzgodnieniiu metody udostępnienia notatek np. przy chęci podzielenia się zeszytami.",
+    "Post.hint": "Post powinien dotyczyć konkretnego problemu lub jednorazowej krótkiej pomocy. Np. z rozwiązaniemm zadania, wyjaśnieniem jakiegoś zagadnienia lub pytania o prowadzących.",
+    "Announcement.hint": "Ogłoszenie powinno dotyczyć korepetycji lub prośby o pomoc w nauce w danej dziedzinie.",
+
     "app.title": "Giełda wiedzy",
     "Knowledge Exchange": "Giełda wiedzy",
     "All": "Wszystkie",
