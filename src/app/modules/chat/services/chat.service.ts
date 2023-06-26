@@ -78,7 +78,7 @@ export class ChatService {
     this.user = null;
   }
 
-  initUnreadCount() {
+  updateUnreadCount() {
     this.chatHttpService.getUnreadCount().subscribe(
       (response) => {
         this.unreadCount.next(response.result[0]);
@@ -88,5 +88,9 @@ export class ChatService {
 
   decrementUnreadCount() {
     this.unreadCount.next(this.unreadCount.value - 1);
+  }
+
+  incrementUnreadCount() {
+    this.unreadCount.next(this.unreadCount.value + 1);
   }
 }

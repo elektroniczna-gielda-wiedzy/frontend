@@ -32,6 +32,7 @@ export class ChatListComponent {
   ngOnInit(): void {
     this.initBreakPoint();
     this.initReceiveMessage();
+    this.initNewChat();
     this.initChatList();
   }
 
@@ -50,6 +51,9 @@ export class ChatListComponent {
     if (message.chat_id === this.currentChatId) {
       this.newMessage = message;
       this.markAsRead(chat);
+    } else if (chat.is_read) {
+      chat.is_read = false;
+      this.chatService.incrementUnreadCount();
     }
   }
 
@@ -65,38 +69,41 @@ export class ChatListComponent {
     this.chatListSubscription = this.chatHttpService
       .getChatList()
       .subscribe((response) => {
-        this.chatList = response.result;
+        this.chatList.push(...response.result);
         this.displayChatList = this.chatList;
         this.noChats = this.chatList.length === 0;
         if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
           this.currentChatId = this.chatList[0].chat_id;
+          this.markAsRead(this.chatList[0]);
         }
         this.subscribeToChats();
         this.initNotification();
-        this.initNewChat();
       });
   }
 
   initNewChat() {
     const otherUser = this.chatService.getUser();
 
+    if (!otherUser) {
+      return;
+    }
+    
     const chat = this.chatList.find((chat) => {
       return chat.other_user.user_id === otherUser?.user_id;
     });
 
-    if (chat && otherUser) {
+    if (chat) {
       this.currentChatId = chat.chat_id;
       return;
     }
 
-    if (otherUser) {
-      this.noChats = false;
-      this.chatList.unshift({
-        chat_id: -1,
-        other_user: { ...otherUser },
-      });
-      this.currentChatId = -1;
-    }
+    this.noChats = false;
+    this.chatList.unshift({
+      chat_id: -1,
+      other_user: { ...otherUser },
+      is_read: true,
+    });
+    this.currentChatId = -1;
   }
 
   initNotification() {
@@ -121,6 +128,7 @@ export class ChatListComponent {
         this.isMobile = result.matches;
         if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
           this.currentChatId = this.chatList[0].chat_id;
+          this.markAsRead(this.chatList[0]);
         } else if (this.isMobile && this.currentChatId) {
           this.displayChatList = this.chatList.filter(
             (chat) => chat.chat_id === this.currentChatId
@@ -215,6 +223,13 @@ export class ChatListComponent {
           other_user: chat.messages[0].sender,
           last_message: chat.messages.at(-1),
         });
+        this.chatService.incrementUnreadCount();
+
+        if (this.chatList.length === 1 && !this.isMobile) {
+          this.currentChatId = chatId;
+          this.markAsRead(this.chatList[0]);
+        }
+        
         this.chatService.subscribeToChat(chatId);
       });
   }

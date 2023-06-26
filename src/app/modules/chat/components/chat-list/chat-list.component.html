@@ -19,7 +19,7 @@
         >markunread</mat-icon
       >
       <mat-icon
-        *ngIf="chat.is_read"
+        *ngIf="chat.is_read && chat.chat_id !== -1"
         class="chat-card-right-item"
         color="accent"
         >drafts</mat-icon

@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.chatService.initUnreadCount();
+    this.chatService.updateUnreadCount();
   }
 
   ngOnDestroy(): void {
@@ -88,9 +88,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.notificationsSubscription = this.chatService
       .notifications()
       .subscribe((notification: Message) => {
-        this.logger.trace('notification', notification.body);
         if (this.router.url !== '/chat') {
           this.displayNotification();
+          this.chatService.updateUnreadCount();
         }
       });
   }
