@@ -46,10 +46,11 @@
 
     <div class="card-footer">
       <button
-        *ngIf="entry?.entry_type_id !== 3"
+        *ngIf="entry?.entry_type_id !== 3 && !isAuthor"
         mat-raised-button
         color="primary"
         class="contact-button"
+        (click)="contactAuthor()"
       >
         {{ "Contact author" | translate }}
       </button>

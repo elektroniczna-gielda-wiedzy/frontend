@@ -3,6 +3,12 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+import { ChatService } from 'src/app/modules/chat/services/chat.service';
+import { NGXLogger } from 'ngx-logger';
+import { Message } from '@stomp/stompjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +18,9 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private isLoggedInSubscription?: Subscription;
+  private notificationsSubscription?: Subscription;
   profileDropdownOpen = false;
-  links: { url: string; label: string }[] = [];
+  links: { url: string; label: string, badge?: Observable<number> }[] = [];
   profileLinks = [
     { url: '/profile/entries', label: 'My entries' },
     { url: '/profile/favorites', label: 'My favorites' },
@@ -23,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { url: '/entries/post', label: 'Posts' },
     { url: '/entries/note', label: 'Notes' },
     { url: '/entries/announcement', label: 'Announcements' },
+    { url: '/chat', label: 'Chat', badge: this.chatService.unreadCount$ },
   ];
   notLoggedInLinks = [
     { url: '/auth/sign-in', label: 'Sign In' },
@@ -34,11 +42,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
       map((result) => result.matches),
       shareReplay()
     );
+    
+  currentPath?: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService,
+    private logger: NGXLogger,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService,
+  ) {}
 
   signOut(): void {
     this.authService.logout();
+    this.chatService.disconnect();
   }
 
   ngOnInit(): void {
@@ -46,16 +64,48 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (isLoggedIn) => {
         if (isLoggedIn) {
           this.links = this.loggedInLinks;
+          this.initChat();
         } else {
           this.links = this.notLoggedInLinks;
         }
       }
     );
+    this.chatService.updateUnreadCount();
   }
 
   ngOnDestroy(): void {
     if (this.isLoggedInSubscription) {
       this.isLoggedInSubscription.unsubscribe();
     }
+    if (this.notificationsSubscription) {
+      this.notificationsSubscription.unsubscribe();
+    }
+    this.chatService.disconnect();
+  }
+
+  initChat(): void {
+    this.chatService.connect();
+    this.notificationsSubscription = this.chatService
+      .notifications()
+      .subscribe((notification: Message) => {
+        if (this.router.url !== '/chat') {
+          this.displayNotification();
+          this.chatService.updateUnreadCount();
+        }
+      });
+  }
+
+  displayNotification() {
+    const snackBarRef = this.snackBar.open(
+      this.translateService.instant('You have a new message!'),
+      this.translateService.instant('Go to chat'),
+      {
+        duration: 7000,
+        verticalPosition: 'top',
+        horizontalPosition: 'left',
+      });
+    snackBarRef.onAction().subscribe(() => {
+      this.router.navigate(['/chat']);
+    });
   }
 }

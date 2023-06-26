@@ -1,0 +1,86 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 64px);
+  @media (max-width: 599px) {
+    height: calc(100% - 56px);
+  }
+}
+
+mat-card-subtitle,
+mat-card-title {
+  $title-row-count: 1;
+  $line-height: 1.5em;
+
+  display: -webkit-box;
+  -webkit-line-clamp: $title-row-count;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5em;
+  height: calc($line-height * $title-row-count);
+  transition: all 0.2s ease-in-out;
+}
+
+.chat-card {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(mat.get-color-from-palette(theme.$app-accent), 0.5);
+  &.open {
+    background-color: mat.get-color-from-palette(theme.$app-accent, "lighter");
+  }
+  &.not-read {
+    color: mat.get-color-from-palette(theme.$app-accent, 900);
+  }
+}
+
+.no-chats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5em;
+  color: mat.get-color-from-palette(theme.$app-accent);
+  text-align: center;
+}
+
+.chat-outer-container {
+  display: flex;
+
+  &.desktop {
+    flex-direction: row;
+    gap: 1em;
+    & > .chat-list {
+      width: 500px;
+    }
+  }
+  &:not(.desktop) {
+    flex-direction: column;
+    min-height: 200px;
+  }
+}
+
+.chat-card-right-item {
+  position: absolute;
+  top: 50%;
+  right: 0.5em;
+  transform: translateY(-50%);
+}
+
+.chat-outer-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-list,
+app-chat-details {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.chat-list {
+  min-height: 100px;
+  max-height: 100%;
+  overflow-y: auto;
+}

@@ -13,8 +13,10 @@ import {
   EntryType,
   ImageService,
   Language,
+  TokenService,
   stringToEntryType,
 } from 'src/app/core';
+import { ChatService } from 'src/app/modules/chat/services/chat.service';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 
@@ -39,7 +41,9 @@ export class EntryDetailsComponent {
     private languageService: LanguageService,
     private imageService: ImageService,
     private dialog: MatDialog,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private chatService: ChatService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
@@ -130,4 +134,14 @@ export class EntryDetailsComponent {
     }
   }
 
+  contactAuthor() {
+    if (!this.entry) return;
+    this.chatService.startChatWithUser(this.entry.author);
+    this.router.navigate(['/chat']);
+  }
+
+  get isAuthor(): boolean {
+    if (!this.entry) return false;
+    return this.tokenService.getUserId() === this.entry.author.user_id;
+  }
 }
