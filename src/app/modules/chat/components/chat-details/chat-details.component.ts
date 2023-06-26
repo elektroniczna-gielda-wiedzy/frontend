@@ -99,6 +99,7 @@ export class ChatDetailsComponent {
     }
     this.chatHttpService.getChat(this.chatId).subscribe((response) => {
       this.chat = response.result[0];
+      this.chatService.subscribeToChat(this.chat.chat_id);
     });
   }
 

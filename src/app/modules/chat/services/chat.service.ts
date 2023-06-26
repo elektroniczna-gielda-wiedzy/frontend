@@ -31,6 +31,9 @@ export class ChatService {
   }
 
   subscribeToChat(chatId: number) {
+    if (this.chatSubscriptions.has(chatId)) {
+      return;
+    }
     const subscription = this.rxStompService
       .watch(`/topic/chat/${chatId}`)
       .subscribe((message: Message) => {

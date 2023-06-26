@@ -202,7 +202,6 @@ export class ChatListComponent {
       chat.chat_id = chatId;
     }
     this.currentChatId = chatId;
-    this.chatService.subscribeToChat(chatId);
   }
 
   handleNewChatStarted(chatId: number) {
