@@ -1,10 +1,11 @@
 import { RxStompConfig } from '@stomp/rx-stomp';
 import { TokenService } from 'src/app/core';
+import { environment } from 'src/environments/environment';
 
 export function myRxStompConfig(): RxStompConfig {
   return {
     // Which server?
-    brokerURL: 'ws://127.0.0.1:8080/ws',
+    brokerURL: environment.brokerURL,
 
     // Headers
     // Typical keys: login, passcode, host
