@@ -32,7 +32,6 @@ export class ChatListComponent {
   ngOnInit(): void {
     this.initBreakPoint();
     this.initReceiveMessage();
-    this.initNewChat();
     this.initChatList();
   }
 
@@ -69,13 +68,10 @@ export class ChatListComponent {
     this.chatListSubscription = this.chatHttpService
       .getChatList()
       .subscribe((response) => {
-        this.chatList.push(...response.result);
+        this.chatList = response.result;
         this.displayChatList = this.chatList;
         this.noChats = this.chatList.length === 0;
-        if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
-          this.currentChatId = this.chatList[0].chat_id;
-          this.markAsRead(this.chatList[0]);
-        }
+        this.initNewChat();
         this.subscribeToChats();
         this.initNotification();
       });
@@ -85,15 +81,23 @@ export class ChatListComponent {
     const otherUser = this.chatService.getUser();
 
     if (!otherUser) {
+      if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
+        this.currentChatId = this.chatList[0].chat_id;
+        this.markAsRead(this.chatList[0]);
+      }
       return;
     }
-    
+
     const chat = this.chatList.find((chat) => {
       return chat.other_user.user_id === otherUser?.user_id;
     });
 
     if (chat) {
       this.currentChatId = chat.chat_id;
+      if (this.isMobile) {
+        this.displayChatList = [chat];
+        this.markAsRead(chat);
+      }
       return;
     }
 
@@ -104,6 +108,9 @@ export class ChatListComponent {
       is_read: true,
     });
     this.currentChatId = -1;
+    if (this.isMobile) {
+      this.displayChatList = [this.chatList[0]];
+    }
   }
 
   initNotification() {
@@ -176,14 +183,12 @@ export class ChatListComponent {
       return;
     }
 
-    this.chatHttpService.markAsRead(chat.chat_id).subscribe(
-      (response) => {
-        if (response.success){
-          chat.is_read = true;
-          this.chatService.decrementUnreadCount();
-        }
+    this.chatHttpService.markAsRead(chat.chat_id).subscribe((response) => {
+      if (response.success) {
+        chat.is_read = true;
+        this.chatService.decrementUnreadCount();
       }
-    );
+    });
   }
 
   goToList(event: Event) {
@@ -197,9 +202,19 @@ export class ChatListComponent {
 
   createChatCompleted(chatId: number) {
     this.chatService.stopChatWithUser();
-    const chat = this.chatList.find((chat) => chat.chat_id === -1)
+    const chat = this.chatList.find((chat) => chat.chat_id === -1);
     if (chat) {
       chat.chat_id = chatId;
+      this.chatListSubscription = this.chatHttpService
+        .getChatList()
+        .subscribe((response) => {
+          const newChat = response.result.find(
+            (chat) => chat.chat_id === chatId
+          );
+          if (newChat) {
+            chat.last_message = newChat.last_message;
+          }
+        });
     }
     this.currentChatId = chatId;
   }
@@ -228,7 +243,7 @@ export class ChatListComponent {
           this.currentChatId = chatId;
           this.markAsRead(this.chatList[0]);
         }
-        
+
         this.chatService.subscribeToChat(chatId);
       });
   }
