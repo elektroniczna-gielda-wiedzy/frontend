@@ -99,7 +99,6 @@ export class ChatDetailsComponent {
     }
     this.chatHttpService.getChat(this.chatId).subscribe((response) => {
       this.chat = response.result[0];
-      this.chatService.subscribeToChat(this.chat.chat_id);
     });
   }
 
@@ -146,6 +145,7 @@ export class ChatDetailsComponent {
     this.chatHttpService.createChat(otherUserId).subscribe((response) => {
       this.chatId = response.result[0].chat_id;
       this.createChatCompleted.emit(this.chatId);
+      this.chatService.subscribeToChat(this.chatId);
       this.sendMessageToChat(message);
     });
   }

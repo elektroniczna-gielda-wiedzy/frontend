@@ -4,6 +4,7 @@ import { ChatService } from '../../services/chat.service';
 import { Author, ChatListItem, ChatMessage } from 'src/app/core';
 import { ChatHttpService } from '../../services/chat-http.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-chat-list',
@@ -18,15 +19,16 @@ export class ChatListComponent {
   displayChatList: ChatListItem[] = [];
   private chatListSubscription?: Subscription;
   private notificationSubscription?: Subscription;
-  private chatSubscription?: Subscription;
   private breakpointSubscription?: Subscription;
   noChats = false;
   isMobile = false;
+  waitingForChat: number | null | undefined = null;
 
   constructor(
     private chatService: ChatService,
     private chatHttpService: ChatHttpService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private logger: NGXLogger
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class ChatListComponent {
       (chat) => chat.chat_id === message.chat_id
     );
     if (chatIndex === -1) {
+      this.handleNewChatStarted(message.chat_id);
       return;
     }
 
@@ -152,7 +155,6 @@ export class ChatListComponent {
     this.notificationSubscription?.unsubscribe();
     this.messagesSubscription?.unsubscribe();
     this.chatListSubscription?.unsubscribe();
-    this.chatSubscription?.unsubscribe();
     this.breakpointSubscription?.unsubscribe();
   }
 
@@ -202,49 +204,48 @@ export class ChatListComponent {
 
   createChatCompleted(chatId: number) {
     this.chatService.stopChatWithUser();
-    const chat = this.chatList.find((chat) => chat.chat_id === -1);
-    if (chat) {
-      chat.chat_id = chatId;
-      this.chatListSubscription = this.chatHttpService
-        .getChatList()
-        .subscribe((response) => {
-          const newChat = response.result.find(
-            (chat) => chat.chat_id === chatId
-          );
-          if (newChat) {
-            chat.last_message = newChat.last_message;
-          }
-        });
+    const chatIndex = this.chatList.findIndex(
+      (chat) => chat.chat_id === -1
+    );
+    if (chatIndex !== -1) {
+      this.chatList.splice(chatIndex, 1);
     }
-    this.currentChatId = chatId;
+    this.waitingForChat = chatId;
   }
 
   handleNewChatStarted(chatId: number) {
     if (
-      this.chatSubscription ||
       this.chatList.find((chat) => chat.chat_id === chatId)
     ) {
       return;
     }
+    this.logger.trace('New chat started', chatId);
 
-    this.chatSubscription = this.chatHttpService
-      .getChat(chatId)
+    
+
+    this.chatListSubscription = this.chatHttpService
+      .getChatList()
       .subscribe((response) => {
-        this.noChats = false;
-        const chat = response.result[0];
-        this.chatList.unshift({
-          chat_id: chat.chat_id,
-          other_user: chat.messages[0].sender,
-          last_message: chat.messages.at(-1),
-        });
-        this.chatService.incrementUnreadCount();
+        const chat = response.result.find((chat) => chat.chat_id === chatId);
+        if (chat) {
+          this.noChats = false;
+          this.chatList.unshift(chat);
+          if (!chat.is_read) {
+            this.chatService.incrementUnreadCount();
+          }
+          this.chatService.subscribeToChat(chatId);
 
-        if (this.chatList.length === 1 && !this.isMobile) {
-          this.currentChatId = chatId;
-          this.markAsRead(this.chatList[0]);
+          if (this.chatList.length === 1 && !this.isMobile) {
+            this.currentChatId = chatId;
+            this.markAsRead(chat);
+          }
+
+          if (this.waitingForChat === chatId) {
+            this.currentChatId = chatId;
+            this.waitingForChat = null;
+            this.markAsRead(chat);
+          }
         }
-
-        this.chatService.subscribeToChat(chatId);
       });
   }
 }
