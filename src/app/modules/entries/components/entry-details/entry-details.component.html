@@ -12,11 +12,16 @@
     <div class="content">
       {{ entry?.content }}
     </div>
-
-    <div *ngIf="image" class="image-container" (click)="openDialog()">
-      <img [src]="image" />
-    </div>
-
+    <ng-container *ngIf="entry?.image">
+      <div *ngIf="image; else spinner" class="image-container">
+        <img [src]="image" (click)="openDialog()" />
+      </div>
+      <ng-template #spinner>
+        <div class="image-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+    </ng-container>
     <div class="categories">
       <mat-chip-set>
         <div *ngFor="let category of entry?.categories">
@@ -74,10 +79,10 @@
   </mat-card-content>
   <div *appIfAuthorOrAdmin="entry?.author?.user_id">
     <app-entry-action-buttons
-    *ngIf="entry"
-    [entryId]="entry.entry_id"
-    [entryType]="entry.entry_type_id"
-    (entryDeleted)="entryDeleted($event)"
+      *ngIf="entry"
+      [entryId]="entry.entry_id"
+      [entryType]="entry.entry_type_id"
+      (entryDeleted)="entryDeleted($event)"
     ></app-entry-action-buttons>
   </div>
   <app-answer-card
