@@ -5,7 +5,7 @@ export const environment = {
   tokenAllowedDomains: ['localhost:8080'],
   tokenDisallowedRoutes: ['http://localhost:8080/api/v1/auth/sign_in', 'http://localhost:8080/api/v1/auth/sign_up'],
   apiUrl: 'http://localhost:8080/api/v1',
-  brokerURL: 'ws://localhost:8080/ws',
+  brokerURL: 'ws://localhost:8080/api/v1/ws',
   defaultLanguage: 'pl',
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
