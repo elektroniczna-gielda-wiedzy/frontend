@@ -12,6 +12,10 @@
     object-position: center;
     cursor: pointer;
   }
+
+  & > mat-spinner {
+    margin: 3em 0 0 6em;
+  }
 }
 
 .fullscreen-dialog {

@@ -13,6 +13,7 @@ import { MatPseudoCheckbox, MatPseudoCheckboxModule } from '@angular/material/co
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 @NgModule({
     declarations: [
     ],
@@ -28,7 +29,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatSelectModule,
         MatCheckboxModule,
         MatGridListModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule
     ]
 })
 export class MaterialModule { }

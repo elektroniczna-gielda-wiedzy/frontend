@@ -11,8 +11,9 @@
       </h3>
     </mat-card-title>
     <mat-icon
+      *ngIf="entryType"
       color="primary"
-      matTooltip="{{ getEntryTypeHint(entryType) }}"
+      matTooltip="{{ getHint(entryType) }}"
       aria-label="Help guide"
       class="help-guide"
       >help</mat-icon

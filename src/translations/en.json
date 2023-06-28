@@ -1,4 +1,8 @@
-{
+{   
+    "Note.hint": "Notes are for support materials you would like to share. You can add them as a link in the description along with an illustrative photo or simply as a photo when the notes are short. You can also put information about contact via chat and agreeing on the method of sharing notes, e.g. when you want to share notebooks.",
+    "Post.hint": "The post should be about a specific problem or a one-time quick help. For example, with solving a task, explaining an issue or a question about the professors at the university.",
+    "Announcement.hint": "The announcement should be about tutoring or a request for help in learning in a given field.",
+    
     "app.title": "Knowledge Exchange",
     "Knowledge Exchange": "Knowledge Exchange",
     "All": "All",
@@ -72,5 +76,17 @@
     "Faculties": "Faculties",
     "Apply filters": "Apply filters",
     "Clear filters": "Clear filters",
-    "Search": "Search"
+    "Search": "Search",
+
+    "You": "You",
+    "Start a conversation!": "Start a conversation!",
+    "You currently have no chats started!": "You currently have no chats started!",
+    "You can start a chat by clicking": "You can start a chat by clicking",
+    "in the note or announcement details view": "in the note or announcement details view",
+    "You have a new message!": "You have a new message!",
+    "Go to chat": "Go to chat",
+
+    "Page Not Found!": "Page Not Found!",
+    "Sorry, the page you are looking for does not exist.": "Sorry, the page you are looking for does not exist.",
+    "Go to Home": "Go to Home"
 }

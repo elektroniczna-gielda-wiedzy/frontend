@@ -20,6 +20,7 @@ export * from './models/category';
 export * from './models/user';
 export * from './models/token';
 export * from './models/standard-response';
+export * from './models/chat';
 
 // guards
 export * from './guards/entry-type.guard';

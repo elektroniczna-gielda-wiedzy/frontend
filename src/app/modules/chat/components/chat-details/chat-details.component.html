@@ -1,0 +1,48 @@
+<mat-list class="chat-outer-container">
+  <div #scrollMe class="chat-container">
+    <div
+      mat-list-item
+      *ngFor="let message of chat?.messages"
+      class="message-container"
+      [class.own-message]="isOwnMessage(message)"
+    >
+      <div class="message-info">
+        <span class="message-author"> {{ senderName(message) | translate }} </span>
+        <span
+          class="message-time"
+          [class.own-message]="isOwnMessage(message)"
+          >{{ message.date_sent | relativeTime : currentLanguage }}
+          </span
+        >
+      </div>
+      <div class="message-content" [class.own-message]="isOwnMessage(message)">
+        {{ message.content }}
+      </div>
+    </div>
+  </div>
+  <form
+    [formGroup]="messageForm"
+    (ngSubmit)="sendMessage()"
+    class="message-form"
+  >
+    <mat-form-field class="message-form-field" appearance="outline">
+      <textarea
+        matInput
+        formControlName="messageContent"
+        placeholder="Type your message"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"
+      ></textarea>
+      <button
+        type="submit"
+        mat-icon-button
+        matSuffix
+        color="primary"
+        class="contact-button"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</mat-list>

@@ -235,12 +235,16 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     return this.categoryService.getCategoryName(category);
   }
 
-  getEntryTypeHint(entry_type: EntryType | null) {
-    let result: string = '';
-    if (entry_type) {
-      result = this.entryHttpService.getCategoryTypeHint(entry_type);
-    }
-    return result;
+  // getEntryTypeHint(entry_type: EntryType | null) {
+  //   let result: string = '';
+  //   if (entry_type) {
+  //     result = this.entryHttpService.getCategoryTypeHint(entry_type);
+  //   }
+  //   return result;
+  // }
+
+  getHint(entryType: EntryType) {
+    return this.languageService.translate(EntryType[entryType] + '.hint');
   }
 
   removeImage() {
