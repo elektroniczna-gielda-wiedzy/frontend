@@ -19,6 +19,8 @@ import { Location } from '@angular/common';
 import { NGXLogger } from 'ngx-logger';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entry-add',
@@ -26,7 +28,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./entry-add.component.scss'],
 })
 export class EntryAddComponent implements OnInit, OnDestroy {
-  entry?: EntryRequest;
+  entry?: Entry;
   entryId?: number;
   entryImage?: string | null;
   defaultImage?: string;
@@ -63,7 +65,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     private languageService: LanguageService,
     private breakpointObserver: BreakpointObserver,
     private entryHttpService: EntryHttpService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -127,27 +130,29 @@ export class EntryAddComponent implements OnInit, OnDestroy {
           return;
         }
 
-        const entry = response.result[0];
+        this.entry = response.result[0];
 
-        if (entry.entry_type_id !== this.entryType) {
-          
+        if (this.entry.entry_type_id !== this.entryType) {
           this.router.navigate([
             'entries',
-            EntryType[entry.entry_type_id].toLowerCase(),
-            entry.entry_id,
-            'edit'
+            EntryType[this.entry.entry_type_id].toLowerCase(),
+            this.entry.entry_id,
+            'edit',
           ]);
-          this.entryType = entry.entry_type_id;
-          this.entryTypeString = EntryType[entry.entry_type_id].toLowerCase();
+          this.entryType = this.entry.entry_type_id;
+          this.entryTypeString =
+            EntryType[this.entry.entry_type_id].toLowerCase();
         }
 
         this.form.patchValue({
-          title: entry.title,
-          content: entry.content,
-          categories: entry.categories.map((category) => category.category_id),
+          title: this.entry.title,
+          content: this.entry.content,
+          categories: this.entry.categories.map(
+            (category) => category.category_id
+          ),
         });
-        if (entry.image) {
-          this.loadImage(entry.image);
+        if (this.entry.image) {
+          this.loadImage(this.entry.image);
         }
       },
       error: (response) => {
@@ -162,7 +167,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       this.defaultImage = response;
     });
   }
-
 
   onFileSelected(event: any): void {
     const max_size = 20971520;
@@ -221,11 +225,13 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       error: (err: any) => {
         this.sending = false;
         this.logger.error(err);
-      }
-    }
+      },
+    };
 
     if (this.entryId) {
-      this.entryHttpService.updateEntry(this.entryId, entry).subscribe(handleResponse);
+      this.entryHttpService
+        .updateEntry(this.entryId, entry)
+        .subscribe(handleResponse);
     } else {
       this.entryHttpService.createEntry(entry).subscribe(handleResponse);
     }
@@ -252,5 +258,12 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     this.filename = '';
+  }
+
+  openDialog(): void {
+    this.dialog.open(FullscreenImageDialogComponent, {
+      data: { image: this.entryImage },
+      panelClass: 'fullscreen-dialog',
+    });
   }
 }

@@ -77,9 +77,24 @@
               #fileInput
               type="file"
             />
-            <div class="current-image-container" *ngIf="entryImage">
-              <img class="current-image" [src]="entryImage" />
-            </div>
+
+            <ng-container *ngIf="entry?.image || entryImage">
+              <div
+                class="current-image-container"
+                *ngIf="entryImage; else spinner"
+              >
+                <img
+                  class="current-image"
+                  [src]="entryImage"
+                  (click)="openDialog()"
+                />
+              </div>
+              <ng-template #spinner>
+                <div class="current-image-container">
+                  <mat-spinner></mat-spinner>
+                </div>
+              </ng-template>
+            </ng-container>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
