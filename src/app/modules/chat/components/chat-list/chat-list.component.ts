@@ -185,10 +185,18 @@ export class ChatListComponent {
       return;
     }
 
-    this.chatHttpService.markAsRead(chat.chat_id).subscribe((response) => {
-      if (response.success) {
-        chat.is_read = true;
-        this.chatService.decrementUnreadCount();
+    chat.is_read = true;
+
+    this.chatHttpService.markAsRead(chat.chat_id).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.chatService.decrementUnreadCount();
+        } else {
+          chat.is_read = false;
+        }
+      },
+      error: () => {
+        chat.is_read = false;
       }
     });
   }
@@ -209,6 +217,12 @@ export class ChatListComponent {
     );
     if (chatIndex !== -1) {
       this.chatList.splice(chatIndex, 1);
+    }
+
+    const chat = this.chatList.find((chat) => chat.chat_id === chatId);
+    if (chat) {
+      this.goToChat(chatId);
+      return;
     }
     this.waitingForChat = chatId;
   }
