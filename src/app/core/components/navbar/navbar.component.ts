@@ -65,12 +65,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (isLoggedIn) {
           this.links = this.loggedInLinks;
           this.initChat();
+          this.chatService.updateUnreadCount();
         } else {
           this.links = this.notLoggedInLinks;
         }
       }
     );
-    this.chatService.updateUnreadCount();
   }
 
   ngOnDestroy(): void {
