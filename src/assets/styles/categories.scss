@@ -1,50 +1,41 @@
-
 @use "src/assets/styles/entry-card-variables.scss" as *;
 @use "@angular/material" as mat;
 @use "src/theme";
 
 .categories {
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    overflow: hidden;
-    gap: $categories-gap;
-    margin: 1em 0;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  overflow: hidden;
+  gap: $categories-gap;
+  margin: 1em 0;
 }
 
 .category {
-    padding: 0 0.4em;
-    border-radius: 100px;
-    // border-style: solid;
-    // border-width: $category-border-width;
-    white-space: nowrap;
-    overflow: hidden;
-    line-height: $category-line-height;
-    // max-width: calc($max-card-width - 2em);
-    height: $category-line-height;
-    color: black;
+  padding: 0 0.4em;
+  border-radius: 100px;
+  // border-style: solid;
+  // border-width: $category-border-width;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: $category-line-height;
+  // max-width: calc($max-card-width - 2em);
+  height: $category-line-height;
+  color: black;
 
-    &.faculty {
-        background-color: mat.get-color-from-palette(
-            theme.$app-accent,
-            "lighter"
-        );
-        // border-color: mat.get-color-from-palette(theme.$app-accent, "darker");
+  &.faculty {
+    background-color: mat.get-color-from-palette(theme.$app-accent, 50);
 
-        &.major {
-            background-color: mat.get-color-from-palette(theme.$app-accent);
-        }
+    &.major {
+      background-color: mat.get-color-from-palette(theme.$app-accent, 200);
     }
+  }
 
-    &.area {
-        background-color: mat.get-color-from-palette(
-            theme.$app-primary,
-            "lighter"
-        );
-        // border-color: mat.get-color-from-palette(theme.$app-primary, "darker");
+  &.area {
+    background-color: mat.get-color-from-palette(theme.$app-primary, 50);
 
-        &.subarea {
-            background-color: mat.get-color-from-palette(theme.$app-primary);
-        }
+    &.subarea {
+      background-color: mat.get-color-from-palette(theme.$app-primary, 200);
     }
+  }
 }
