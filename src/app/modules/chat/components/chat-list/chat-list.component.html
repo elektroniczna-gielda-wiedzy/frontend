@@ -10,6 +10,7 @@
       class="chat-card"
       [class.not-read]="!chat.is_read"
       [class.open]="currentChatId === chat.chat_id"
+      [class.mobile]="isMobile"
       (click)="goToChat(chat.chat_id)"
     >
       <mat-icon

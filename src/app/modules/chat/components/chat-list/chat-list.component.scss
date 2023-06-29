@@ -34,6 +34,14 @@ mat-card-title {
   &.not-read {
     color: mat.get-color-from-palette(theme.$app-accent, 900);
   }
+  & > mat-card-content, & > mat-card-header {
+    padding-right: 3em;
+  }
+  &.mobile.open {
+    & > mat-card-content, & > mat-card-header {
+      padding-right: 4em;
+    }
+  }
 }
 
 .no-chats {
