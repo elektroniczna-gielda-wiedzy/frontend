@@ -1,5 +1,6 @@
 @use "src/assets/styles/entry-list.scss";
-
+@use "@angular/material" as mat;
+@use "src/theme";
 
 .entry-list-outer-container {
     margin: 1em;
@@ -10,4 +11,9 @@
 
 h1 {
     text-align: center;
+}
+
+.tabs-container {
+    border-radius: 0.5em;
+    background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
 }

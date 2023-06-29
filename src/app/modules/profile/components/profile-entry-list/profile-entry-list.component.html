@@ -1,6 +1,6 @@
 <div class="entry-list-outer-container">
     <h1>{{('My ' + page) | translate}}</h1>
-    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab-group class="tabs-container" (selectedTabChange)="onTabChange($event)">
         <mat-tab label="{{getLabel('All')}}"></mat-tab>
         <mat-tab label="{{getLabel('Posts')}}"></mat-tab>
         <mat-tab label="{{getLabel('Notes')}}"></mat-tab>
