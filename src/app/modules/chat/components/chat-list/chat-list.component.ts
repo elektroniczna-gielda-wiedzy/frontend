@@ -99,8 +99,8 @@ export class ChatListComponent {
       this.currentChatId = chat.chat_id;
       if (this.isMobile) {
         this.displayChatList = [chat];
-        this.markAsRead(chat);
       }
+      this.markAsRead(chat);
       return;
     }
 
