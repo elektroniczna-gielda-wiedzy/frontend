@@ -32,7 +32,7 @@ mat-card-title {
     background-color: mat.get-color-from-palette(theme.$app-accent, "lighter");
   }
   &.not-read {
-    color: mat.get-color-from-palette(theme.$app-accent, 900);
+    color: mat.get-color-from-palette(theme.$app-primary);
   }
   & > mat-card-content, & > mat-card-header {
     padding-right: 3em;
@@ -50,9 +50,9 @@ mat-card-title {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.5em;
-  color: mat.get-color-from-palette(theme.$app-accent);
+  font-size: 1.3em;
   text-align: center;
+  padding: 1em;
 }
 
 .chat-outer-container {

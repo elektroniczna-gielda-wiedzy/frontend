@@ -16,19 +16,19 @@
       <mat-icon
         *ngIf="!chat.is_read"
         class="chat-card-right-item"
-        color="accent"
+        color="primary"
         >markunread</mat-icon
       >
       <mat-icon
         *ngIf="chat.is_read && chat.chat_id !== -1"
         class="chat-card-right-item"
-        color="accent"
+        color="primary"
         >drafts</mat-icon
       >
       <button
         *ngIf="isMobile && currentChatId === chat.chat_id"
         mat-mini-fab
-        color="accent"
+        color="primary"
         class="chat-card-right-item"
         (click)="goToList($event)"
       >

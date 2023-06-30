@@ -49,7 +49,7 @@ mat-toolbar a:last-of-type {
 }
 
 .active-side-nav-item {
-  background-color: mat.get-color-from-palette(theme.$app-accent, lighter);
+  background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
 }
 
 .badge::after {

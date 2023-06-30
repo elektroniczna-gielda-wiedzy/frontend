@@ -1,7 +1,7 @@
 <div class="language-selector-container" [class.side-nav]="sideNav">
   <button
     mat-button
-    color="{{ currentLanguage == polish ? 'accent' : '' }}"
+    color="{{ currentLanguage == polish ? (sideNav ? 'primary' : 'accent')  : '' }}"
     (click)="setLanguage(polish)"
   >
     {{ polishSelector }}
@@ -9,7 +9,7 @@
   <span>|</span>
   <button
     mat-button
-    color="{{ currentLanguage == english ? 'accent' : '' }}"
+    color="{{ currentLanguage == english ? (sideNav ? 'primary' : 'accent') : '' }}"
     (click)="setLanguage(english)"
   >
     {{ englishSelector }}
