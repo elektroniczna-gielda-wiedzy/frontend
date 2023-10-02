@@ -12,8 +12,11 @@ export class RelativeTimePipe implements PipeTransform {
   transform(value: any, lang: Language = Language.en): any {
     if (!value) return ''
     
-    const [date, time] = value.split(' ');
-    const [day, month, year] = date.split(':');
+    // const [date, time] = value.split(' ');
+    // const [day, month, year] = date.split(':');
+    // const [hour, minute] = time.split(':');
+    const [date, time] = value.split('T');
+    const [year, month, day] = date.split('-');
     const [hour, minute] = time.split(':');
 
     const previous = new Date(+year, +month - 1, +day, +hour, +minute);
