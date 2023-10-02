@@ -5,6 +5,7 @@
     </mat-card-title>
     <app-favorite-icon
       [isFavorite]="entry?.favorite === true"
+      [entryId]="entry?.entry_id"
       [bigger]="true"
     ></app-favorite-icon>
   </mat-card-header>

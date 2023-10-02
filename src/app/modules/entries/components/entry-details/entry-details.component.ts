@@ -115,19 +115,13 @@ export class EntryDetailsComponent {
     });
   }
 
-  handleFavorite(e: MouseEvent) {
-    e.stopPropagation();
-    if (!this.entry) return;
-    this.entry.favorite = !this.entry?.favorite;
-  }
-
   openDialog(): void {
     this.dialog.open(FullscreenImageDialogComponent, {
       data: { image: this.image },
       panelClass: 'fullscreen-dialog',
     });
   }
- 
+
   entryDeleted(id: number) {
     if (this.entry && this.entry.entry_id === id) {
       this.router.navigate(['/']);

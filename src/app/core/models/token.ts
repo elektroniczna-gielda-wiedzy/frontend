@@ -5,7 +5,7 @@ export interface TokenResponse {
 export const TOKEN_KEY = 'sessionToken';
 
 export interface TokenPayload {
-    subject: number;
+    user: number;
     role: string;
     iat: number;
     exp: number;

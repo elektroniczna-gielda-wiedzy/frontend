@@ -3,7 +3,8 @@
     <mat-card-title (click)="navigateToDetails()">{{
       entry.title
     }}</mat-card-title>
-    <app-favorite-icon [isFavorite]="entry.favorite"></app-favorite-icon>
+    <app-favorite-icon [isFavorite]="entry.favorite" [entryId]="entry.entry_id"
+    ></app-favorite-icon>
   </mat-card-header>
   <mat-card-content>
     <div class="categories">

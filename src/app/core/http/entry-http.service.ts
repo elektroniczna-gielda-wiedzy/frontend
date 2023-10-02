@@ -72,7 +72,7 @@ export class EntryHttpService {
 
     const userId = this.tokenService.getUserId();
     if (userId) {
-      queryParams.params = queryParams.params.set('favorites', true);
+      queryParams.params = queryParams.params.set('favorites', userId);
     } else {
       return of({ result: [], messages: ['No user id found'], success: false });
     }
@@ -80,6 +80,11 @@ export class EntryHttpService {
     queryParams.params = queryParams.params.set('order', 'DESC');
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
+  }
+
+  setFavorite(id: number, value: number): Observable<StandardResponse<Entry>> {
+    const url = `${this.apiUrl}/${id}/favorite`;
+    return this.http.put<StandardResponse<Entry>>(url, {value});
   }
 
   createEntry(params: EntryRequest): Observable<StandardResponse<Entry>> {

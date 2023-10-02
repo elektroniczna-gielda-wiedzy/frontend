@@ -34,7 +34,7 @@ export class TokenService {
 
   getUserId(token: string = TokenService.getToken()): number | null {
     const decodedToken = this.getDecodedToken(token);
-    return decodedToken ? decodedToken.subject : null;
+    return decodedToken ? decodedToken.user : null;
   }
 
   getUserRole(token: string = TokenService.getToken()): string | null {
