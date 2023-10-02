@@ -7,6 +7,7 @@ export interface Entry {
   entry_type_id: number;
   title: string;
   favorite: boolean;
+  votes: number;
   categories: Category[];
   author: Author;
   created_at: string;

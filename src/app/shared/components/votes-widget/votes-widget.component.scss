@@ -1,0 +1,40 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+.vote-widget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &.bigger {
+        font-size: 1.3em;
+    }
+}
+
+.votes-count {
+    user-select: none;
+    color: mat.get-color-from-palette(theme.$app-primary);
+}
+
+.vote-icon {
+    --hover-scale: 1.4;
+    font-size: 2.5em;
+    scale: 1;
+    flex-shrink: 0;
+    width: max-content;
+    height: max-content;
+    transition: all 0.2s ease-in-out;
+    &:hover:not(.is-author) {
+        cursor: pointer;
+        scale: var(--hover-scale);  
+        color: mat.get-color-from-palette(theme.$app-primary);
+    }
+}
+
+.vote-icon.voted {
+    color: mat.get-color-from-palette(theme.$app-primary);
+    scale: 1.2;
+    &:hover {
+        scale: var(--hover-scale);  
+    }
+}

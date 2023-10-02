@@ -123,4 +123,18 @@ export class EntryHttpService {
 
     return this.http.delete<StandardResponse<Entry>>(url);
   }
+
+  vote(
+    value: number,
+    entryId: number,
+    answerId?: number
+  ): Observable<StandardResponse<Entry>> {
+    let url = `${this.apiUrl}/${entryId}`;
+    if (answerId) {
+      url += `/answer/${answerId}`;
+    }
+    url += `/vote`;
+
+    return this.http.put<StandardResponse<Entry>>(url, { value });
+  }
 }

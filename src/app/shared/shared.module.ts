@@ -13,6 +13,7 @@ import { CategorySelectorComponent } from './components/category-selector/catego
 import { FullscreenImageDialogComponent } from './components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 import { EntryActionButtonsComponent } from './components/entry-action-buttons/entry-action-buttons.component';
 import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.directive';
+import { VotesWidgetComponent } from './components/votes-widget/votes-widget.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.direct
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
     IfAuthorOrAdminDirective,
+    VotesWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.direct
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
     IfAuthorOrAdminDirective,
+    VotesWidgetComponent
   ],
 })
 export class SharedModule {}

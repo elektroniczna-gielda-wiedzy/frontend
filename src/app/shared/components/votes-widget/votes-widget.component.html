@@ -1,0 +1,15 @@
+<div class="vote-widget-container" [ngClass]="{ bigger: !answerId }">
+  <mat-icon
+    (click)="vote(1)"
+    class="vote-icon"
+    [ngClass]="{ 'voted': voted === 1,'is-author': isAuthor }"
+    >arrow_drop_up</mat-icon
+  >
+    <span class="votes-count">{{ count }}</span>
+  <mat-icon
+  (click)="vote(-1)"
+  class="vote-icon"
+  [ngClass]="{ 'voted': voted === -1, 'is-author': isAuthor }"
+  >arrow_drop_down</mat-icon
+>
+</div>
