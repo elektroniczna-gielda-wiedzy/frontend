@@ -30,7 +30,12 @@ mat-card-footer {
     margin: 1em;
     
 }
-.answer-cont{
+
+.answer-outer-container {
+    display: flex;
+}
+
+.answer-container{
     display: flex;
     flex-direction: column ;
     gap:1em;
@@ -56,7 +61,7 @@ mat-card-footer {
     gap: 1em;
 }
 
-.card-footer{
+.answer-footer{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

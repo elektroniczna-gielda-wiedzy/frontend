@@ -3,46 +3,58 @@
   <h3>{{ answers?.length }} {{ "Answers" | translate }}</h3>
 </mat-card-header>
 <mat-card-content *ngFor="let answer of answers">
-  <div class="answer-cont">
-    <div class="content">
-      {{ answer?.content }}
-    </div>
+  <div class="answer-outer-container">
+    <app-votes-widget
+      [count]="answer?.votes || 0"
+      [entryId]="entryId"
+      [answerId]="answer.answer_id"
+      [authorId]="answer.author.user_id"
+    ></app-votes-widget>
 
-    <ng-container *ngIf="answer?.image">
-      <div
-        *ngIf="answer?.imageSrc; else spinner"
-        class="image-container"
-        (click)="openDialog()"
-      >
-        <img [src]="answer?.imageSrc" (click)="openDialog(answer?.imageSrc)" />
+    <div class="answer-container">
+      <div class="content">
+        {{ answer?.content }}
       </div>
-      <ng-template #spinner>
-        <div class="image-container">
-          <mat-spinner></mat-spinner>
+
+      <ng-container *ngIf="answer?.image">
+        <div
+          *ngIf="answer?.imageSrc; else spinner"
+          class="image-container"
+          (click)="openDialog()"
+        >
+          <img
+            [src]="answer?.imageSrc"
+            (click)="openDialog(answer?.imageSrc)"
+          />
         </div>
-      </ng-template>
-    </ng-container>
-  </div>
+        <ng-template #spinner>
+          <div class="image-container">
+            <mat-spinner></mat-spinner>
+          </div>
+        </ng-template>
+      </ng-container>
 
-  <div class="card-footer">
-    <mat-card-subtitle>
-      <div class="author-container">
-        <span>
-          {{ answer?.author?.first_name }}
-        </span>
-        <span>
-          {{ answer?.author?.last_name }}
-        </span>
+      <div class="answer-footer">
+        <mat-card-subtitle>
+          <div class="author-container">
+            <span>
+              {{ answer?.author?.first_name }}
+            </span>
+            <span>
+              {{ answer?.author?.last_name }}
+            </span>
+          </div>
+          <div class="date-container">
+            <span translate>answered</span>
+            <span>
+              {{ answer?.created_at | relativeTime : currentLanguage }}
+            </span>
+          </div>
+        </mat-card-subtitle>
       </div>
-      <div class="date-container">
-        <span translate>answered</span>
-        <span>
-          {{ answer?.created_at | relativeTime : currentLanguage }}
-        </span>
-      </div>
-    </mat-card-subtitle>
-    <app-comments-card></app-comments-card>
+    </div>
   </div>
+  <app-comments-card></app-comments-card>
   <mat-divider></mat-divider>
 </mat-card-content>
 <form [formGroup]="form" (ngSubmit)="createAnswer()" class="form">
