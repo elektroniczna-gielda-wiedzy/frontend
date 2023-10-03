@@ -14,6 +14,7 @@ import { FullscreenImageDialogComponent } from './components/fullscreen-image-di
 import { EntryActionButtonsComponent } from './components/entry-action-buttons/entry-action-buttons.component';
 import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.directive';
 import { VotesWidgetComponent } from './components/votes-widget/votes-widget.component';
+import { IsAdminDirective } from './directives/is-admin.directive';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { VotesWidgetComponent } from './components/votes-widget/votes-widget.com
     EntryActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
+    IsAdminDirective,
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { VotesWidgetComponent } from './components/votes-widget/votes-widget.com
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
     IfAuthorOrAdminDirective,
-    VotesWidgetComponent
+    VotesWidgetComponent,
+    IsAdminDirective
   ],
 })
 export class SharedModule {}
