@@ -28,7 +28,7 @@
           routerLink="{{ link.url }}"
           routerLinkActive="active-side-nav-item"
           [attr.data-badge]="link.badge | async"
-          [class.badge]="(link.badge | async)"
+          [class.badge]="link.badge | async"
           (click)="drawer.close()"
           >{{ link.label | translate }}</a
         >
@@ -44,19 +44,41 @@
             </mat-icon>
           </div>
         </a>
+        <div *ngIf="profileDropdownOpen" class="profile-side-nav-items">
+          <a
+            mat-list-item
+            *ngFor="let link of profileLinks"
+            routerLink="{{ link.url }}"
+            routerLinkActive="active-side-nav-item"
+            (click)="drawer.close()"
+            >{{ link.label | translate }}</a
+          >
+          <a mat-list-item (click)="signOut(); drawer.close()">{{
+            "Sign Out" | translate
+          }}</a>
+        </div>
+        <a
+          *appIsAdmin
+          mat-list-item
+          (click)="adminDropdownOpen = !adminDropdownOpen"
+        >
+          <div class="profile-side-nav">
+            <span translate class="admin-text">Admin</span>
+            <mat-icon>
+              {{ adminDropdownOpen ? "expand_more" : "chevron_right" }}
+            </mat-icon>
+          </div>
+        </a>
       </div>
-      <div *ngIf="profileDropdownOpen" class="profile-side-nav-items">
+      <div *ngIf="adminDropdownOpen" class="profile-side-nav-items">
         <a
           mat-list-item
-          *ngFor="let link of profileLinks"
+          *ngFor="let link of adminLinks"
           routerLink="{{ link.url }}"
           routerLinkActive="active-side-nav-item"
           (click)="drawer.close()"
           >{{ link.label | translate }}</a
         >
-        <a mat-list-item (click)="signOut(); drawer.close()">{{
-          "Sign Out" | translate
-        }}</a>
       </div>
       <app-language-selector [sideNav]="true"></app-language-selector>
     </mat-nav-list>
@@ -90,19 +112,19 @@
           routerLink="{{ link.url }}"
           routerLinkActive="active-nav-item"
           [attr.data-badge]="link.badge | async"
-          [class.badge]="(link.badge | async)"
+          [class.badge]="link.badge | async"
           >{{ link.label | translate }}</a
         >
 
         <button
           *appIsLoggedIn
           mat-button
-          [matMenuTriggerFor]="menu"
+          [matMenuTriggerFor]="profileMenu"
           class="main-nav-item"
         >
-          {{'Profile' | translate}}
+          {{ "Profile" | translate }}
         </button>
-        <mat-menu #menu="matMenu" class="profile-menu">
+        <mat-menu #profileMenu="matMenu" class="profile-menu">
           <a
             mat-menu-item
             *ngFor="let link of profileLinks"
@@ -114,6 +136,24 @@
           <button mat-menu-item class="main-nav-item" (click)="signOut()">
             {{ "Sign Out" | translate }}
           </button>
+        </mat-menu>
+        <button
+          *appIsAdmin
+          mat-button
+          [matMenuTriggerFor]="adminMenu"
+          class="main-nav-item admin-text"
+        >
+          Admin
+        </button>
+        <mat-menu #adminMenu="matMenu" class="profile-menu">
+          <a
+            mat-menu-item
+            *ngFor="let link of adminLinks"
+            routerLink="{{ link.url }}"
+            routerLinkActive="active-side-nav-item"
+            (click)="drawer.close()"
+            >{{ link.label | translate }}</a
+          >
         </mat-menu>
         <app-language-selector></app-language-selector>
       </div>

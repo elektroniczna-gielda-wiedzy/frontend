@@ -124,3 +124,7 @@ a.main-nav-item, button.main-nav-item  {
 .right-side-nav-item {
   margin-inline-start: auto;
 }
+
+.admin-text {
+  color: mat.get-color-from-palette(theme.$app-warn) !important;
+}
