@@ -43,6 +43,6 @@ export class TokenService {
   }
 
   isAdmin(token: string = TokenService.getToken()): boolean {
-    return this.getUserRole(token) === 'ADMIN';
+    return !this.isTokenExpired(token) && this.getUserRole(token) === 'ADMIN';
   }
 }
