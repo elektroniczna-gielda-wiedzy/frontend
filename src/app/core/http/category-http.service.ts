@@ -16,4 +16,25 @@ export class CategoryHttpService {
     const url = this.apiUrl;
     return this.http.get<StandardResponse<Category>>(url);
   }
+
+  getCategory(categoryId: number) : Observable<StandardResponse<Category>>{
+    const url = `${this.apiUrl}/${categoryId}`;
+    return this.http.get<StandardResponse<Category>>(url);
+  }
+
+  createCategory(category: Category) : Observable<StandardResponse<Category>>{
+    const url = this.apiUrl;
+    return this.http.post<StandardResponse<Category>>(url, category);
+  }
+
+  updateCategory(category: Category) : Observable<StandardResponse<Category>>{
+    const url = `${this.apiUrl}/${category.category_id}`;
+    return this.http.put<StandardResponse<Category>>(url, category);
+  }
+
+  deleteCategory(categoryId: number) : Observable<StandardResponse<Category>>{
+    const url = `${this.apiUrl}/${categoryId}`;
+    return this.http.delete<StandardResponse<Category>>(url);
+  }
+  
 }

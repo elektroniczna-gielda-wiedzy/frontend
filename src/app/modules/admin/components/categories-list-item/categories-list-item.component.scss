@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+
+.category-list-item{
+    &:not(.is-subcategory) {
+        background-color: mat.get-color-from-palette(theme.$app-accent, 50);
+        &.is-area {
+            background-color: mat.get-color-from-palette(theme.$app-primary, 50);
+        }
+        
+    }
+    &.is-subcategory {
+        padding-left: 2em;
+    }
+}

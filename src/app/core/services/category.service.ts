@@ -24,5 +24,25 @@ export class CategoryService {
     return result;
   }
 
-  
+  initCategories(categories: Category[]) {
+    const childToParentMap: { [key: number]: number } = {};
+    const categoryGroups: { name: string; categories: Category[] }[] = [
+      {
+        name: 'Faculties',
+        categories: categories.filter((category) => category.type === 0),
+      },
+      {
+        name: 'Areas',
+        categories: categories.filter((category) => category.type === 1),
+      },
+    ];
+
+    categories.forEach((category) => {
+      if (category.parent_id) {
+        childToParentMap[category.category_id] = category.parent_id;
+      }
+    });
+
+    return {categoryGroups, childToParentMap};
+  }
 }

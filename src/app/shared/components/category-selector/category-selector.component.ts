@@ -29,6 +29,9 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
     this.categorySubscription = this.categoryHttpService
       .getCategories()
       .subscribe((response) => {
+        const { categoryGroups, childToParentMap } = this.categoryService.initCategories(response.result);
+        this.categoryGroups = categoryGroups;
+        this.childToParentMap = childToParentMap;
         this.initCategories(response.result);
         if (this.parentAutoAdd) {
           this.initControl();
