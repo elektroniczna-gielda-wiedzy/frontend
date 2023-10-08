@@ -3,18 +3,33 @@
     class="category-list"
     *ngFor="let group of categoryGroups; trackBy: trackByFn"
   >
-    <div class="category-group-name-container">
+    <div
+      class="category-group-name-container"
+      [class.is-area]="group.name === 'Areas'"
+    >
       <mat-expansion-panel
         class="category-group-name-panel"
         #expansionPanel
         hideToggle
         [expanded]="this.addCategoryFormState === group.name"
       >
-        <mat-expansion-panel-header (click)="expansionPanel.close()">
+        <mat-expansion-panel-header
+          class="default-cursor"
+          (click)="
+            expansionPanel.expanded
+              ? expansionPanel.close()
+              : expansionPanel.open()
+          "
+        >
           <mat-panel-title>
             <span class="category-group-name">{{ group.name }}</span>
           </mat-panel-title>
           <mat-panel-description>
+            <span>
+              <ng-container *ngIf="expansionPanel.expanded">
+                {{ getAddCategoryFormTitle(group.name) | translate}}</ng-container
+              ></span
+            >
             <button
               *ngIf="expansionPanel.expanded"
               type="button"
@@ -51,6 +66,7 @@
         <mat-action-row>
           <button
             type="button"
+            disabled="{{ this.polishName === '' || this.englishName === '' }}"
             mat-raised-button
             color="primary"
             (click)="_addCategory()"

@@ -24,7 +24,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.categorySubscription = this.categoryHttpService
       .getCategories()
       .subscribe((response) => {
-        console.log(response);
         const { categoryGroups, childToParentMap } =
           this.categoryService.initCategories(response.result);
         this.categoryGroups = categoryGroups;
@@ -43,20 +42,11 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   displayAddCategoryForm(name: string): void {
     this.polishName = '';
     this.englishName = '';
-    if(this.addCategoryFormState === name) {
-      this.addCategoryFormState = 'closed';
-    } else {
-      this.addCategoryFormState = name;
-    }
+    this.addCategoryFormState = name;
   }
-  
-  isPanelExpanded(name: string): boolean {
-    return this.addCategoryFormState === name;
-  }
-  
 
   getAddCategoryFormTitle(name: string): string {
-    return name === 'area' ? 'Add new area' : 'Add new faculty';
+    return name === 'Areas' ? 'Add new area' : 'Add new faculty';
   }
 
   setAddCategoryFormState(name: string) {
@@ -67,7 +57,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.polishName = '';
     this.englishName = '';
     this.addCategoryFormState = 'closed';
-    console.log(this.polishName)
   }
 
   _addCategory(): void {
@@ -91,25 +80,19 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   addCategory(category: Category): void {
-    // Call a method in the service to save the new category
     this.categoryHttpService.createCategory(category).subscribe((response) => {
-      console.log(response);
-      // Update the local data with the new category
       this.categoryGroups = this.categoryGroups.map((group) => ({
         ...group,
         categories: group.categories.concat(response.result),
       }));
+      this.cancelAddCategory();
     });
   }
 
   updateCategory(updatedCategory: Category): void {
-    // Call a method in the service to save the updated data
     this.categoryHttpService
       .updateCategory(updatedCategory)
       .subscribe((response) => {
-        console.log(response);
-
-        // Update the local data with the new names
         this.categoryGroups = this.categoryGroups.map((group) => ({
           ...group,
           categories: group.categories.map((category) =>
@@ -122,12 +105,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   deleteCategory(categoryId: number): void {
-    // Call your service to delete the category
     this.categoryHttpService
       .deleteCategory(categoryId)
       .subscribe((response) => {
-        console.log(response);
-        // Update the categoryGroups
         this.categoryGroups = this.categoryGroups.map((categoryGroup) => {
           return {
             ...categoryGroup,
