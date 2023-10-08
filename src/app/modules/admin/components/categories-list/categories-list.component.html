@@ -69,7 +69,7 @@
             disabled="{{ this.polishName === '' || this.englishName === '' }}"
             mat-raised-button
             color="primary"
-            (click)="_addCategory()"
+            (click)="_addCategory(group.type)"
           >
             {{ "Add" | translate }}
           </button>

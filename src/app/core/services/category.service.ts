@@ -26,13 +26,15 @@ export class CategoryService {
 
   initCategories(categories: Category[]) {
     const childToParentMap: { [key: number]: number } = {};
-    const categoryGroups: { name: string; categories: Category[] }[] = [
+    const categoryGroups: { name: string; type: number, categories: Category[] }[] = [
       {
         name: 'Faculties',
+        type: 0,
         categories: categories.filter((category) => category.type === 0),
       },
       {
         name: 'Areas',
+        type: 1,
         categories: categories.filter((category) => category.type === 1),
       },
     ];

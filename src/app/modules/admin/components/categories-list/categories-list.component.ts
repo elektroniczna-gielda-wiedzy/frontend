@@ -9,8 +9,7 @@ import { Category, CategoryHttpService, CategoryService } from 'src/app/core';
 })
 export class CategoriesListComponent implements OnInit, OnDestroy {
   private categorySubscription?: Subscription;
-  categoryGroups: { name: string; categories: Category[] }[] = [];
-  childToParentMap: { [key: number]: number } = {};
+  categoryGroups: { name: string; type: number; categories: Category[] }[] = [];
   polishName: string = '';
   englishName: string = '';
   addCategoryFormState: string = 'closed';
@@ -24,10 +23,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.categorySubscription = this.categoryHttpService
       .getCategories()
       .subscribe((response) => {
-        const { categoryGroups, childToParentMap } =
-          this.categoryService.initCategories(response.result);
+        const { categoryGroups } = this.categoryService.initCategories(
+          response.result
+        );
         this.categoryGroups = categoryGroups;
-        this.childToParentMap = childToParentMap;
       });
   }
 
@@ -59,7 +58,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.addCategoryFormState = 'closed';
   }
 
-  _addCategory(): void {
+  _addCategory(type: number): void {
     const newCategory: Category = {
       names: [
         {
@@ -72,7 +71,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
         },
       ],
       parent_id: null,
-      type: 0,
+      type: type,
       category_id: 0,
     };
 
@@ -81,10 +80,15 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   addCategory(category: Category): void {
     this.categoryHttpService.createCategory(category).subscribe((response) => {
-      this.categoryGroups = this.categoryGroups.map((group) => ({
-        ...group,
-        categories: group.categories.concat(response.result),
-      }));
+      this.categoryGroups = this.categoryGroups.map((group) => {
+        if (group.type === category.type) {
+          return {
+            ...group,
+            categories: group.categories.concat(response.result),
+          };
+        }
+        return group;
+      });
       this.cancelAddCategory();
     });
   }

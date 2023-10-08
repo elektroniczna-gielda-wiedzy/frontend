@@ -15,7 +15,7 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
   @Input() parentAutoAdd: boolean = false;
   private categorySubscription?: Subscription;
   private controlSubscription?: Subscription;
-  categoryGroups: { name: string; categories: Category[] }[] = [];
+  categoryGroups: { name: string; type: number, categories: Category[] }[] = [];
   selectedValues: number[] = [];
   childToParentMap: { [key: number]: number } = {};
 
@@ -32,7 +32,6 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
         const { categoryGroups, childToParentMap } = this.categoryService.initCategories(response.result);
         this.categoryGroups = categoryGroups;
         this.childToParentMap = childToParentMap;
-        this.initCategories(response.result);
         if (this.parentAutoAdd) {
           this.initControl();
         }
@@ -46,25 +45,6 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
     if (this.controlSubscription) {
       this.controlSubscription.unsubscribe();
     }
-  }
-
-  initCategories(categories: Category[]) {
-    this.categoryGroups = [
-      {
-        name: 'Faculties',
-        categories: categories.filter((category) => category.type === 0),
-      },
-      {
-        name: 'Areas',
-        categories: categories.filter((category) => category.type === 1),
-      },
-    ];
-
-    categories.forEach((category) => {
-      if (category.parent_id) {
-        this.childToParentMap[category.category_id] = category.parent_id;
-      }
-    });
   }
 
   initControl() {
