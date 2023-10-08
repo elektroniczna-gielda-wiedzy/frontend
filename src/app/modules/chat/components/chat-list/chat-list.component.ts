@@ -50,11 +50,14 @@ export class ChatListComponent {
     chat.last_message = message;
     this.chatList.unshift(chat);
 
+    if (chat.is_read) {
+      chat.is_read = false;
+    }
+
     if (message.chat_id === this.currentChatId) {
       this.newMessage = message;
-      this.markAsRead(chat);
-    } else if (chat.is_read) {
-      chat.is_read = false;
+      this.markAsRead(chat, false);
+    } else {
       this.chatService.incrementUnreadCount();
     }
   }
@@ -133,7 +136,7 @@ export class ChatListComponent {
 
   initBreakPoint() {
     this.breakpointSubscription = this.breakpointObserver
-      .observe('(max-width: 800px)')
+      .observe('(max-width: 1000px)')
       .subscribe((result) => {
         this.isMobile = result.matches;
         if (!this.isMobile && !this.currentChatId && this.chatList.length > 0) {
@@ -180,7 +183,7 @@ export class ChatListComponent {
     }
   }
 
-  markAsRead(chat: ChatListItem) {
+  markAsRead(chat: ChatListItem, decrement = true) {
     if (chat.is_read) {
       return;
     }
@@ -190,14 +193,14 @@ export class ChatListComponent {
     this.chatHttpService.markAsRead(chat.chat_id).subscribe({
       next: (response) => {
         if (response.success) {
-          this.chatService.decrementUnreadCount();
+          if (decrement) this.chatService.decrementUnreadCount();
         } else {
           chat.is_read = false;
         }
       },
       error: () => {
         chat.is_read = false;
-      }
+      },
     });
   }
 
@@ -212,9 +215,7 @@ export class ChatListComponent {
 
   createChatCompleted(chatId: number) {
     this.chatService.stopChatWithUser();
-    const chatIndex = this.chatList.findIndex(
-      (chat) => chat.chat_id === -1
-    );
+    const chatIndex = this.chatList.findIndex((chat) => chat.chat_id === -1);
     if (chatIndex !== -1) {
       this.chatList.splice(chatIndex, 1);
     }
@@ -228,14 +229,10 @@ export class ChatListComponent {
   }
 
   handleNewChatStarted(chatId: number) {
-    if (
-      this.chatList.find((chat) => chat.chat_id === chatId)
-    ) {
+    if (this.chatList.find((chat) => chat.chat_id === chatId)) {
       return;
     }
     this.logger.trace('New chat started', chatId);
-
-    
 
     this.chatListSubscription = this.chatHttpService
       .getChatList()
