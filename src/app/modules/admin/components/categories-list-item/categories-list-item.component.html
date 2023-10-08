@@ -1,0 +1,64 @@
+<mat-expansion-panel
+  class="category-list-item"
+  [class.is-subcategory]="isSubcategory"
+  [class.is-area]="category.type"
+  hideToggle
+  (opened)="setNames()"
+  (closed)="inputDisable()"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title> {{ getCategoryName(category) }} </mat-panel-title>
+    <mat-panel-description *ngIf="state !== 'Default'">
+      {{ state | translate }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <app-category-form
+    [(polishName)]="polishName"
+    [(englishName)]="englishName"
+    [isInputDisabled]="isInputDisabled"
+  >
+  </app-category-form>
+  <mat-action-row>
+    <ng-container *ngIf="isInputDisabled">
+      <button
+        *ngIf="!isSubcategory"
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="inputEnable('Add subcategory')"
+      >
+        {{ "Add subcategory" | translate }}
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="inputEnable('Edit')"
+      >
+        {{ "Edit" | translate }}
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="warn"
+        (click)="deleteCategory()"
+      >
+        {{ "Delete" | translate }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!isInputDisabled">
+      <button
+        type="button"
+        disabled="{{ this.polishName === '' || this.englishName === '' }}"
+        mat-raised-button
+        color="primary"
+        (click)="onFormSubmit()"
+      >
+        {{ "Save" | translate }}
+      </button>
+      <button type="button" mat-raised-button (click)="inputDisable(true)">
+        {{ "Cancel" | translate }}
+      </button>
+    </ng-container>
+  </mat-action-row>
+</mat-expansion-panel>

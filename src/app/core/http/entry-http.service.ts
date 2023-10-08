@@ -32,7 +32,7 @@ export class EntryHttpService {
 
     if (params.categories && params.categories.length > 0) {
       queryParams.params = queryParams.params.set(
-        'category_ids',
+        'categories',
         params.categories.join(',')
       );
     }

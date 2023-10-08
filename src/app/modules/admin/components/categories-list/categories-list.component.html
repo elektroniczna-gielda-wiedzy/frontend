@@ -1,1 +1,108 @@
-<p>categories-list works!</p>
+<mat-accordion class="category-list-container">
+  <div
+    class="category-list"
+    *ngFor="let group of categoryGroups; trackBy: trackByFn"
+  >
+    <div
+      class="category-group-name-container"
+      [class.is-area]="group.name === 'Areas'"
+    >
+      <mat-expansion-panel
+        class="category-group-name-panel"
+        #expansionPanel
+        hideToggle
+        [expanded]="this.addCategoryFormState === group.name"
+      >
+        <mat-expansion-panel-header
+          class="default-cursor"
+          (click)="
+            expansionPanel.expanded
+              ? expansionPanel.close()
+              : expansionPanel.open()
+          "
+        >
+          <mat-panel-title>
+            <span class="category-group-name">{{ group.name | translate }}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            <span>
+              <ng-container *ngIf="expansionPanel.expanded">
+                {{ getAddCategoryFormTitle(group.name) | translate}}</ng-container
+              ></span
+            >
+            <button
+              *ngIf="expansionPanel.expanded"
+              type="button"
+              mat-icon-button
+              color="primary"
+              (click)="
+                $event.stopPropagation();
+                cancelAddCategory();
+                expansionPanel.close()
+              "
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <button
+              *ngIf="!expansionPanel.expanded"
+              type="button"
+              mat-icon-button
+              color="primary"
+              (click)="
+                $event.stopPropagation();
+                displayAddCategoryForm(group.name);
+                expansionPanel.open()
+              "
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-category-form
+          [(polishName)]="polishName"
+          [(englishName)]="englishName"
+        >
+        </app-category-form>
+        <mat-action-row>
+          <button
+            type="button"
+            disabled="{{ this.polishName === '' || this.englishName === '' }}"
+            mat-raised-button
+            color="primary"
+            (click)="_addCategory(group.type)"
+          >
+            {{ "Add" | translate }}
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            (click)="cancelAddCategory(); expansionPanel.close()"
+          >
+            {{ "Cancel" | translate }}
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </div>
+    <ng-container *ngFor="let category of group.categories; trackBy: trackByFn">
+      <app-categories-list-item
+        *ngIf="category.parent_id == null"
+        [category]="category"
+        (onAddCategory)="addCategory($event)"
+        (onUpdateCategory)="updateCategory($event)"
+        (onDeleteCategory)="deleteCategory($event)"
+      ></app-categories-list-item>
+      <ng-container
+        *ngFor="let subCategory of group.categories; trackBy: trackByFn"
+      >
+        <app-categories-list-item
+          *ngIf="category.category_id === subCategory.parent_id"
+          [category]="subCategory"
+          [isSubcategory]="true"
+          (onAddCategory)="addCategory($event)"
+          (onUpdateCategory)="updateCategory($event)"
+          (onDeleteCategory)="deleteCategory($event)"
+        ></app-categories-list-item>
+      </ng-container>
+    </ng-container>
+  </div>
+</mat-accordion>

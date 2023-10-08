@@ -88,5 +88,11 @@
 
     "Page Not Found!": "Page Not Found!",
     "Sorry, the page you are looking for does not exist.": "Sorry, the page you are looking for does not exist.",
-    "Go to Home": "Go to Home"
+    "Go to Home": "Go to Home",
+
+    "Polish name": "Polish name",
+    "English name": "English name",
+    "Add subcategory": "Add subcategory",
+    "Add new area": "Add new area",
+    "Add new faculty": "Add new faculty"
 }

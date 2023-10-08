@@ -1,0 +1,23 @@
+<div class="form-container" [class.custom-disabled-style]="isInputDisabled">
+  <mat-form-field>
+    <mat-label>{{ "Polish name" | translate }}</mat-label>
+    <input
+      required="{{ !isInputDisabled }}"
+      disabled="{{ isInputDisabled }}"
+      matInput
+      [ngModel]="polishName"
+      (ngModelChange)="onPolishNameChange($event)"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ "English name" | translate }}</mat-label>
+    <input
+      required="{{ !isInputDisabled }}"
+      disabled="{{ isInputDisabled }}"
+      matInput
+      [ngModel]="englishName"
+      (ngModelChange)="onEnglishNameChange($event)"
+    />
+  </mat-form-field>
+</div>
