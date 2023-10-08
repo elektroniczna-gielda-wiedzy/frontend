@@ -21,7 +21,8 @@ export class RelativeTimePipe implements PipeTransform {
 
     const previous = new Date(+year, +month - 1, +day, +hour, +minute);
     const current = new Date();
-    const elapsed = current.getTime() - previous.getTime();
+    const utcOffset = current.getTimezoneOffset() * 60 * 1000;
+    const elapsed = current.getTime() - previous.getTime() + utcOffset;
 
     const msPerSecond: number = 1000;
     const msPerMinute: number = 60 * 1000;
