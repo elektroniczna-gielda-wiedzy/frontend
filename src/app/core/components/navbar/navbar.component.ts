@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { url: '/auth/sign-up', label: 'Sign Up' },
   ];
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe('(max-width: 800px)')
+    .observe('(max-width: 1000px)')
     .pipe(
       map((result) => result.matches),
       shareReplay()
