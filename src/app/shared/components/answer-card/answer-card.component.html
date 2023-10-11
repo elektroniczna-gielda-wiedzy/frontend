@@ -9,6 +9,7 @@
       [entryId]="entryId"
       [answerId]="answer.answer_id"
       [authorId]="answer.author.user_id"
+      [voted]="answer.user_vote || 0"
     ></app-votes-widget>
 
     <div class="answer-container">
@@ -35,6 +36,14 @@
       </ng-container>
 
       <div class="answer-footer">
+        <div class="app-answer-action-buttons" *appIfAuthorOrAdmin="answer?.author?.user_id">
+          <app-answer-action-buttons
+            *ngIf="answer"
+            [answerId]="answer.answer_id"
+            [entryId]="entryId"
+            (answerDeleted)="propagateDeletion($event)"
+          ></app-answer-action-buttons>
+      </div>
         <mat-card-subtitle>
           <div class="author-container">
             <span>
@@ -50,11 +59,17 @@
               {{ answer?.created_at | relativeTime : currentLanguage }}
             </span>
           </div>
+       
         </mat-card-subtitle>
+      
       </div>
+     
     </div>
+    
   </div>
+ 
   <app-comments-card></app-comments-card>
+
   <mat-divider></mat-divider>
 </mat-card-content>
 <form [formGroup]="form" (ngSubmit)="createAnswer()" class="form">

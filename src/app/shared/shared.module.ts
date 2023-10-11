@@ -15,6 +15,7 @@ import { EntryActionButtonsComponent } from './components/entry-action-buttons/e
 import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.directive';
 import { VotesWidgetComponent } from './components/votes-widget/votes-widget.component';
 import { IsAdminDirective } from './directives/is-admin.directive';
+import { AnswerActionButtonsComponent } from './components/answer-action-buttons/answer-action-buttons.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { IsAdminDirective } from './directives/is-admin.directive';
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    AnswerActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective,
@@ -48,6 +50,7 @@ import { IsAdminDirective } from './directives/is-admin.directive';
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    AnswerActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective

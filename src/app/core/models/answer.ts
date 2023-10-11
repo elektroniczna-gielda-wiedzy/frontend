@@ -6,6 +6,7 @@ export interface Answer {
     created_at: string;
     top_answer: boolean;
     votes: number,
+    user_vote?: number;
     content: string;
     image?: string;
     imageSrc?: string;
