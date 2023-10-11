@@ -8,6 +8,7 @@ export interface Entry {
   title: string;
   favorite: boolean;
   votes: number;
+  user_vote?: number;
   categories: Category[];
   author: Author;
   created_at: string;

@@ -18,6 +18,7 @@
         [count]="entry?.votes || 0"
         [entryId]="entry?.entry_id"
         [authorId]="entry?.author?.user_id"
+        [voted]="entry?.user_vote || 0"
       ></app-votes-widget>
     </div>
   </mat-card-header>

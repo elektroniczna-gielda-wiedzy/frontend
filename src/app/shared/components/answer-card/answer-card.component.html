@@ -9,6 +9,7 @@
       [entryId]="entryId"
       [answerId]="answer.answer_id"
       [authorId]="answer.author.user_id"
+      [voted]="answer.user_vote || 0"
     ></app-votes-widget>
 
     <div class="answer-container">

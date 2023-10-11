@@ -41,7 +41,7 @@ export class VotesWidgetComponent {
         .vote(value, this.entryId, this.answerId)
         .subscribe((res) => {
           if (res.success) {
-            this.count += value;
+            this.count += value - this.voted;
             this.voted = value;
           }
         });
