@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [

@@ -16,4 +16,22 @@ export class AnswerHttpService {
     const url = `${this.apiUrl}/${entryId}/answer`;
     return this.http.post<StandardResponse<Answer>>(url, answer);
   }
+
+
+  updateAnswer(
+    entryId: number,
+    answerId: number,
+    answer: AnswerRequest
+  ): Observable<StandardResponse<Answer>> {
+    const url = `${this.apiUrl}/${entryId}/answer/${answerId}`;
+
+    return this.http.put<StandardResponse<Answer>>(url, answer);
+  }
+
+  deleteAnswer(entryId: number ,answerId : number): Observable<StandardResponse<Answer>> {
+    const url = `${this.apiUrl}/${entryId}/answer/${answerId}`;
+    console.log(url)
+    return this.http.delete<StandardResponse<Answer>>(url);
+  }
+
 }

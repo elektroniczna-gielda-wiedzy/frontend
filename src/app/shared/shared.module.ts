@@ -15,6 +15,11 @@ import { EntryActionButtonsComponent } from './components/entry-action-buttons/e
 import { IfAuthorOrAdminDirective } from './directives/if-author-or-admin.directive';
 import { VotesWidgetComponent } from './components/votes-widget/votes-widget.component';
 import { IsAdminDirective } from './directives/is-admin.directive';
+import { AnswerActionButtonsComponent } from './components/answer-action-buttons/answer-action-buttons.component';
+import { AnswerEditPopupComponent } from './components/answer-edit-popup/answer-edit-popup.component';
+
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -27,15 +32,17 @@ import { IsAdminDirective } from './directives/is-admin.directive';
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    AnswerActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective,
+    AnswerEditPopupComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     TranslateModule,
-
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -48,9 +55,11 @@ import { IsAdminDirective } from './directives/is-admin.directive';
     CategorySelectorComponent,
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
+    AnswerActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
-    IsAdminDirective
+    IsAdminDirective,
+    AnswerEditPopupComponent
   ],
 })
 export class SharedModule {}

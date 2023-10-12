@@ -128,6 +128,13 @@ export class EntryDetailsComponent {
     }
   }
 
+  //TODO load only answers
+  answerDeleted(id: number) {
+    if (this.entry && this.entry.entry_id === id) {
+      this.loadEntry(this.entry.entry_id);
+    }
+  }
+
   contactAuthor() {
     if (!this.entry) return;
     this.chatService.startChatWithUser(this.entry.author);

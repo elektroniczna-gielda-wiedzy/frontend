@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   Language,
@@ -23,9 +23,9 @@ import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fulls
   templateUrl: './answer-card.component.html',
   styleUrls: ['./answer-card.component.scss'],
 })
-export class AnswerCardComponent {
+export class AnswerCardComponent implements OnDestroy {
   @Input()
-  entryId?: number;
+  entryId!: number;
   @Input()
   answers?: Answer[] = [];
   private langChangeSubscription?: Subscription;
@@ -35,6 +35,7 @@ export class AnswerCardComponent {
   imageError!: string;
   isImageSaved: boolean = false;
   cardImageBase64: string | null | undefined;
+  @Output() answerDeleted = new EventEmitter<number>();
 
   form: FormGroup = this.fb.group({
     answer: [null, [Validators.required]],
@@ -151,4 +152,11 @@ export class AnswerCardComponent {
       panelClass: 'fullscreen-dialog',
     });
   }
+
+
+  propagateDeletion(id: number) {
+    this.answerDeleted.emit(id);
+  
+    
+  } 
 }
