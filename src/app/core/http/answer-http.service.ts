@@ -20,11 +20,12 @@ export class AnswerHttpService {
 
   updateAnswer(
     entryId: number,
-    params: AnswerRequest
+    answerId: number,
+    answer: AnswerRequest
   ): Observable<StandardResponse<Answer>> {
-    const url = `${this.apiUrl}/${entryId}/answer`;
+    const url = `${this.apiUrl}/${entryId}/answer/${answerId}`;
 
-    return this.http.put<StandardResponse<Answer>>(url, params);
+    return this.http.put<StandardResponse<Answer>>(url, answer);
   }
 
   deleteAnswer(entryId: number ,answerId : number): Observable<StandardResponse<Answer>> {

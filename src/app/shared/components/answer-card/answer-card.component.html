@@ -40,6 +40,7 @@
           <app-answer-action-buttons
             *ngIf="answer"
             [answerId]="answer.answer_id"
+            [answer]="answer"
             [entryId]="entryId"
             (answerDeleted)="propagateDeletion($event)"
           ></app-answer-action-buttons>

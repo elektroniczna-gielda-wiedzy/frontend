@@ -99,5 +99,6 @@
     *ngIf="entry?.entry_type_id === 3"
     [answers]="entry?.answers"
     [entryId]="entry!.entry_id"
+    (answerDeleted)="answerDeleted($event)"
   ></app-answer-card>
 </mat-card>
