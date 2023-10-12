@@ -17,34 +17,3 @@ body {
 }
 
 
-.mat-mdc-dialog-container .mdc-dialog__surface{
-  // background-color: aqua ;
-  display: flex !important ;
-  flex-direction: column !important;
-  justify-content: space-between!important;
-  height: 100%;
-  overflow-y:unset !important;
-
-
-}
-.mat-dialog-actions{
-   width: 100%;
-   display: flex;
-   justify-content: flex-end !important;
-}
-
-.mat-mdc-form-field{
-  width: 100% !important;
-}
-
-app-answer-edit-popup{
-height: 100% !important;
-align-content: space-between;
-display: flex;
-flex-direction: column;
-gap: 1em;
-
-}
-.mdc-dialog__content{
-  overflow: hidden;
-}
