@@ -110,3 +110,8 @@ mat-card-subtitle{
 .content {
     white-space: pre-line;
 }
+
+.app-comment-action-buttons{
+    display: flex;
+    justify-content: flex-end;
+}

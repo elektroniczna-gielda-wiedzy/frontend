@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import {  CommentHttpService ,Comment}  from 'src/app/core';
+//import {  CommentHttpService ,Comment}  from 'src/app/core';
 import { AnswerEditPopupComponent } from '../answer-edit-popup/answer-edit-popup.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { CommentHttpService } from 'src/app/core/http/comment-http.service';
+import { Comment } from 'src/app/core/models/comment';
 @Component({
   selector: 'app-comment-action-buttons',
   templateUrl: './comment-action-buttons.component.html',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class CommentActionButtonsComponent {
   @Input() commentId!: number;
   @Input() comment!: Comment;
-  
+  @Input() answerId!: number;
   @Input() entryId!: number;
   
   @Output() commentDeleted = new EventEmitter<number>();
@@ -28,7 +29,7 @@ export class CommentActionButtonsComponent {
   ) { }
 
 
-  editcomment() {
+  editComment() {
     const dialogRef = this.dialog.open(AnswerEditPopupComponent, {
       data: this.comment.content,
       height: '300px',
@@ -43,7 +44,7 @@ export class CommentActionButtonsComponent {
 
 
 
-        this.commentHttpService.updatecomment(this.entryId , this.commentId , this.comment).subscribe((res) => {
+        this.commentHttpService.updateComment(this.entryId , this.answerId , this.commentId , this.comment).subscribe((res) => {
           if (res.success) {
             this.logger.info('comment updated');
             console.log(res.result)
@@ -54,16 +55,18 @@ export class CommentActionButtonsComponent {
       }
      
     });
-  }
+   }
 
-  deletecomment() {
-    this.commentHttpService.deletecomment(this.entryId , this.commentId).subscribe((res) => {
+  deleteComment() {
+    console.log(this.entryId ,this.answerId , this.commentId)
+    this.commentHttpService.deleteComment(this.entryId ,this.answerId , this.commentId).subscribe((res) => {
+      console.log(res)
       if (res.success) {
         this.logger.info('comment deleted');
         this.commentDeleted.emit(this.commentId);
       }
     });
 
-    location.reload();
-  }
+   // location.reload();
+   }
 }

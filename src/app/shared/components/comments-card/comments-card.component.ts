@@ -80,7 +80,7 @@ export class CommentsCardComponent {
         next: (res) => {
           this.logger.trace(res);
           if (res.success && res.result?.length > 0) {
-          
+            this.comments?.push(res.result[0]);
             this.commentForm.reset();
     
             // Object.values(this.form.controls).forEach(control => {

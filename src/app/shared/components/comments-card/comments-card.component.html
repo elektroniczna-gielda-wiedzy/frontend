@@ -15,8 +15,15 @@
         
         <div class="comment-footer">
           <div class="app-comment-action-buttons" *appIfAuthorOrAdmin="comment?.author?.user_id">
-
+            <app-comment-action-buttons
+              [entryId] = "entryId"
+              [answerId]="answerId"
+              [commentId]="comment.comment_id"
+              [comment]="comment"
+            >
+            </app-comment-action-buttons>
         </div>
+    
           <mat-card-subtitle>
             <div class="author-container">
               <span>
@@ -34,10 +41,10 @@
             </div>
          
           </mat-card-subtitle>
-        
+    </div>    
         </div>
-      </div>
-    </div>  
+        </div>
+      
     <mat-divider></mat-divider>
   </mat-card-content>
 
