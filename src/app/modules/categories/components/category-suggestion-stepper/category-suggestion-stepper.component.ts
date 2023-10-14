@@ -108,7 +108,7 @@ export class CategorySuggestionStepperComponent implements OnInit {
   }
 
   displayNotification(message: string): void {
-    this.snackBar.open(message, 'x', {
+    this.snackBar.open(message, this.translateService.instant('Close'), {
       duration: 7000,
       verticalPosition: 'top',
       horizontalPosition: 'left',

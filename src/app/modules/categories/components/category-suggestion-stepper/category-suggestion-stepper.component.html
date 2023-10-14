@@ -13,11 +13,17 @@
       <!-- First Step -->
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Select category type</ng-template>
+          <ng-template matStepLabel>
+            {{ "Select category type" | translate }}
+          </ng-template>
           <div class="form-control-container">
             <mat-radio-group formControlName="categoryTypeCtrl">
-              <mat-radio-button value="areas">Areas</mat-radio-button>
-              <mat-radio-button value="faculties">Faculties</mat-radio-button>
+              <mat-radio-button value="areas">
+                {{ "Areas" | translate }}
+              </mat-radio-button>
+              <mat-radio-button value="faculties">
+                {{ "Faculties" | translate }}
+              </mat-radio-button>
             </mat-radio-group>
           </div>
 
@@ -29,7 +35,7 @@
               [disabled]="!firstFormGroup.valid"
               matStepperNext
             >
-              Next
+              {{"Next" | translate}}
             </button>
           </div>
         </form>
@@ -38,20 +44,26 @@
       <!-- Second Step -->
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Select operation</ng-template>
+          <ng-template matStepLabel>
+            {{ "Select operation type" | translate }}
+          </ng-template>
           <div class="form-control-container">
             <mat-radio-group formControlName="operationCtrl">
               <mat-radio-button value="newCategory"
-                >Create new category</mat-radio-button
+                >
+                  {{ "New category" | translate }}
+                </mat-radio-button
               >
               <mat-radio-button value="newSubcategory"
-                >Create new subcategory for existing category</mat-radio-button
+                >
+                {{ "New subcategory" | translate }}
+                </mat-radio-button
               >
             </mat-radio-group>
           </div>
           <div class="btn-container">
             <button mat-raised-button type="button" matStepperPrevious>
-              Back
+              {{ "Back" | translate }}
             </button>
             <button
               mat-raised-button
@@ -60,7 +72,7 @@
               [disabled]="!secondFormGroup.valid"
               matStepperNext
             >
-              Next
+              {{ "Next" | translate }}
             </button>
           </div>
         </form>
@@ -73,7 +85,10 @@
         [completed]="thirdFormGroup.valid"
       >
         <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Select existing category</ng-template>
+          <ng-template matStepLabel>
+            {{ "Select existing category" | translate }}
+
+          </ng-template>
           <div class="form-control-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ "Categories" | translate }}</mat-label>
@@ -89,7 +104,7 @@
           </div>
           <div class="btn-container">
             <button mat-raised-button type="button" matStepperPrevious>
-              Back
+              {{ "Back" | translate }}
             </button>
             <button
               mat-raised-button
@@ -98,7 +113,7 @@
               [disabled]="!thirdFormGroup.valid"
               matStepperNext
             >
-              Next
+              {{ "Next" | translate }}
             </button>
           </div>
         </form>
@@ -106,7 +121,9 @@
 
       <!-- Final Step -->
       <mat-step>
-        <ng-template matStepLabel>Provide names</ng-template>
+        <ng-template matStepLabel>
+          {{ "Fill category names" | translate }}
+        </ng-template>
         <div class="form-control-container">
           <app-category-form
             [(polishName)]="polishName"
@@ -115,7 +132,9 @@
           </app-category-form>
         </div>
         <div class="btn-container">
-          <button mat-raised-button matStepperPrevious>Back</button>
+          <button mat-raised-button matStepperPrevious>
+            {{ "Back" | translate }}
+          </button>
           <button
             mat-raised-button
             type="button"
@@ -123,7 +142,7 @@
             color="primary"
             (click)="saveCategory()"
           >
-            Save
+            {{ "Save" | translate }}
           </button>
         </div>
       </mat-step>
