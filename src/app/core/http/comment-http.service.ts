@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Comment, CommentRequest } from '../models/comment';
 import { StandardResponse } from '../models/standard-response';
 import { Observable } from 'rxjs';
@@ -31,8 +31,8 @@ export class CommentHttpService {
 
   deleteComment(entryId: number, answerId: number, commentId: number ): Observable<StandardResponse<Comment>> {
     const url = `${this.apiUrl}/${entryId}/answer/${answerId}/comment/${commentId}`;
-    
-    return this.http.delete<StandardResponse<Comment>>(url);
+    const headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
+    return this.http.delete<StandardResponse<Comment>>(url ,{headers: headers});
   }
 
 }

@@ -57,10 +57,8 @@ export class AnswerActionButtonsComponent {
     this.AnswerHttpService.deleteAnswer(this.entryId , this.answerId).subscribe((res) => {
       if (res.success) {
         this.logger.info('Answer deleted');
-        this.answerDeleted.emit(this.answerId);
+        this.answerDeleted.emit(this.entryId);
       }
     });
-
-    location.reload();
   }
 }
