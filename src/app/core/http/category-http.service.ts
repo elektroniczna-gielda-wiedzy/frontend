@@ -15,6 +15,8 @@ export class CategoryHttpService {
   getCategories(
     params: {
       status?: CategoryStatus;
+      type?: number;
+      parent_id?: number;
     } = {}
   ): Observable<StandardResponse<Category>> {
     const url = this.apiUrl;
@@ -23,14 +25,21 @@ export class CategoryHttpService {
     };
 
     if (params.status) {
+      queryParams.params = queryParams.params.set('status', params.status);
+    }
+
+    if (params.type !== undefined) {
+      queryParams.params = queryParams.params.set('type', params.type);
+    }
+
+    if (params.parent_id) {
       queryParams.params = queryParams.params.set(
-        'status',
-        params.status
+        'parent_id',
+        params.parent_id
       );
     }
 
     return this.http.get<StandardResponse<Category>>(url, queryParams);
-      
   }
 
   // getCategory(categoryId: number): Observable<StandardResponse<Category>> {

@@ -83,7 +83,6 @@ export class CategoriesListItemComponent {
         },
       ],
     };
-    console.log(newCategory);
     this.onAddCategory.emit(newCategory);
   }
 
