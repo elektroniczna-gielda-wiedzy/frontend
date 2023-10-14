@@ -16,7 +16,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     EntryListComponent,
     EntryAddComponent,
     EntryDetailsComponent,
-   
   ],
   imports: [
     CommonModule,

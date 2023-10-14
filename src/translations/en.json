@@ -60,6 +60,8 @@
     "Save": "Save",
     "Add image": "Add image",
     "Cancel": "Cancel",
+    "Next": "Next",
+    "Back": "Back",
 
     "Bad email or password": "Bad email or password",
     "Close":"Close",
@@ -94,5 +96,16 @@
     "English name": "English name",
     "Add subcategory": "Add subcategory",
     "Add new area": "Add new area",
-    "Add new faculty": "Add new faculty"
+    "Add new faculty": "Add new faculty",
+    "Active": "Active",
+    "Suggestions": "Suggestions",
+
+    "--suggestion-sent-msg": "Thank you for your suggestion. We will consider it.",
+    "Suggest new category": "Suggest new category",
+    "Select category type": "Select category type",
+    "Select operation type": "Select operation type",
+    "Select existing category": "Select existing category",
+    "Fill category names": "Fill category names",
+    "New category": "New category",
+    "New subcategory": "New subcategory"
 }

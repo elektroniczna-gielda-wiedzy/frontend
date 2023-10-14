@@ -52,6 +52,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   cardImageBase64: string | null | undefined;
   filename = '';
   cols = 2;
+  imageRowSpan = 1;
+  suggestionWizardOpen = false;
 
   selectedFile: File | undefined;
   constructor(
@@ -187,6 +189,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
         imgBase64Path.indexOf(',') + 1
       );
       this.entryImage = imgBase64Path;
+      this.imageRowSpan = 3;
       this.isImageSaved = true;
       this.filename = this.selectedFile?.name ?? '';
     };
@@ -258,6 +261,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     this.filename = '';
+    this.imageRowSpan = 1;
   }
 
   openDialog(): void {
@@ -265,5 +269,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       data: { image: this.entryImage },
       panelClass: 'fullscreen-dialog',
     });
+  }
+  openSuggestionWizard(): void {
+    this.router.navigate(['categories', 'suggest']);
   }
 }

@@ -15,6 +15,7 @@ import { Category, CategoryService } from 'src/app/core';
 export class CategoriesListItemComponent {
   @Input() category!: Category;
   @Input() isSubcategory: boolean = false;
+  @Input() tab: number = 0;
 
   @Output() onAddCategory: EventEmitter<Category> = new EventEmitter();
   @Output() onUpdateCategory: EventEmitter<Category> = new EventEmitter();
@@ -70,6 +71,7 @@ export class CategoriesListItemComponent {
       category_id: 0,
       parent_id: this.category.category_id,
       type: this.category.type,
+      status: this.tab === 0 ? 'ACTIVE' : 'SUGGESTED',
       names: [
         {
           lang_id: 1,
@@ -81,8 +83,15 @@ export class CategoriesListItemComponent {
         },
       ],
     };
-    console.log(newCategory);
     this.onAddCategory.emit(newCategory);
+  }
+
+  approveCategory(): void {
+      const updatedCategory: Category = {
+        ...this.category,
+        status: 'ACTIVE',
+      }
+      this.onUpdateCategory.emit(updatedCategory);
   }
 
   updateCategory(): void {

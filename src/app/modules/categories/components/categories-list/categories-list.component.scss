@@ -44,3 +44,10 @@
 .default-cursor {
     cursor: default !important;
 }
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: min(50vh, 500px);
+}

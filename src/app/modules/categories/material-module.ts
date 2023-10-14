@@ -7,6 +7,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
     declarations: [
@@ -19,7 +23,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
         MatButtonModule,
         MatTabsModule,
         MatButtonToggleModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatStepperModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCardModule
     ]
 })
 export class MaterialModule { }

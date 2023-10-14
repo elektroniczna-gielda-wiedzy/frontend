@@ -61,6 +61,8 @@
     "Save": "Zapisz",
     "Add image" : "Załącz plik",
     "Cancel": "Anuluj",
+    "Next": "Dalej",
+    "Back": "Wstecz",
 
     "Bad email or password": "Błędny email lub hasło",
     "Close":"Zamknij",
@@ -95,5 +97,16 @@
     "English name": "Angielska nazwa",
     "Add subcategory": "Dodaj podkategorię",
     "Add new area": "Dodaj nowy obszar",
-    "Add new faculty": "Dodaj nowy wydział"
+    "Add new faculty": "Dodaj nowy wydział",
+    "Active": "Aktywne",
+    "Suggestions": "Sugestie",
+
+    "--suggestion-sent-msg": "Dziękujemy za sugestię! Zostanie ona rozpatrzona przez administratora.",
+    "Suggest new category": "Zaproponuj nową kategorię",
+    "Select category type": "Wybierz typ kategorii",
+    "Select operation type": "Wybierz typ operacji",
+    "Select existing category": "Wybierz istniejącą kategorię",
+    "Fill category names": "Wypełnij nazwy kategorii",
+    "New category": "Nowa kategoria",
+    "New subcategory": "Nowa podkategoria"
 }

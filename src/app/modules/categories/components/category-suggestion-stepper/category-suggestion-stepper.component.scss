@@ -1,0 +1,22 @@
+.form-control-container {
+    margin: 0.5em 0;
+}
+
+.btn-container {
+    display: flex;
+    gap: 0.5em;
+}
+
+.to-right {
+    margin-left: auto;
+}
+
+.card {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+mat-card-header {
+    display: flex;
+    justify-content: center;
+}

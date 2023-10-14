@@ -24,9 +24,36 @@ export class CategoryService {
     return result;
   }
 
+  initCategoriesNested(categories: Category[]) {
+    const categoriesDictionary: { [key: number]: Category } = {};
+    const categoriesParentMap: { [key: number]: number[] } = {};
+    let parentCategoriesIds: number[] = [];
+
+    categories.forEach((category) => {
+      categoriesDictionary[category.category_id] = category;
+      if (category.parent_id) {
+        if (!categoriesParentMap[category.parent_id]) {
+          categoriesParentMap[category.parent_id] = [];
+        }
+        categoriesParentMap[category.parent_id].push(category.category_id);
+      } else if (categoriesParentMap[category.category_id] === undefined) {
+        categoriesParentMap[category.category_id] = [];
+      }
+    });
+    parentCategoriesIds = Object.keys(categoriesParentMap).map((id) =>
+      parseInt(id)
+    );
+
+    return { categoriesDictionary, categoriesParentMap, parentCategoriesIds };
+  }
+
   initCategories(categories: Category[]) {
     const childToParentMap: { [key: number]: number } = {};
-    const categoryGroups: { name: string; type: number, categories: Category[] }[] = [
+    const categoryGroups: {
+      name: string;
+      type: number;
+      categories: Category[];
+    }[] = [
       {
         name: 'Faculties',
         type: 0,
@@ -45,6 +72,6 @@ export class CategoryService {
       }
     });
 
-    return {categoryGroups, childToParentMap};
+    return { categoryGroups, childToParentMap };
   }
 }
