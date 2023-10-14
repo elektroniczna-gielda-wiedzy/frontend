@@ -38,7 +38,7 @@ export class CommentActionButtonsComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    
       if (result != undefined){
         this.comment.content = result
 
@@ -47,7 +47,6 @@ export class CommentActionButtonsComponent {
         this.commentHttpService.updateComment(this.entryId , this.answerId , this.commentId , this.comment).subscribe((res) => {
           if (res.success) {
             this.logger.info('comment updated');
-            console.log(res.result)
           }
         });
     
@@ -58,15 +57,12 @@ export class CommentActionButtonsComponent {
    }
 
   deleteComment() {
-    console.log(this.entryId ,this.answerId , this.commentId)
     this.commentHttpService.deleteComment(this.entryId ,this.answerId , this.commentId).subscribe((res) => {
-      console.log(res)
       if (res.success) {
         this.logger.info('comment deleted');
-        this.commentDeleted.emit(this.commentId);
+        this.commentDeleted.emit(this.answerId);
       }
     });
 
-   // location.reload();
    }
 }

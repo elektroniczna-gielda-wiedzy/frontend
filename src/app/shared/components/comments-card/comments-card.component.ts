@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,8 @@ export class CommentsCardComponent {
   entryId!: number;
   @Input()
   answerId!: number;
-
+  //@Output() commentDeleted = new EventEmitter<number>();
+  private commentsSubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   
@@ -53,6 +54,13 @@ export class CommentsCardComponent {
       }
     );
   }
+
+  ngOnChanges(changes: SimpleChanges){
+    
+    this.commentService.getComments(this.entryId , this.answerId)
+   
+  }
+
 
   ngOnDestroy() {
     if (this.langChangeSubscription) {
@@ -94,5 +102,15 @@ export class CommentsCardComponent {
       });
 
   }
+
+  
+    commentDeleted(id: number) {
+      this.commentsSubscription = this.commentService
+          .getComments(this.entryId , this.answerId)
+          .subscribe((response) => {
+            this.comments = response.result;
+          });
+     }
+ 
 
 }

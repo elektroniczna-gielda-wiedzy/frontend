@@ -16,10 +16,11 @@
         <div class="comment-footer">
           <div class="app-comment-action-buttons" *appIfAuthorOrAdmin="comment?.author?.user_id">
             <app-comment-action-buttons
-              [entryId] = "entryId"
+              [entryId] ="entryId"
               [answerId]="answerId"
               [commentId]="comment.comment_id"
               [comment]="comment"
+              (commentDeleted)="commentDeleted($event)"
             >
             </app-comment-action-buttons>
         </div>
@@ -54,7 +55,7 @@
   > 
 
   <mat-form-field class="example-full-width " appearance="outline">
-    <mat-label class="comment">{{ "Add first comment" | translate }}</mat-label>
+    <mat-label class="comment">{{ "Add new comment" | translate }}</mat-label>
     <textarea  matInput (keydown)="$event.stopPropagation()" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"   formControlName="comment"
      ></textarea>
      <button mat-icon-button matSuffix color="primary" class="contact-button"><mat-icon  class="icon-display">send</mat-icon></button>

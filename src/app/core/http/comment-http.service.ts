@@ -12,6 +12,12 @@ export class CommentHttpService {
   private readonly apiUrl = `${environment.apiUrl}/entry`;
   constructor(private http: HttpClient) { }
 
+  getComments(entryId: number , answerId: number ): Observable<StandardResponse<Comment>> {
+    const url = `${this.apiUrl}/${entryId}/answer/${answerId}/comment`;
+    return this.http.get<StandardResponse<Comment>>(url);
+    
+  }
+
   addComment(entryId: number,answerId: number,  comment: CommentRequest): Observable<StandardResponse<Comment>> {
     const url = `${this.apiUrl}/${entryId}/answer/${answerId}/comment`;
     return this.http.post<StandardResponse<Comment>>(url, comment);
