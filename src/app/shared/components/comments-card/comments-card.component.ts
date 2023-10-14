@@ -46,6 +46,7 @@ export class CommentsCardComponent {
   
   ngOnInit(): void {
     console.log(this.comments)
+    this.comments?.sort((b,a) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.step = 0;
 
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
@@ -75,8 +76,7 @@ export class CommentsCardComponent {
   }
 
   addComment(){
-      console.log(this.commentForm.value.comment)
-
+  
       if (this.commentForm.invalid ) {
         return;
       }
