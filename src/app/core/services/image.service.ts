@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ImageService {
-  baseUrl = environment.apiUrl + '/images';
+  baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   private async getBase64Image(blob: Blob) {
@@ -24,8 +24,9 @@ export class ImageService {
   async getImage(url: string) {
     const headers = {
       Authorization: TokenService.getToken(),
+
     };
-    url = `${this.baseUrl}/${url}`;
+    url = `${this.baseUrl}${url}`;
 
     return new Promise((resolve: (value?: string) => any) => {
       this.http

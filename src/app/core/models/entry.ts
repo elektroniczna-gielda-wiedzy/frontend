@@ -13,7 +13,7 @@ export interface Entry {
   author: Author;
   created_at: string;
   content?: string;
-  image?: string;
+  image_url?: string;
   answers?: Answer[];
 }
 
@@ -21,7 +21,10 @@ export interface EntryRequest {
   entry_type_id: number;
   title: string;
   content: string;
-  image?: string;
+  image?: {
+    filename: string;
+    data: string;
+  }
   categories: number[];
 }
 

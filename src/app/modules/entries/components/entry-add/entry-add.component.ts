@@ -153,8 +153,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
             (category) => category.category_id
           ),
         });
-        if (this.entry.image) {
-          this.loadImage(this.entry.image);
+        if (this.entry.image_url) {
+          this.loadImage(this.entry.image_url);
         }
       },
       error: (response) => {
@@ -163,8 +163,9 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadImage(imageUrl: string): void {
-    this.imageService.getImage(imageUrl).then((response) => {
+  loadImage(image_url: string): void {
+    this.imageService.getImage(image_url).then((response) => {
+      this.imageRowSpan = 3;
       this.entryImage = response;
       this.defaultImage = response;
     });
@@ -177,9 +178,22 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     const max_width = 25600;
     this.selectedFile = event.target.files[0] ?? null;
 
-    // if (event.target.files[0].size > max_size) {
-    //   this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-    //  }
+    if (!this.selectedFile) {
+      return;
+    }
+
+    if (event.target.files[0].size > max_size) {
+      this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+      this.logger.error(this.imageError);
+     return;
+    }
+    
+    if (allowed_types.indexOf(event.target.files[0].type) === -1) {
+      this.imageError = 'Only Images are allowed ( JPG | PNG )';
+      this.logger.error(this.imageError);
+      return;
+    }
+
     var fileReader = new FileReader();
     fileReader.onload = (e: any) => {
       const image = new Image();
@@ -209,7 +223,10 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     const entry: EntryRequest = {
       entry_type_id: this.entryType,
       ...this.form.value,
-      image: this.cardImageBase64,
+      image: {
+        filename: this.filename,
+        data: this.cardImageBase64 ?? '',
+      }
     };
     this.sending = true;
 
@@ -261,7 +278,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
     this.filename = '';
-    this.imageRowSpan = 1;
+    this.imageRowSpan = this.defaultImage ? 3 : 1;
   }
 
   openDialog(): void {
