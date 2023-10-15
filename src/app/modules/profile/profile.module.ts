@@ -6,9 +6,10 @@ import { ProfileEntryListComponent } from './components/profile-entry-list/profi
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from './material-module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 
 @NgModule({
-  declarations: [ProfileEntryListComponent],
+  declarations: [ProfileEntryListComponent, ProfileDetailsComponent],
   imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, TranslateModule],
 })
 export class ProfileModule {}
