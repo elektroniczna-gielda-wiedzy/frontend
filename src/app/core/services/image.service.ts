@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ImageService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.serverUrl;
   constructor(private http: HttpClient) {}
 
   private async getBase64Image(blob: Blob) {

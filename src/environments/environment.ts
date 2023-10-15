@@ -1,11 +1,17 @@
 import { NgxLoggerLevel } from 'ngx-logger';
 
+const backend = 'localhost:8080'
+
 export const environment = {
   production: false,
-  tokenAllowedDomains: ['localhost:8080'],
-  tokenDisallowedRoutes: ['http://localhost:8080/api/v1/auth/sign_in', 'http://localhost:8080/api/v1/auth/sign_up'],
-  apiUrl: 'http://localhost:8080/api/v1',
-  brokerURL: 'ws://localhost:8080/api/v1/ws',
+  tokenAllowedDomains: [backend],
+  tokenDisallowedRoutes: [
+    `http://${backend}/api/v1/auth/sign_in`,
+    `http://${backend}/api/v1/auth/sign_up`,
+  ],
+  serverUrl: `http://${backend}`,
+  apiUrl: `http://${backend}/api/v1`,
+  brokerURL:  `ws://${backend}/api/v1/ws`,
   defaultLanguage: 'pl',
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
