@@ -1,11 +1,62 @@
 <button mat-button color="primary" (click)="toggle()">{{step ? ('Hide comments' |  translate) : ('Show comments'|  translate)}}</button>
     
+
 <mat-expansion-panel class="remove-mat-expansion-panel-padding" [expanded]="step === 1" hideToggle *ngIf="step" >
-    <form  class="form"> 
+
+  <mat-card-content *ngFor="let comment of comments">
+    <div class="comment-outer-container">
+     
+  
+      <div class="comment-container" color="primary">
+        <div class="content">
+          {{ comment?.content }}
+        </div>
+  
+        
+        <div class="comment-footer">
+          <div class="app-comment-action-buttons" *appIfAuthorOrAdmin="comment?.author?.user_id">
+            <app-comment-action-buttons
+              [entryId] ="entryId"
+              [answerId]="answerId"
+              [commentId]="comment.comment_id"
+              [comment]="comment"
+              (commentDeleted)="commentDeleted($event)"
+            >
+            </app-comment-action-buttons>
+        </div>
+    
+          <mat-card-subtitle>
+            <div class="author-container">
+              <span>
+                {{ comment?.author?.first_name }}
+              </span>
+              <span>
+                {{ comment?.author?.last_name }}
+              </span>
+            </div>
+            <div class="date-container">
+              <span translate> {{" commented" | translate }}</span>
+              <span>
+                {{ comment?.created_at | relativeTime : currentLanguage }}
+              </span>
+            </div>
+         
+          </mat-card-subtitle>
+    </div>    
+        </div>
+        </div>
+      
+    <mat-divider></mat-divider>
+  </mat-card-content>
+
+  <form  class="form" 
+    [formGroup]="commentForm"
+    (ngSubmit)="addComment()"
+  > 
 
   <mat-form-field class="example-full-width " appearance="outline">
-    <mat-label class="comment">{{ "Add first comment" | translate }}</mat-label>
-    <textarea  matInput (keydown)="$event.stopPropagation()" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
+    <mat-label class="comment">{{ "Add new comment" | translate }}</mat-label>
+    <textarea  matInput (keydown)="$event.stopPropagation()" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"   formControlName="comment"
      ></textarea>
      <button mat-icon-button matSuffix color="primary" class="contact-button"><mat-icon  class="icon-display">send</mat-icon></button>
   </mat-form-field>

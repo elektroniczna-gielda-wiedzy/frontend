@@ -18,7 +18,7 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 import { NGXLogger } from 'ngx-logger';
 import { MatDialog } from '@angular/material/dialog';
 import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fullscreen-image-dialog.component';
-
+import { Comment } from 'src/app/core/models/comment';
 @Component({
   selector: 'app-answer-card',
   templateUrl: './answer-card.component.html',
@@ -75,6 +75,7 @@ export class AnswerCardComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
+  
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
       () => {
         this.currentLanguage = this.languageService.language;

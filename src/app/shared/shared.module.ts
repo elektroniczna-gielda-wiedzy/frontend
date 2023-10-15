@@ -17,10 +17,11 @@ import { VotesWidgetComponent } from './components/votes-widget/votes-widget.com
 import { IsAdminDirective } from './directives/is-admin.directive';
 import { AnswerActionButtonsComponent } from './components/answer-action-buttons/answer-action-buttons.component';
 import { AnswerEditPopupComponent } from './components/answer-edit-popup/answer-edit-popup.component';
+import { CommentActionButtonsComponent } from './components/comment-action-buttons/comment-action-buttons.component';
+
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { TopAnswerWidgetComponent } from './components/top-answer-widget/top-answer-widget.component';
-
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { TopAnswerWidgetComponent } from './components/top-answer-widget/top-ans
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
     AnswerActionButtonsComponent,
+    CommentActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective,
@@ -58,6 +60,7 @@ import { TopAnswerWidgetComponent } from './components/top-answer-widget/top-ans
     FullscreenImageDialogComponent,
     EntryActionButtonsComponent,
     AnswerActionButtonsComponent,
+    CommentActionButtonsComponent,
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective,

@@ -1,5 +1,5 @@
 import { Author } from './user';
-
+import {Comment } from "./comment"
 export interface Answer {
     answer_id: number;
     author: Author;
@@ -10,6 +10,7 @@ export interface Answer {
     content: string;
     image?: string;
     imageSrc?: string;
+    comments?: Comment[];
   }
   
   export interface AnswerRequest {

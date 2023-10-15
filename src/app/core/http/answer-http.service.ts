@@ -30,7 +30,6 @@ export class AnswerHttpService {
 
   deleteAnswer(entryId: number ,answerId : number): Observable<StandardResponse<Answer>> {
     const url = `${this.apiUrl}/${entryId}/answer/${answerId}`;
-    console.log(url)
     return this.http.delete<StandardResponse<Answer>>(url);
   }
 
