@@ -6,10 +6,11 @@ import { UserInfo } from '../models/user';
   providedIn: 'root'
 })
 export class UserHttpService {
-  private readonly apiUrl = `${environment.apiUrl}/entry`;
+  private readonly apiUrl = `${environment.apiUrl}/user`;
   constructor(private http: HttpClient){ }
 
   getUserInfo(userId: number) {
-    return this.http.get<UserInfo>(`/api/users/${userId}`);
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.get<UserInfo>(url);
   }
 }
