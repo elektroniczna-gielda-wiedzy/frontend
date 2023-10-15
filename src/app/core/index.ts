@@ -26,6 +26,7 @@ export * from './models/chat';
 export * from './guards/entry-type.guard';
 export * from './guards/auth.guard';
 export * from './guards/not-auth.guard';
+export * from './guards/admin.guard';
 
 // interceptors
 export * from './interceptors/error.interceptor';

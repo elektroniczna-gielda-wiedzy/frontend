@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { CategoriesListComponent } from '../categories/components/categories-list/categories-list.component';
 import { adminGuard } from 'src/app/core/guards/admin.guard';
 
 const routes: Routes = [
-  { path: 'categories', component: CategoriesListComponent, canActivate: [adminGuard] },
+  // { path: 'categories', component: CategoriesListComponent, canActivate: [adminGuard] },
 ];
 
 

@@ -8,8 +8,15 @@
 >
   <mat-expansion-panel-header>
     <mat-panel-title> {{ getCategoryName(category) }} </mat-panel-title>
-    <mat-panel-description *ngIf="state !== 'Default'">
-      {{ state | translate }}
+    <mat-panel-description>
+      <span>
+        <ng-container *ngIf="state !== 'Default'">
+          {{ state | translate }}
+        </ng-container>
+      </span>
+      <mat-icon *ngIf="tab == 1 && category.status == 'ACTIVE'" color="primary"
+        >verified_user</mat-icon
+      >
     </mat-panel-description>
   </mat-expansion-panel-header>
   <app-category-form
@@ -21,7 +28,16 @@
   <mat-action-row>
     <ng-container *ngIf="isInputDisabled">
       <button
-        *ngIf="!isSubcategory"
+        *ngIf="tab == 1 && category.status === 'SUGGESTED'"
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="approveCategory()"
+      >
+        {{ "Approve" | translate }}
+      </button>
+      <button
+        *ngIf="!isSubcategory && category.status !== 'SUGGESTED'"
         type="button"
         mat-raised-button
         color="primary"

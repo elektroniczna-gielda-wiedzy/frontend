@@ -51,7 +51,14 @@
           ></app-category-selector>
         </mat-grid-tile>
 
-        <mat-grid-tile [rowspan]="3" *ngIf="entryType !== 2">
+        <mat-grid-tile>
+          <div class="add-suggestion-btn-container">
+            <span> Don't see a suitable category? </span>
+            <button type="button" mat-button (click)="openSuggestionWizard()">Add your suggestion</button>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [rowspan]="imageRowSpan" *ngIf="entryType !== 2">
           <div class="image-select-container">
             <div class="image-buttons">
               <button
@@ -78,7 +85,7 @@
               type="file"
             />
 
-            <ng-container *ngIf="entry?.image || entryImage">
+            <ng-container *ngIf="entry?.image_url || entryImage">
               <div
                 class="current-image-container"
                 *ngIf="entryImage; else spinner"

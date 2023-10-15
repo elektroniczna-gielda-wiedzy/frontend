@@ -1,17 +1,25 @@
-<mat-accordion class="category-list-container">
+<mat-tab-group class="tabs-container" (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="{{ getLabel('Active') }}"></mat-tab>
+  <mat-tab label="{{ getLabel('Suggestions') }}"></mat-tab>
+</mat-tab-group>
+
+<mat-accordion class="category-list-container" *ngIf="!loading; else spinner">
   <div
     class="category-list"
-    *ngFor="let group of categoryGroups; trackBy: trackByFn"
+    *ngFor="
+      let categoryType of ['Faculties', 'Areas'];
+      let categoryTypeId = index
+    "
   >
     <div
       class="category-group-name-container"
-      [class.is-area]="group.name === 'Areas'"
+      [class.is-area]="categoryType === 'Areas'"
     >
       <mat-expansion-panel
         class="category-group-name-panel"
         #expansionPanel
         hideToggle
-        [expanded]="this.addCategoryFormState === group.name"
+        [expanded]="this.addCategoryFormState === categoryType"
       >
         <mat-expansion-panel-header
           class="default-cursor"
@@ -22,12 +30,16 @@
           "
         >
           <mat-panel-title>
-            <span class="category-group-name">{{ group.name | translate }}</span>
+            <span class="category-group-name">{{
+              categoryType | translate
+            }}</span>
           </mat-panel-title>
           <mat-panel-description>
             <span>
               <ng-container *ngIf="expansionPanel.expanded">
-                {{ getAddCategoryFormTitle(group.name) | translate}}</ng-container
+                {{
+                  getAddCategoryFormTitle(categoryType) | translate
+                }}</ng-container
               ></span
             >
             <button
@@ -50,7 +62,7 @@
               color="primary"
               (click)="
                 $event.stopPropagation();
-                displayAddCategoryForm(group.name);
+                displayAddCategoryForm(categoryType);
                 expansionPanel.open()
               "
             >
@@ -69,7 +81,7 @@
             disabled="{{ this.polishName === '' || this.englishName === '' }}"
             mat-raised-button
             color="primary"
-            (click)="_addCategory(group.type)"
+            (click)="_addCategory(categoryTypeId)"
           >
             {{ "Add" | translate }}
           </button>
@@ -83,26 +95,37 @@
         </mat-action-row>
       </mat-expansion-panel>
     </div>
-    <ng-container *ngFor="let category of group.categories; trackBy: trackByFn">
-      <app-categories-list-item
-        *ngIf="category.parent_id == null"
-        [category]="category"
-        (onAddCategory)="addCategory($event)"
-        (onUpdateCategory)="updateCategory($event)"
-        (onDeleteCategory)="deleteCategory($event)"
-      ></app-categories-list-item>
-      <ng-container
-        *ngFor="let subCategory of group.categories; trackBy: trackByFn"
-      >
-        <app-categories-list-item
-          *ngIf="category.category_id === subCategory.parent_id"
-          [category]="subCategory"
-          [isSubcategory]="true"
-          (onAddCategory)="addCategory($event)"
-          (onUpdateCategory)="updateCategory($event)"
-          (onDeleteCategory)="deleteCategory($event)"
-        ></app-categories-list-item>
+    <ng-container *ngIf="!(refreshCategories$ | async)">
+      <ng-container *ngFor="let categoryId of parentCategoriesIds">
+        <ng-container
+          *ngIf="categoriesDictionary[categoryId]?.type === categoryTypeId"
+        >
+          <app-categories-list-item
+            [tab]="tab"
+            [category]="categoriesDictionary[categoryId]"
+            (onAddCategory)="addCategory($event)"
+            (onUpdateCategory)="updateCategory($event)"
+            (onDeleteCategory)="deleteCategory($event)"
+          ></app-categories-list-item>
+          <ng-container
+            *ngFor="let subCategoryId of categoriesParentMap[categoryId]"
+          >
+            <app-categories-list-item
+              [tab]="tab"
+              [category]="categoriesDictionary[subCategoryId]"
+              [isSubcategory]="true"
+              (onAddCategory)="addCategory($event)"
+              (onUpdateCategory)="updateCategory($event)"
+              (onDeleteCategory)="deleteCategory($event)"
+            ></app-categories-list-item>
+          </ng-container>
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>
 </mat-accordion>
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

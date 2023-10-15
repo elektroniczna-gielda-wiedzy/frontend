@@ -12,4 +12,10 @@
     &.is-subcategory {
         padding-left: 2em;
     }
+    mat-panel-description {
+        margin-right: 0;
+        justify-content: space-between;
+        flex-grow: 0;
+        gap: 0.5em;
+      }
 }

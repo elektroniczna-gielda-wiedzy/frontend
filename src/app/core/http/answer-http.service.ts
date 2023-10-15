@@ -33,4 +33,8 @@ export class AnswerHttpService {
     return this.http.delete<StandardResponse<Answer>>(url);
   }
 
+  changeTopAnswer(entryId: number, answerId: number, value: 1 | -1): Observable<StandardResponse<Answer>> {
+    const url = `${this.apiUrl}/${entryId}/answer/${answerId}/top`;
+    return this.http.put<StandardResponse<Answer>>(url, {value});
+  }
 }
