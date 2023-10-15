@@ -66,10 +66,14 @@
       </div>
      
     </div>
-    
+
   </div>
  
-  <app-comments-card></app-comments-card>
+  <app-comments-card  
+      [answerId]="answer.answer_id"
+      [entryId]="entryId"
+      [comments]="answer?.comments"
+></app-comments-card>
 
   <mat-divider></mat-divider>
 </mat-card-content>

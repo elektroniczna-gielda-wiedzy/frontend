@@ -71,9 +71,10 @@
     "Remove": "Remove",
     "Show comments": "Show comments",
     "Hide comments": "Hide comments",
-    "Add first comment": "Add first comment",
+    "Add new comment": "Add new comment",
     "answered": "aswered",
-
+    "commented": "commented",
+    
     "Areas": "Areas",
     "Faculties": "Faculties",
     "Apply filters": "Apply filters",
