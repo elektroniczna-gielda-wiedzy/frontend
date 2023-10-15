@@ -108,5 +108,15 @@
     "Select existing category": "Select existing category",
     "Fill category names": "Fill category names",
     "New category": "New category",
-    "New subcategory": "New subcategory"
+    "New subcategory": "New subcategory",
+
+    "Profile Details": "Profile details",
+    "User Details": "User Details",
+    "Change Password": "Change Password",
+    "Entries Stats": "Entries Stats",
+    "Number of entries added": "Number of entries added",
+    "Total votes received": "Total votes received",
+    "Account Activity": "Account Activity",
+    "Account create date": "Account create date",
+    "Last login date": "Last login date"
 }

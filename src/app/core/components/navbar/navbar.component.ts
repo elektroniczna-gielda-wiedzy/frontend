@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   profileLinks = [
     { url: '/profile/entries', label: 'My entries' },
     { url: '/profile/favorites', label: 'My favorites' },
-    // { url: '/profile/details', label: 'Profile details' },
+    { url: '/profile/details', label: 'Profile details' },
   ];
   adminLinks = [
     { url: '/categories', label: 'Categories' },

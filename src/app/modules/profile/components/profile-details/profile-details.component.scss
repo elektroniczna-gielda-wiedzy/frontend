@@ -1,0 +1,23 @@
+.margin-right {
+  margin-right: 0.5em;
+}
+
+.profile-details-outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2em;
+}
+
+.profile-details-inner-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 1em;
+  max-width: 1200px;
+  width: 100%;
+}
+
+mat-card {
+  overflow-x: auto;
+}
