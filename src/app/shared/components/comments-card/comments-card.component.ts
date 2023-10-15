@@ -91,9 +91,9 @@ export class CommentsCardComponent {
             this.comments?.push(res.result[0]);
             this.commentForm.reset();
     
-            // Object.values(this.form.controls).forEach(control => {
-            //   control.setErrors(null);
-            // });
+            Object.values(this.commentForm.controls).forEach(control => {
+              control.setErrors(null);
+            });
           }
         },
         error: (err) => {
