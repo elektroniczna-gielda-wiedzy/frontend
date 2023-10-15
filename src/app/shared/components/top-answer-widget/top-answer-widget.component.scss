@@ -1,0 +1,15 @@
+@use "@angular/material" as mat;
+@use "src/theme";
+.top-answer-icon {
+  scale: 1.2;
+  transition: all 0.4s ease-in-out;
+}
+
+.top-answer-icon:hover {
+  cursor: pointer;
+  scale: 1.4;
+  color: mat.get-color-from-palette(theme.$app-primary);
+  &.is-marked {
+    color: mat.get-color-from-palette(theme.$app-warn);
+  }
+}

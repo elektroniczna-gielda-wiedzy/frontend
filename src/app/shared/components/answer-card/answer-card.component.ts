@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   Language,
@@ -6,6 +6,7 @@ import {
   ImageService,
   AnswerHttpService,
   AnswerRequest,
+  TokenService,
 } from 'src/app/core';
 import {
   FormGroup,
@@ -24,6 +25,8 @@ import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fulls
   styleUrls: ['./answer-card.component.scss'],
 })
 export class AnswerCardComponent implements OnDestroy {
+  @Input()
+  entryAuthorId?: number;
   @Input()
   entryId!: number;
   @Input()
@@ -47,7 +50,9 @@ export class AnswerCardComponent implements OnDestroy {
     private logger: NGXLogger,
     private im: ImageService,
     private dialog: MatDialog,
-    private answerService: AnswerHttpService
+    private answerHttpService: AnswerHttpService,
+    private cdRef: ChangeDetectorRef,
+    private tokenService: TokenService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -124,7 +129,7 @@ export class AnswerCardComponent implements OnDestroy {
       answer.image = this.cardImageBase64;
     }
 
-    this.answerService.addAnswer(this.entryId, answer).subscribe({
+    this.answerHttpService.addAnswer(this.entryId, answer).subscribe({
       next: (res) => {
         this.logger.trace(res);
         if (res.success && res.result?.length > 0) {
@@ -156,7 +161,63 @@ export class AnswerCardComponent implements OnDestroy {
 
   propagateDeletion(id: number) {
     this.answerDeleted.emit(id);
+  }
+
+  onChangeTopAnswer({ answerId, isTopAnswer }: { answerId: number, isTopAnswer: boolean }) {
+    if (!this.answers) {
+      return;
+    }
+
+    if (this.entryId && answerId) {
+      this.answerHttpService
+        .changeTopAnswer(this.entryId, answerId, isTopAnswer ? -1 : 1)
+        .subscribe((res) => {
+          if (res.success) {
+            this.logger.trace(res);
+            this.updateAnswersAfterMarking(answerId);
+          }
+        });
+    }
+  }
+
+  updateAnswersAfterMarking(answerId: number) {
+    this.answers?.forEach((answer) => {
+      if (answer.answer_id != answerId && answer.top_answer) {
+        answer.top_answer = false;
+      } else if (answer.answer_id == answerId) {
+        answer.top_answer = !answer.top_answer;
+      }
+    });
   
-    
-  } 
+    this.answers?.sort((a, b) => {
+      if (a.top_answer) {
+        return -1;
+      } else if (b.top_answer) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    this.cdRef.detectChanges();
+    const headerElement: HTMLElement | null = document.querySelector('#answer-count');
+
+    if (headerElement && !isElementVisible(headerElement)) {
+        const el: HTMLElement | null = document.querySelector(`#answer-id-${answerId}`);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  canMarkAnswer(authorId: number) {
+    const currentUserId = this.tokenService.getUserId();
+    if (!currentUserId || this.entryAuthorId !== currentUserId) {
+      return false;
+    }
+    return authorId !== currentUserId;
+  }
+}
+
+function isElementVisible(el: HTMLElement): boolean {
+  const rect = el.getBoundingClientRect();
+  return (rect.top >= 0 && rect.bottom <= window.innerHeight);
 }

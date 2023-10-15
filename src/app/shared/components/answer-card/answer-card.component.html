@@ -1,17 +1,26 @@
 <mat-divider></mat-divider>
-<mat-card-header>
+<mat-card-header id="answer-count">
   <h3>{{ answers?.length }} {{ "Answers" | translate }}</h3>
 </mat-card-header>
 <mat-card-content *ngFor="let answer of answers">
-  <div class="answer-outer-container">
-    <app-votes-widget
-      [count]="answer?.votes || 0"
-      [entryId]="entryId"
-      [answerId]="answer.answer_id"
-      [authorId]="answer.author.user_id"
-      [voted]="answer.user_vote || 0"
-    ></app-votes-widget>
-
+  <div id="answer-id-{{answer.answer_id}}" class="answer-outer-container">
+    <div class="answer-widget-container">
+      <app-top-answer-widget
+      *ngIf="canMarkAnswer(answer.author.user_id)"
+        [isTopAnswer]="answer.top_answer"
+        [entryId]="entryId"
+        [answerId]="answer.answer_id"
+        (onChangeTopAnswer)="onChangeTopAnswer($event)"
+      ></app-top-answer-widget>
+      
+      <app-votes-widget
+        [count]="answer?.votes || 0"
+        [entryId]="entryId"
+        [answerId]="answer.answer_id"
+        [authorId]="answer.author.user_id"
+        [voted]="answer.user_vote || 0"
+      ></app-votes-widget>
+    </div>
     <div class="answer-container">
       <div class="content">
         {{ answer?.content }}

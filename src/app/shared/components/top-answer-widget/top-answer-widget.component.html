@@ -1,0 +1,10 @@
+<div class="top-answer-widget-container">
+  <mat-icon
+    class="top-answer-icon"
+    [class.is-marked]="isTopAnswer"
+    color="primary"
+    (click)="changeTopAnswer()"
+  >
+    {{ icon }}
+  </mat-icon>
+</div>

@@ -19,6 +19,7 @@ import { AnswerActionButtonsComponent } from './components/answer-action-buttons
 import { AnswerEditPopupComponent } from './components/answer-edit-popup/answer-edit-popup.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { TopAnswerWidgetComponent } from './components/top-answer-widget/top-answer-widget.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     VotesWidgetComponent,
     IsAdminDirective,
     AnswerEditPopupComponent,
+    TopAnswerWidgetComponent,
   ],
   imports: [
     CommonModule,
