@@ -108,5 +108,15 @@
     "Select existing category": "Wybierz istniejącą kategorię",
     "Fill category names": "Wypełnij nazwy kategorii",
     "New category": "Nowa kategoria",
-    "New subcategory": "Nowa podkategoria"
+    "New subcategory": "Nowa podkategoria",
+
+    "Profile details": "Szczegóły profilu",
+    "User Details": "Szczegóły użytkownika",
+    "Change Password": "Zmień hasło",
+    "Entries Stats": "Statystyki wpisów",
+    "Number of entries added": "Liczba dodanych wpisów",
+    "Total votes received": "Otrzymane głosy",
+    "Account Activity": "Aktywność konta",
+    "Account create date": "Data utworzenia konta",
+    "Last login date": "Data ostatniego logowania"
 }

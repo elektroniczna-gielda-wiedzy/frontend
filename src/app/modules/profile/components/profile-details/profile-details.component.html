@@ -2,7 +2,7 @@
   <div class="profile-details-inner-container">
     <mat-card>
       <mat-card-header>
-        <mat-card-title> User Details </mat-card-title>
+        <mat-card-title> {{ "User Details" | translate }} </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <h2>
@@ -15,34 +15,36 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Change Password</button>
+        <button mat-raised-button color="primary">
+          {{ "Change Password" | translate }}
+        </button>
       </mat-card-actions>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title> Entries Stats </mat-card-title>
+        <mat-card-title> {{ "Entries Stats" | translate }} </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div>
-          <h4>Number of entries added</h4>
+          <h4>{{ "Number of entries added" | translate }}</h4>
           <div>
-            <span class="margin-right">Announcements:</span>
+            <span class="margin-right">{{ "Announcements" | translate }}:</span>
             <span>{{ userInfo?.activity?.no_entries?.Announcement }}</span>
           </div>
           <div>
-            <span class="margin-right">Notes:</span>
+            <span class="margin-right">{{ "Notes" | translate }}:</span>
             <span>{{ userInfo?.activity?.no_entries?.Note }}</span>
           </div>
           <div>
-            <span class="margin-right">Posts:</span>
+            <span class="margin-right">{{ "Posts" | translate }}:</span>
             <span>{{ userInfo?.activity?.no_entries?.Post }}</span>
           </div>
         </div>
         <div>
-          <h4>Total votes received</h4>
+          <h4>{{ "Total votes received" | translate }}</h4>
           <div>
-            <span class="margin-right">Announcements:</span>
+            <span class="margin-right">{{ "Announcements" | translate }}:</span>
             <mat-icon>arrow_drop_up</mat-icon>
             <span>{{
               userInfo?.activity?.no_votes?.Announcement?.positive
@@ -53,14 +55,14 @@
             }}</span>
           </div>
           <div>
-            <span class="margin-right">Notes:</span>
+            <span class="margin-right">{{ "Notes" | translate }}:</span>
             <mat-icon>arrow_drop_up</mat-icon>
             <span>{{ userInfo?.activity?.no_votes?.Note?.positive }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
             <span>{{ userInfo?.activity?.no_votes?.Note?.negative }}</span>
           </div>
           <div>
-            <span class="margin-right">Posts:</span>
+            <span class="margin-right">{{ "Posts" | translate }}:</span>
             <mat-icon>arrow_drop_up</mat-icon>
             <span>{{ userInfo?.activity?.no_votes?.Post?.positive }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
@@ -72,15 +74,15 @@
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title> Account Activity </mat-card-title>
+        <mat-card-title> {{ "Account Activity" | translate }} </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div>
-          <h4>Account create date</h4>
+          <h4>{{ "Account create date" | translate }}</h4>
           <div>{{ formatDate(userInfo?.created_at) }}</div>
         </div>
         <div>
-          <h4>Last login date</h4>
+          <h4>{{ "Last login date" | translate }}</h4>
           <div>{{ formatDate(userInfo?.last_login) }}</div>
         </div>
       </mat-card-content>

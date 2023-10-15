@@ -10,6 +10,12 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
 
 @NgModule({
   declarations: [ProfileEntryListComponent, ProfileDetailsComponent],
-  imports: [CommonModule, ProfileRoutingModule, SharedModule, MaterialModule, TranslateModule],
+  imports: [
+    CommonModule,
+    ProfileRoutingModule,
+    SharedModule,
+    MaterialModule,
+    TranslateModule,
+  ],
 })
 export class ProfileModule {}
