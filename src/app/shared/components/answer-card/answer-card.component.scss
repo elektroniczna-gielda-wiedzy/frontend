@@ -116,3 +116,9 @@ mat-divider {
    
     justify-content: flex-end;
 }
+
+.answer-widget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
