@@ -34,7 +34,7 @@ export class AnswerActionButtonsComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      this.logger.trace(result);
       if (result != undefined){
         this.answer.content = result
 
@@ -43,11 +43,11 @@ export class AnswerActionButtonsComponent {
         this.AnswerHttpService.updateAnswer(this.entryId , this.answerId , this.answer).subscribe((res) => {
           if (res.success) {
             this.logger.info('Answer updated');
-            console.log(res.result)
+            this.logger.trace(res.result)
           }
         });
     
-        console.log('The dialog was closed');
+        this.logger.trace('The dialog was closed');
       }
      
     });
