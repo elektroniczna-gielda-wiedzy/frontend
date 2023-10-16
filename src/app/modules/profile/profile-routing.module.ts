@@ -17,7 +17,12 @@ const routes: Routes = [
   {
     path: 'details',
     component: ProfileDetailsComponent
-  }
+  },
+  {
+    path: ':userId/entries',
+    component: ProfileEntryListComponent,
+    data: { page: 'other-user-entries' },
+  },
 ];
 
 @NgModule({
