@@ -23,7 +23,7 @@
     </div>
   </mat-card-header>
   <mat-card-content>
-    <ng-container *ngIf="entry?.image_url">
+    <ng-container *ngIf="entry?.image">
       <div *ngIf="image; else spinner" class="image-container">
         <img [src]="image" (click)="openDialog()" />
       </div>

@@ -153,8 +153,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
             (category) => category.category_id
           ),
         });
-        if (this.entry.image_url) {
-          this.loadImage(this.entry.image_url);
+        if (this.entry.image) {
+          this.loadImage(this.entry.image);
         }
       },
       error: (response) => {
@@ -163,14 +163,15 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadImage(image_url: string): void {
-    this.imageService.getImage(image_url).then((response) => {
+  loadImage(image: string): void {
+    this.imageService.getImage(image).then((response) => {
       this.imageRowSpan = 3;
       this.entryImage = response;
       this.defaultImage = response;
     });
   }
 
+  //TODO: refactor extract to service
   onFileSelected(event: any): void {
     const max_size = 20971520;
     const allowed_types = ['image/png', 'image/jpeg'];

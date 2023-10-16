@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Answer, AnswerHttpService} from 'src/app/core';
+import { Answer, AnswerHttpService, AnswerRequest} from 'src/app/core';
 import { AnswerEditPopupComponent } from '../answer-edit-popup/answer-edit-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -33,17 +33,18 @@ export class AnswerActionButtonsComponent {
       panelClass: 'answer-dialog'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.logger.trace(result);
-      if (result != undefined){
-        this.answer.content = result
+    dialogRef.afterClosed().subscribe(editedContent => {
+      this.logger.trace(editedContent);
+      if (editedContent != undefined){
+        const answerRequest: AnswerRequest = {
+          content: editedContent
+        }
 
-
-
-        this.AnswerHttpService.updateAnswer(this.entryId , this.answerId , this.answer).subscribe((res) => {
+        this.AnswerHttpService.updateAnswer(this.entryId , this.answerId , answerRequest).subscribe((res) => {
           if (res.success) {
             this.logger.info('Answer updated');
             this.logger.trace(res.result)
+            this.answer.content = editedContent
           }
         });
     

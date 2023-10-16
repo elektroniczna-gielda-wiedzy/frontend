@@ -98,8 +98,8 @@ export class EntryDetailsComponent {
           return;
         }
 
-        if (this.entry.image_url) {
-          this.loadImage(this.entry.image_url);
+        if (this.entry.image) {
+          this.loadImage(this.entry.image);
         }
       },
       error: (response) => {
@@ -109,8 +109,8 @@ export class EntryDetailsComponent {
     });
   }
 
-  loadImage(image_url: string): void {
-    this.imageService.getImage(image_url).then((response) => {
+  loadImage(image: string): void {
+    this.imageService.getImage(image).then((response) => {
       this.image = response;
     });
   }

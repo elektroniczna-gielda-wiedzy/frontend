@@ -38,6 +38,7 @@ export class AnswerCardComponent implements OnDestroy {
   imageError!: string;
   isImageSaved: boolean = false;
   cardImageBase64: string | null | undefined;
+  filename = '';
   @Output() answerDeleted = new EventEmitter<number>();
 
   form: FormGroup = this.fb.group({
@@ -89,6 +90,8 @@ export class AnswerCardComponent implements OnDestroy {
     }
   }
 
+
+  //TODO: refactor extract to service
   onFileSelected(event: any): void {
     const max_size = 20971520;
     const allowed_types = ['image/png', 'image/jpeg'];
@@ -96,18 +99,32 @@ export class AnswerCardComponent implements OnDestroy {
     const max_width = 25600;
     this.selectedFile = event.target.files[0] ?? null;
 
-    if (event.target.files[0].size > max_size) {
-      this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+    if (!this.selectedFile) {
+      return;
     }
+
+    if (event.target.files[0].size > max_size) {
+      this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+      this.logger.error(this.imageError);
+     return;
+    }
+    
+    if (allowed_types.indexOf(event.target.files[0].type) === -1) {
+      this.imageError = 'Only Images are allowed ( JPG | PNG )';
+      this.logger.error(this.imageError);
+      return;
+    }
+
     var fileReader = new FileReader();
     fileReader.onload = (e: any) => {
       const image = new Image();
       image.src = e.target.result;
       const imgBase64Path = e.target.result;
-      this.cardImageBase64 = imgBase64Path.substring(
+      this.cardImageBase64 = imgBase64Path?.substring(
         imgBase64Path.indexOf(',') + 1
       );
       this.isImageSaved = true;
+      this.filename = this.selectedFile?.name ?? '';
     };
 
     fileReader.readAsDataURL(event.target.files[0]);
@@ -127,7 +144,10 @@ export class AnswerCardComponent implements OnDestroy {
       content: this.form.value.answer,
     };
     if (this.isImageSaved && this.cardImageBase64) {
-      answer.image = this.cardImageBase64;
+      answer.image = {
+        filename: this.filename,
+        data: this.cardImageBase64,
+      }
     }
 
     this.answerHttpService.addAnswer(this.entryId, answer).subscribe({

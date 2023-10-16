@@ -13,7 +13,7 @@ export interface Entry {
   author: Author;
   created_at: string;
   content?: string;
-  image_url?: string;
+  image?: string;
   answers?: Answer[];
 }
 
