@@ -270,7 +270,10 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   //   return result;
   // }
 
-  getHint(entryType: EntryType) {
+  getHint(entryType: EntryType | null) {
+    if (!entryType) {
+      return '';
+    }
     return this.languageService.translate(EntryType[entryType] + '.hint');
   }
 
