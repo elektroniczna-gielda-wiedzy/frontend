@@ -4,7 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Category, CategoryService, CategoryStatus } from 'src/app/core';
+import { Category, CategoryService, CategoryStatus, CategoryType } from 'src/app/core';
 
 @Component({
   selector: 'app-categories-list-item',
@@ -136,5 +136,9 @@ export class CategoriesListItemComponent {
     return (
       !this.isSubcategory && this.category.status === CategoryStatus.ACTIVE
     );
+  }
+
+  get isArea(): boolean {
+    return this.category.type === CategoryType.AREA;
   }
 }

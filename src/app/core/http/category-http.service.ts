@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
 import { Category } from '../models/category';
 import { CategoryStatus } from '../enums/category-status';
+import { CategoryType } from '../enums/category-type';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class CategoryHttpService {
   getCategories(
     params: {
       status?: CategoryStatus;
-      type?: number;
+      type?: CategoryType;
       parent_id?: number;
     } = {}
   ): Observable<StandardResponse<Category>> {

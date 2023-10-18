@@ -1,7 +1,7 @@
 <mat-expansion-panel
   class="category-list-item"
   [class.is-subcategory]="isSubcategory"
-  [class.is-area]="category.type"
+  [class.is-area]="isArea"
   hideToggle
   (opened)="setNames()"
   (closed)="inputDisable()"

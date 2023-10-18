@@ -13,7 +13,7 @@
           <mat-chip
             selected
             class="faculty"
-            *ngIf="category.type == 0"
+            *ngIf="isFaculty(category)"
             [ngClass]="getCategoryClass(category)"
           >
             {{ getCategoryName(category) }}
@@ -26,7 +26,7 @@
             selected
             class="area"
             [ngClass]="getCategoryClass(category)"
-            *ngIf="category.type == 1"
+            *ngIf="isArea(category)"
           >
             {{ getCategoryName(category) }}
           </mat-chip>

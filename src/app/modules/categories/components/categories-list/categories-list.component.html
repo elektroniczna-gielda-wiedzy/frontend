@@ -6,20 +6,17 @@
 <mat-accordion class="category-list-container" *ngIf="!loading; else spinner">
   <div
     class="category-list"
-    *ngFor="
-      let categoryType of ['Faculties', 'Areas'];
-      let categoryTypeId = index
-    "
+    *ngFor="let categoryType of categoryTypes;"
   >
     <div
       class="category-group-name-container"
-      [class.is-area]="categoryType === 'Areas'"
+      [class.is-area]="isArea(categoryType.id)"
     >
       <mat-expansion-panel
         class="category-group-name-panel"
         #expansionPanel
         hideToggle
-        [expanded]="this.addCategoryFormState === categoryType"
+        [expanded]="addCategoryFormState === categoryType.id"
       >
         <mat-expansion-panel-header
           class="default-cursor"
@@ -31,14 +28,14 @@
         >
           <mat-panel-title>
             <span class="category-group-name">{{
-              categoryType | translate
+              categoryType.label | translate
             }}</span>
           </mat-panel-title>
           <mat-panel-description>
             <span>
               <ng-container *ngIf="expansionPanel.expanded">
                 {{
-                  getAddCategoryFormTitle(categoryType) | translate
+                  getAddCategoryFormTitle(categoryType.id) | translate
                 }}</ng-container
               ></span
             >
@@ -62,7 +59,7 @@
               color="primary"
               (click)="
                 $event.stopPropagation();
-                displayAddCategoryForm(categoryType);
+                displayAddCategoryForm(categoryType.id);
                 expansionPanel.open()
               "
             >
@@ -81,7 +78,7 @@
             disabled="{{ this.polishName === '' || this.englishName === '' }}"
             mat-raised-button
             color="primary"
-            (click)="_addCategory(categoryTypeId)"
+            (click)="_addCategory(categoryType.id)"
           >
             {{ "Add" | translate }}
           </button>
@@ -98,7 +95,7 @@
     <ng-container *ngIf="!(refreshCategories$ | async)">
       <ng-container *ngFor="let categoryId of parentCategoriesIds">
         <ng-container
-          *ngIf="categoriesDictionary[categoryId]?.type === categoryTypeId"
+          *ngIf="categoriesDictionary[categoryId]?.type === categoryType.id"
         >
           <app-categories-list-item
             [tab]="tab"

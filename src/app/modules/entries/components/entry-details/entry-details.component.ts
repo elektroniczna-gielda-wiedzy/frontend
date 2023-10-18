@@ -8,6 +8,7 @@ import {
   Answer,
   Category,
   CategoryService,
+  CategoryType,
   Entry,
   EntryHttpService,
   EntryType,
@@ -139,6 +140,14 @@ export class EntryDetailsComponent {
     if (!this.entry) return;
     this.chatService.startChatWithUser(this.entry.author);
     this.router.navigate(['/chat']);
+  }
+
+  isFaculty(category: Category): boolean {
+    return category.type === CategoryType.FACULTY;
+  }
+
+  isArea(category: Category): boolean {
+    return category.type === CategoryType.AREA;
   }
 
   get isAuthor(): boolean {

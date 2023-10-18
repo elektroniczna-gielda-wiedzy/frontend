@@ -11,6 +11,7 @@ export * from './services/token.service';
 
 // enums
 export * from './enums/category-status'
+export * from './enums/category-type';
 export * from './enums/entry-type';
 export * from './enums/language';
 
