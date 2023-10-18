@@ -26,7 +26,7 @@ export class EntryHttpService {
       params: new HttpParams(),
     };
 
-    if (params.type) {
+    if (params.type !== undefined) {
       queryParams.params = queryParams.params.set('type', params.type);
     }
 

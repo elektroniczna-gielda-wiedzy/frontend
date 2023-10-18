@@ -62,7 +62,7 @@
 
     <div class="card-footer">
       <button
-        *ngIf="entry?.entry_type_id !== 3 && !isAuthor"
+        *ngIf="displayContactButton"
         mat-raised-button
         color="primary"
         class="contact-button"
@@ -97,7 +97,7 @@
     ></app-entry-action-buttons>
   </div>
   <app-answer-card
-    *ngIf="entry?.entry_type_id === 3"
+    *ngIf="displayAnswers"
     [answers]="entry?.answers"
     [entryId]="entry!.entry_id"
     [entryAuthorId]="entry?.author?.user_id"

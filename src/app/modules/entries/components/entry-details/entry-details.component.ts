@@ -145,4 +145,12 @@ export class EntryDetailsComponent {
     if (!this.entry) return false;
     return this.tokenService.getUserId() === this.entry.author.user_id;
   }
+
+  get displayContactButton(): boolean {
+    return this.entry?.entry_type_id !== EntryType.Post && !this.isAuthor
+  }
+
+  get displayAnswers(): boolean {
+    return this.entry?.entry_type_id === EntryType.Post;
+  }
 }

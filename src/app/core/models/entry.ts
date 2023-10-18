@@ -1,10 +1,11 @@
 import { Category } from './category';
 import { Author } from './user';
 import { Answer } from './answer';
+import { EntryType } from '../enums/entry-type';
 
 export interface Entry {
   entry_id: number;
-  entry_type_id: number;
+  entry_type_id: EntryType;
   title: string;
   favorite: boolean;
   votes: number;
@@ -18,7 +19,7 @@ export interface Entry {
 }
 
 export interface EntryRequest {
-  entry_type_id: number;
+  entry_type_id: EntryType;
   title: string;
   content: string;
   image?: {
