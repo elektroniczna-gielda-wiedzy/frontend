@@ -288,7 +288,12 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       panelClass: 'fullscreen-dialog',
     });
   }
+
   openSuggestionWizard(): void {
     this.router.navigate(['categories', 'suggest']);
+  }
+
+  get displayImageSelector(): boolean {
+    return this.entryType !== EntryType.Announcement;
   }
 }
