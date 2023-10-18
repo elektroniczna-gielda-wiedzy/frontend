@@ -31,7 +31,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.updateCategories();
+    this.fetchCategories();
   }
 
   ngOnDestroy(): void {
@@ -73,7 +73,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       parent_id: null,
       type: type,
       category_id: 0,
-      status: this.tab === 0 ? 'ACTIVE' : 'SUGGESTED',
+      status: this.tab
     };
 
     this.addCategory(newCategory);
@@ -146,14 +146,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   onTabChange(event: any): void {
     this.tab = event.index;
-    let params = {};
-    if (this.tab === 1) {
-      params = { status: 'suggested' };
-    }
-    this.updateCategories(params);
+    this.fetchCategories({ status: this.tab });
   }
 
-  updateCategories(params = {}): void {
+  fetchCategories(params = {}): void {
     this.loading = true;
     this.categoryHttpService.getCategories(params).subscribe((response) => {
       this.loading = false;

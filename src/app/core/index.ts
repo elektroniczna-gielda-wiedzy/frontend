@@ -10,6 +10,7 @@ export * from './services/category.service';
 export * from './services/token.service';
 
 // enums
+export * from './enums/category-status'
 export * from './enums/entry-type';
 export * from './enums/language';
 

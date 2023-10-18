@@ -1,4 +1,5 @@
-export type CategoryStatus = 'ACTIVE' | 'SUGGESTED' | 'DELETED';
+import { CategoryStatus } from "../enums/category-status";
+
 
 export interface Category {
   category_id: number;

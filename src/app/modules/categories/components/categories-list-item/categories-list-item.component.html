@@ -14,7 +14,7 @@
           {{ state | translate }}
         </ng-container>
       </span>
-      <mat-icon *ngIf="tab == 1 && category.status == 'ACTIVE'" color="primary"
+      <mat-icon *ngIf="displayApprovedIcon" color="primary"
         >verified_user</mat-icon
       >
     </mat-panel-description>
@@ -28,7 +28,7 @@
   <mat-action-row>
     <ng-container *ngIf="isInputDisabled">
       <button
-        *ngIf="tab == 1 && category.status === 'SUGGESTED'"
+        *ngIf="displayApproveButton"
         type="button"
         mat-raised-button
         color="primary"
@@ -37,7 +37,7 @@
         {{ "Approve" | translate }}
       </button>
       <button
-        *ngIf="!isSubcategory && category.status !== 'SUGGESTED'"
+        *ngIf="displayAddSubcategoryButton"
         type="button"
         mat-raised-button
         color="primary"
