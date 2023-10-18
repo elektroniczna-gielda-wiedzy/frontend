@@ -84,8 +84,6 @@ export class EntryDetailsComponent {
   }
 
   loadEntry(id: number): void {
-    if (!this.entryType) return;
-
     this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
       next: (response) => {
         this.entry = response.result[0];
@@ -96,7 +94,6 @@ export class EntryDetailsComponent {
             this.entry.entry_id,
           ]);
           this.entryType = this.entry.entry_type_id;
-          return;
         }
 
         if (this.entry.image) {

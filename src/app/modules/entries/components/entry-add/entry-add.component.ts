@@ -32,7 +32,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   entryId?: number;
   entryImage?: string | null;
   defaultImage?: string;
-  entryType: EntryType | null = null;
+  entryType!: EntryType;
   entryTypeString: string | null = null;
   hide = true;
   sending = false;
@@ -123,8 +123,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   }
 
   loadEntry(id: number): void {
-    if (!this.entryType) return;
-
     this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
       next: (response) => {
         if (!(response.success && response.result?.length > 0)) {
@@ -217,7 +215,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.entryType || !this.form.valid) {
+    if (!this.form.valid) {
       return;
     }
 
