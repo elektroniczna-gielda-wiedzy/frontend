@@ -224,11 +224,15 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     const entry: EntryRequest = {
       entry_type_id: this.entryType,
       ...this.form.value,
-      image: {
-        filename: this.filename,
-        data: this.cardImageBase64 ?? '',
-      }
     };
+
+    if (this.filename && this.cardImageBase64) {
+      entry.image = {
+        filename: this.filename,
+        data: this.cardImageBase64,
+      };
+    
+    }
     this.sending = true;
 
     const handleResponse = {
