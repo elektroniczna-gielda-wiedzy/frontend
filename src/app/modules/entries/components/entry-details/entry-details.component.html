@@ -39,7 +39,7 @@
           <mat-chip
             selected
             class="faculty"
-            *ngIf="category.type == 0"
+            *ngIf="isFaculty(category)"
             [ngClass]="getCategoryClass(category)"
           >
             {{ getCategoryName(category) }}
@@ -52,7 +52,7 @@
             selected
             class="area"
             [ngClass]="getCategoryClass(category)"
-            *ngIf="category.type == 1"
+            *ngIf="isArea(category)"
           >
             {{ getCategoryName(category) }}
           </mat-chip>
@@ -62,7 +62,7 @@
 
     <div class="card-footer">
       <button
-        *ngIf="entry?.entry_type_id !== 3 && !isAuthor"
+        *ngIf="displayContactButton"
         mat-raised-button
         color="primary"
         class="contact-button"
@@ -97,7 +97,7 @@
     ></app-entry-action-buttons>
   </div>
   <app-answer-card
-    *ngIf="entry?.entry_type_id === 3"
+    *ngIf="displayAnswers"
     [answers]="entry?.answers"
     [entryId]="entry!.entry_id"
     [entryAuthorId]="entry?.author?.user_id"

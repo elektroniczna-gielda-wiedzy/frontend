@@ -1,7 +1,7 @@
 export enum EntryType {
-  Announcement = 2,
-  Note = 1,
-  Post = 3,
+  Announcement = 1,
+  Note = 0,
+  Post = 2,
 }
 export function stringToEntryType(type: string): EntryType {
   switch (type.toLowerCase()) {

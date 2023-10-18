@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Category, CategoryHttpService, CategoryService } from 'src/app/core';
+import { Category, CategoryHttpService, CategoryService, CategoryStatus } from 'src/app/core';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-category-suggestion-stepper',
@@ -67,7 +66,7 @@ export class CategorySuggestionStepperComponent implements OnInit {
         },
       ],
       category_id: 0,
-      status: 'SUGGESTED',
+      status: CategoryStatus.SUGGESTED,
     };
     this.categoryHttpService
       .createCategory(newCategory)

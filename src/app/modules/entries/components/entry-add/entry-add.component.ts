@@ -32,7 +32,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   entryId?: number;
   entryImage?: string | null;
   defaultImage?: string;
-  entryType: EntryType | null = null;
+  entryType!: EntryType;
   entryTypeString: string | null = null;
   hide = true;
   sending = false;
@@ -123,8 +123,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   }
 
   loadEntry(id: number): void {
-    if (!this.entryType) return;
-
     this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
       next: (response) => {
         if (!(response.success && response.result?.length > 0)) {
@@ -217,18 +215,22 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.entryType || !this.form.valid) {
+    if (!this.form.valid) {
       return;
     }
 
     const entry: EntryRequest = {
       entry_type_id: this.entryType,
       ...this.form.value,
-      image: {
-        filename: this.filename,
-        data: this.cardImageBase64 ?? '',
-      }
     };
+
+    if (this.filename && this.cardImageBase64) {
+      entry.image = {
+        filename: this.filename,
+        data: this.cardImageBase64,
+      };
+    
+    }
     this.sending = true;
 
     const handleResponse = {
@@ -270,7 +272,10 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   //   return result;
   // }
 
-  getHint(entryType: EntryType) {
+  getHint(entryType: EntryType | null) {
+    if (!entryType) {
+      return '';
+    }
     return this.languageService.translate(EntryType[entryType] + '.hint');
   }
 
@@ -288,7 +293,12 @@ export class EntryAddComponent implements OnInit, OnDestroy {
       panelClass: 'fullscreen-dialog',
     });
   }
+
   openSuggestionWizard(): void {
     this.router.navigate(['categories', 'suggest']);
+  }
+
+  get displayImageSelector(): boolean {
+    return this.entryType !== EntryType.Announcement;
   }
 }
