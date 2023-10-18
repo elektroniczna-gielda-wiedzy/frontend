@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'entries', loadChildren: () => import('./modules/entries/entries.module').then(m => m.EntriesModule) },
   { path: 'chat', loadChildren: () => import('./modules/chat/chat.module').then(m => m.ChatModule) },
   { path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
-  { path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin-dashboard', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule) },
   { path: 'categories', loadChildren: () => import('./modules/categories/categories.module').then(m => m.CategoriesModule) },
   { path: '', redirectTo: '/entries/announcement', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

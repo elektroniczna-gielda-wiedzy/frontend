@@ -9,11 +9,27 @@
     justify-content: center;
 }
 
-h1 {
+.page-title-container {
     text-align: center;
 }
 
 .tabs-container {
     border-radius: 0.5em;
     background-color: mat.get-color-from-palette(theme.$app-primary, lighter);
+}
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+}
+
+.chat-icon {
+    transition: scale .2s ease-in-out;
+}
+
+.chat-icon:hover {
+    cursor: pointer;
+    scale: 1.2;
 }
