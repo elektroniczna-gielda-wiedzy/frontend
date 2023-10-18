@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TokenService, UserInfo } from 'src/app/core';
+import { EntryType, TokenService, UserInfo } from 'src/app/core';
 import { UserHttpService } from 'src/app/core/http/user-http.service';
 
 @Component({
@@ -52,5 +52,18 @@ export class ProfileDetailsComponent {
       return '';
     }
     return date.split('+')[0];
+  }
+
+  getLabel(entryType: EntryType) {
+    switch (entryType) {
+      case EntryType.Announcement:
+        return 'Announcements';
+      case EntryType.Note:
+        return 'Notes';
+      case EntryType.Post:
+        return 'Posts';
+      default:
+        return '';
+    }
   }
 }

@@ -100,7 +100,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   }
 
   private updateEntries(): void {
-    if (!this.entryType) {
+    if (this.entryType == null) {
       this.entriesSubject.next(this.allEntries);
       return;
     }
@@ -149,8 +149,12 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
     }
   }
 
-  contactUser(user: Author) {
-    this.chatService.startChatWithUser(user);
+  contactUser() {
+    if (!this.userInfo) {
+      return;
+    }
+
+    this.chatService.startChatWithUser(this.userInfo);
     this.router.navigate(['/chat']);
   }
 }

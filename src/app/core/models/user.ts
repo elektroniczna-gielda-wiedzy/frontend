@@ -1,3 +1,5 @@
+import { EntryType } from "../enums/entry-type";
+
 export interface UserSignInCredentials {
   email: string;
   password: string;
@@ -18,29 +20,21 @@ export interface Author {
 }
 
 export interface UserInfo {
-  basic_info: Author;
+  user_id: number;
+  first_name: string;
+  last_name: string;
   email?: string;
   created_at?: string;
   last_login?: string;
-  activity?: {
-    no_entries: {
-      Announcement: number;
-      Note: number;
-      Post: number;
-    };
-    no_votes: {
-      Announcement: {
-        positive: number;
-        negative: number;
-      };
-      Note: {
-        positive: number;
-        negative: number;
-      };
-      Post: {
-        positive: number;
-        negative: number;
-      };
-    };
-  };
+  entries_count?: {
+    entry_type_id: EntryType;
+    count: number;
+    name: string;
+  }[];
+  votes_count?: {
+    entry_type_id: EntryType;
+    name: string;
+    positive: number;
+    negative: number;
+  }[];
 }

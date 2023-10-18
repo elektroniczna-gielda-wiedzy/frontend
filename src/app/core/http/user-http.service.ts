@@ -22,12 +22,12 @@ export class UserHttpService {
     isEmailAuth?: string;
     isBanned?: string;
   } = {}): Observable<StandardResponse<Author>> {
-    const url = `${this.apiUrl}`;
+    const url = `${this.apiUrl}/`;
     let queryParams = {
       params: new HttpParams(),
       headers: { 'Content-Type': 'application/json' },
     };
-
+    queryParams.params = queryParams.params.set('q', '');
     if (params.search) {
       queryParams.params = queryParams.params.set('q', params.search);
     }

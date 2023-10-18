@@ -6,8 +6,8 @@
       </mat-card-header>
       <mat-card-content>
         <h2>
-          {{ userInfo?.basic_info?.first_name }}
-          {{ userInfo?.basic_info?.last_name }}
+          {{ userInfo?.first_name }}
+          {{ userInfo?.last_name }}
         </h2>
         <div>
           <h4>Email</h4>
@@ -28,45 +28,23 @@
       <mat-card-content>
         <div>
           <h4>{{ "Number of entries added" | translate }}</h4>
-          <div>
-            <span class="margin-right">{{ "Announcements" | translate }}:</span>
-            <span>{{ userInfo?.activity?.no_entries?.Announcement }}</span>
-          </div>
-          <div>
-            <span class="margin-right">{{ "Notes" | translate }}:</span>
-            <span>{{ userInfo?.activity?.no_entries?.Note }}</span>
-          </div>
-          <div>
-            <span class="margin-right">{{ "Posts" | translate }}:</span>
-            <span>{{ userInfo?.activity?.no_entries?.Post }}</span>
+          <div *ngFor="let entryCount of userInfo?.entries_count">
+            <span class="margin-right"
+              >{{ getLabel(entryCount.entry_type_id) | translate }}:</span
+            >
+            <span>{{ entryCount.count }}</span>
           </div>
         </div>
         <div>
           <h4>{{ "Total votes received" | translate }}</h4>
-          <div>
-            <span class="margin-right">{{ "Announcements" | translate }}:</span>
+          <div *ngFor="let voteCount of userInfo?.votes_count">
+            <span class="margin-right"
+              >{{ getLabel(voteCount.entry_type_id) | translate }}:</span
+            >
             <mat-icon>arrow_drop_up</mat-icon>
-            <span>{{
-              userInfo?.activity?.no_votes?.Announcement?.positive
-            }}</span>
+            <span>{{ voteCount.positive }}</span>
             <mat-icon>arrow_drop_down</mat-icon>
-            <span>{{
-              userInfo?.activity?.no_votes?.Announcement?.negative
-            }}</span>
-          </div>
-          <div>
-            <span class="margin-right">{{ "Notes" | translate }}:</span>
-            <mat-icon>arrow_drop_up</mat-icon>
-            <span>{{ userInfo?.activity?.no_votes?.Note?.positive }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-            <span>{{ userInfo?.activity?.no_votes?.Note?.negative }}</span>
-          </div>
-          <div>
-            <span class="margin-right">{{ "Posts" | translate }}:</span>
-            <mat-icon>arrow_drop_up</mat-icon>
-            <span>{{ userInfo?.activity?.no_votes?.Post?.positive }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-            <span>{{ userInfo?.activity?.no_votes?.Post?.negative }}</span>
+            <span>{{ voteCount.negative }}</span>
           </div>
         </div>
       </mat-card-content>
