@@ -24,6 +24,8 @@ export interface UserInfo {
   first_name: string;
   last_name: string;
   email?: string;
+  is_banned?: boolean;
+  is_email_auth?: boolean;
   created_at?: string;
   last_login?: string;
   entries_count?: {

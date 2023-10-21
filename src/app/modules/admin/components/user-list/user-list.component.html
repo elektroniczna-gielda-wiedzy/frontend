@@ -13,10 +13,10 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ "Status" | translate }}</mat-label>
           <mat-select formControlName="status">
-            <mat-option value="no-email-auth">
+            <mat-option value="email-auth">
               {{ "Authenticated" | translate }}
             </mat-option>
-            <mat-option value="email-auth">
+            <mat-option value="no-email-auth">
               {{ "Not Authenticated" | translate }}
             </mat-option>
             <mat-option value="banned">
@@ -25,37 +25,61 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </form>
-    <div class="buttons-container">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        class="apply-filter-button"
-      >
-        {{ "Apply filters" | translate }}
-      </button>
 
-      <button
-        *ngIf="userFilterForm.value.search || userFilterForm.value.status"
-        mat-raised-button
-        type="button"
-        class="clear-filter-button"
-        (click)="clearFilter()"
-      >
-        {{ "Clear filters" | translate }}
-      </button>
-    </div>
+      <div class="buttons-container">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="apply-filter-button"
+        >
+          {{ "Apply filters" | translate }}
+        </button>
+
+        <button
+          *ngIf="userFilterForm.value.search || userFilterForm.value.status"
+          mat-raised-button
+          type="button"
+          class="clear-filter-button"
+          (click)="clearFilter()"
+        >
+          {{ "Clear filters" | translate }}
+        </button>
+      </div>
+    </form>
   </div>
+
   <div class="user-list-inner-container">
     <div class="user-list-item" *ngFor="let user of users">
-      <span class="username" >{{ user.first_name }} {{ user.last_name }}</span>
+      <div class="user-info-container">
+        <span class="username" (click)="userDetails(user.user_id)"
+          >{{ user.first_name }} {{ user.last_name }}</span
+        >
+        <mat-icon *ngIf="user.is_banned; else authBlock" color="warn"
+          >block</mat-icon
+        >
+        <ng-template #authBlock>
+          <mat-icon *ngIf="user.is_email_auth" color="primary"
+            >check_circle</mat-icon
+          >
+          <mat-icon *ngIf="!user.is_email_auth" color="accent"
+            >check_circle_outline</mat-icon
+          >
+        </ng-template>
+      </div>
       <div class="action-icons-container">
-          <mat-icon color="primary" (click)="contactUser(user)"> chat_bubble_outline</mat-icon>
-          <mat-icon color="primary" (click)="userEntries(user.user_id)">event_note</mat-icon>
-          <mat-icon color="primary" (click)="userDetails(user.user_id)">portrait</mat-icon>
-          <mat-icon color="warn">block</mat-icon>
-        </div>
+        <mat-icon color="primary" (click)="contactUser(user)">
+          chat_bubble_outline</mat-icon
+        >
+        <mat-icon color="primary" (click)="userEntries(user.user_id)"
+          >event_note</mat-icon
+        >
+        <mat-icon color="primary" (click)="userDetails(user.user_id)"
+          >portrait</mat-icon
+        >
+        <mat-icon *ngIf="!user.is_banned" color="warn">lock</mat-icon>
+        <mat-icon *ngIf="user.is_banned" color="primary">lock_open</mat-icon>
+      </div>
     </div>
   </div>
 </div>

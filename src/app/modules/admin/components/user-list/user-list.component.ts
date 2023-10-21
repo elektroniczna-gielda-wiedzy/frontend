@@ -12,7 +12,7 @@ import { ChatService } from 'src/app/modules/chat/services/chat.service';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent {
-  users: Author[] = [];
+  users: UserInfo[] = [];
   userFilterForm = new FormGroup({
     search: new FormControl(''),
     status: new FormControl(''),
@@ -39,7 +39,7 @@ export class UserListComponent {
       case 'email-auth':
         params.isEmailAuth = 'true';
         break;
-      case 'email-not-auth':
+      case 'no-email-auth':
         params.isEmailAuth = 'false';
         break;
       case 'banned':

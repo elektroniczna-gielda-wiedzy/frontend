@@ -17,33 +17,32 @@ export class UserHttpService {
     return this.http.get<StandardResponse<UserInfo>>(url, { headers });
   }
 
-  getUsers(params: {
-    search?: string;
-    isEmailAuth?: string;
-    isBanned?: string;
-  } = {}): Observable<StandardResponse<Author>> {
-    const url = `${this.apiUrl}/`;
+  getUsers(
+    params: {
+      search?: string;
+      isEmailAuth?: string;
+      isBanned?: string;
+    } = {}
+  ): Observable<StandardResponse<UserInfo>> {
+    const url = `${this.apiUrl}`;
     let queryParams = {
       params: new HttpParams(),
       headers: { 'Content-Type': 'application/json' },
     };
-    queryParams.params = queryParams.params.set('q', '');
+
     if (params.search) {
-      queryParams.params = queryParams.params.set('q', params.search);
+      queryParams.params = queryParams.params.set('query', params.search);
     }
 
     if (params.isEmailAuth) {
       queryParams.params = queryParams.params.set(
         'is_email_auth',
-        params.isEmailAuth.toString()
+        params.isEmailAuth
       );
     }
 
     if (params.isBanned) {
-      queryParams.params = queryParams.params.set(
-        'is_banned',
-        params.isBanned.toString()
-      );
+      queryParams.params = queryParams.params.set('is_banned', params.isBanned);
     }
 
     return this.http.get<StandardResponse<Author>>(url, queryParams);

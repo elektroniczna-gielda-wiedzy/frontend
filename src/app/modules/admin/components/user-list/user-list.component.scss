@@ -37,6 +37,7 @@
 .username{
     font-weight: 500;
     font-size: 1.2em;
+    cursor: pointer;
 }
 
 .action-icons-container {
@@ -51,4 +52,10 @@
         cursor: pointer;
         scale: 1.1; 
     }
+}
+
+.user-info-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
 }
