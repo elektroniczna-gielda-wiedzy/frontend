@@ -120,5 +120,8 @@
     "Total votes received": "Otrzymane głosy",
     "Account Activity": "Aktywność konta",
     "Account create date": "Data utworzenia konta",
-    "Last login date": "Data ostatniego logowania"
+    "Last login date": "Data ostatniego logowania",
+    "Block": "Zablokuj",
+    "Unblock": "Odblokuj",
+    "Entries": "Wpisy"
 }

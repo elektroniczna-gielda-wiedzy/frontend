@@ -119,5 +119,8 @@
     "Total votes received": "Total votes received",
     "Account Activity": "Account Activity",
     "Account create date": "Account create date",
-    "Last login date": "Last login date"
+    "Last login date": "Last login date",
+    "Block": "Block",
+    "Unblock": "Unblock",
+    "Entries": "Entries"
 }

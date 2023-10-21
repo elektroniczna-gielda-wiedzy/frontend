@@ -5,19 +5,49 @@
         <mat-card-title> {{ "User Details" | translate }} </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <h2>
-          {{ userInfo?.first_name }}
-          {{ userInfo?.last_name }}
+        <h2 class="username-container">
+          <span>
+            {{ userInfo?.first_name }}
+            {{ userInfo?.last_name }}
+          </span>
+          <ng-container *ngIf="adminView">
+            <mat-icon *ngIf="userInfo?.is_banned; else authBlock" color="warn"
+              >block</mat-icon
+            >
+            <ng-template #authBlock>
+              <mat-icon *ngIf="userInfo?.is_email_auth" color="primary"
+                >check_circle</mat-icon
+              >
+              <mat-icon *ngIf="!userInfo?.is_email_auth" color="accent"
+                >check_circle_outline</mat-icon
+              >
+            </ng-template>
+          </ng-container>
         </h2>
         <div>
           <h4>Email</h4>
           <div>{{ userInfo?.email }}</div>
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary">
+      <mat-card-actions class="btn-container">
+        <button
+          *ngIf="!adminView; else adminButtons"
+          mat-raised-button
+          color="primary"
+        >
           {{ "Change Password" | translate }}
         </button>
+        <ng-template #adminButtons>
+          <button mat-raised-button color="primary" (click)="userEntries(userInfo?.user_id)">
+            {{"Entries" | translate}}
+          </button>
+          <button mat-raised-button color="warn" *ngIf="!userInfo?.is_banned">
+            {{"Block" | translate}}
+          </button>
+          <button mat-raised-button color="primary" *ngIf="userInfo?.is_banned">
+            {{"Unblock" | translate}}
+          </button>
+        </ng-template>
       </mat-card-actions>
     </mat-card>
 
