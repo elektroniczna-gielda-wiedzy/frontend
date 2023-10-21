@@ -139,6 +139,17 @@ export class EntryDetailsComponent {
     this.router.navigate(['/chat']);
   }
 
+  userEntries(userId?: number) {
+    if (!userId) {
+      return;
+    }
+    if (this.tokenService.isAdmin()) {
+      this.router.navigate(['/admin-dashboard', 'users', userId]);
+      return;
+    }
+    this.router.navigate(['/profile', userId, 'entries']);
+  }
+
   isFaculty(category: Category): boolean {
     return category.type === CategoryType.FACULTY;
   }

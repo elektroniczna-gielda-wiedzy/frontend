@@ -75,6 +75,11 @@ mat-card-footer {
     margin: 0.5em;
 }
 
+.author-container:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .category {
     max-width: calc($max-card-width - 2em);
 }

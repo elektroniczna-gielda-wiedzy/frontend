@@ -71,7 +71,7 @@
         {{ "Contact author" | translate }}
       </button>
       <mat-card-subtitle>
-        <div class="author-container">
+        <div class="author-container" (click)="userEntries(entry?.author?.user_id)">
           <span>
             {{ entry?.author?.first_name }}
           </span>

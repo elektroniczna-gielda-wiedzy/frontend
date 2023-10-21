@@ -19,6 +19,7 @@ import { NGXLogger } from 'ngx-logger';
 import { MatDialog } from '@angular/material/dialog';
 import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fullscreen-image-dialog.component';
 import { Comment } from 'src/app/core/models/comment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-answer-card',
   templateUrl: './answer-card.component.html',
@@ -53,7 +54,8 @@ export class AnswerCardComponent implements OnDestroy {
     private dialog: MatDialog,
     private answerHttpService: AnswerHttpService,
     private cdRef: ChangeDetectorRef,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -235,6 +237,17 @@ export class AnswerCardComponent implements OnDestroy {
       return false;
     }
     return authorId !== currentUserId;
+  }
+
+  userEntries(userId?: number) {
+    if (!userId) {
+      return;
+    }
+    if (this.tokenService.isAdmin()) {
+      this.router.navigate(['/admin-dashboard', 'users', userId]);
+      return;
+    }
+    this.router.navigate(['/profile', userId, 'entries']);
   }
 }
 

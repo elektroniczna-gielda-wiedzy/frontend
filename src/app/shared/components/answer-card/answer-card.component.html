@@ -55,7 +55,7 @@
           ></app-answer-action-buttons>
       </div>
         <mat-card-subtitle>
-          <div class="author-container">
+          <div class="author-container" (click)="userEntries(answer?.author?.user_id)">
             <span>
               {{ answer?.author?.first_name }}
             </span>
