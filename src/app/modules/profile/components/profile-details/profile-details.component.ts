@@ -33,7 +33,6 @@ export class ProfileDetailsComponent {
       const userId = this.route.snapshot.paramMap.get('id');
       this.fetchUserInfo(parseInt(userId || ''));
     }
-    console.log(this.adminView);
   }
 
   fetchUserInfo(userId: number | null) {
