@@ -63,14 +63,6 @@ export class ProfileDetailsComponent {
     });
   }
 
-  // TODO: Move this to a pipe
-  formatDate(date?: string) {
-    if (!date) {
-      return '';
-    }
-    return date.split('+')[0];
-  }
-
   getLabel(entryType: EntryType) {
     switch (entryType) {
       case EntryType.Announcement:
