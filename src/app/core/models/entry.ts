@@ -34,6 +34,6 @@ export const SORT_DEFAULT = '1';
 export const SORT_OPTIONS = [
   { value: '0', label: 'Newest' },
   { value: '1', label: 'Recently modified' },
-  { value: '2', label: 'Most votes' },
+  { value: '2', label: 'Highest votes' },
 ];
 

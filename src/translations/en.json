@@ -122,5 +122,10 @@
     "Last login date": "Last login date",
     "Block": "Block",
     "Unblock": "Unblock",
-    "Entries": "Entries"
+    "Entries": "Entries",
+
+    "Sort by": "Sort by",
+    "Newest": "Newest",
+    "Recently modified": "Recently modified",
+    "Highest votes": "Highest votes"
 }

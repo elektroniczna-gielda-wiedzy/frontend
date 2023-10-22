@@ -123,5 +123,10 @@
     "Last login date": "Data ostatniego logowania",
     "Block": "Zablokuj",
     "Unblock": "Odblokuj",
-    "Entries": "Wpisy"
+    "Entries": "Wpisy",
+
+    "Sort by": "Sortuj według",
+    "Newest": "Najnowsze",
+    "Recently modified": "Ostatnio zmodyfikowane",
+    "Highest votes": "Najwyżej oceniane"
 }
