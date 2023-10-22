@@ -11,17 +11,10 @@
             {{ userInfo?.last_name }}
           </span>
           <ng-container *ngIf="adminView">
-            <mat-icon *ngIf="userInfo?.is_banned; else authBlock" color="warn"
-              >block</mat-icon
-            >
-            <ng-template #authBlock>
-              <mat-icon *ngIf="userInfo?.is_email_auth" color="primary"
-                >check_circle</mat-icon
-              >
-              <mat-icon *ngIf="!userInfo?.is_email_auth" color="accent"
-                >check_circle_outline</mat-icon
-              >
-            </ng-template>
+            <app-user-status-icon
+              [is_banned]="userInfo?.is_banned"
+              [is_email_auth]="userInfo?.is_email_auth"
+            ></app-user-status-icon>
           </ng-container>
         </h2>
         <div>

@@ -55,17 +55,10 @@
         <span class="username" (click)="userDetails(user.user_id)"
           >{{ user.first_name }} {{ user.last_name }}</span
         >
-        <mat-icon *ngIf="user.is_banned; else authBlock" color="warn"
-          >block</mat-icon
-        >
-        <ng-template #authBlock>
-          <mat-icon *ngIf="user.is_email_auth" color="primary"
-            >check_circle</mat-icon
-          >
-          <mat-icon *ngIf="!user.is_email_auth" color="accent"
-            >check_circle_outline</mat-icon
-          >
-        </ng-template>
+        <app-user-status-icon 
+          [is_banned]="user.is_banned"
+          [is_email_auth]="user.is_email_auth"
+        ></app-user-status-icon>
       </div>
       <div class="action-icons-container">
         <mat-icon color="primary" (click)="contactUser(user)">

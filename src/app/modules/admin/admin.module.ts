@@ -6,6 +6,7 @@ import { MaterialModule } from './material-module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ]
 })
 export class AdminModule { }

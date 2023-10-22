@@ -16,20 +16,34 @@ import { IsAdminDirective } from './directives/is-admin.directive';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormatTimePipe } from './pipes/format-time.pipe';
+import { UserStatusIconComponent } from './components/user-status-icon/user-status-icon.component';
+
+const components = [
+  EntryCardComponent,
+  FavoriteIconComponent,
+  CategorySelectorComponent,
+  FullscreenImageDialogComponent,
+  EntryActionButtonsComponent,
+  VotesWidgetComponent,
+  UserStatusIconComponent,
+]
+
+const pipes = [
+  RelativeTimePipe,
+  FormatTimePipe,
+]
+
+const directives = [
+  IsLoggedInDirective,
+  IfAuthorOrAdminDirective,
+  IsAdminDirective,
+]
 
 @NgModule({
   declarations: [
-    EntryCardComponent,
-    FavoriteIconComponent,
-    RelativeTimePipe,
-    IsLoggedInDirective,
-    CategorySelectorComponent,
-    FullscreenImageDialogComponent,
-    EntryActionButtonsComponent,
-    IfAuthorOrAdminDirective,
-    VotesWidgetComponent,
-    IsAdminDirective,
-    FormatTimePipe,
+    ...components,
+    ...pipes,
+    ...directives,
   ],
   imports: [
     CommonModule,
@@ -40,17 +54,9 @@ import { FormatTimePipe } from './pipes/format-time.pipe';
     ReactiveFormsModule,
   ],
   exports: [
-    EntryCardComponent,
-    FavoriteIconComponent,
-    RelativeTimePipe,
-    IsLoggedInDirective,
-    CategorySelectorComponent,
-    FullscreenImageDialogComponent,
-    EntryActionButtonsComponent,
-    IfAuthorOrAdminDirective,
-    VotesWidgetComponent,
-    IsAdminDirective,
-    FormatTimePipe,
+    ...components,
+    ...pipes,
+    ...directives,
   ],
 })
 export class SharedModule {}
