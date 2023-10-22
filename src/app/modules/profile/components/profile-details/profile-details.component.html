@@ -87,11 +87,11 @@
       <mat-card-content>
         <div>
           <h4>{{ "Account create date" | translate }}</h4>
-          <div>{{ formatDate(userInfo?.created_at) }}</div>
+          <div>{{ userInfo?.created_at | formatTime : currentLanguage }}</div>
         </div>
         <div>
           <h4>{{ "Last login date" | translate }}</h4>
-          <div>{{ formatDate(userInfo?.last_login) }}</div>
+          <div>{{ userInfo?.last_login | formatTime : currentLanguage }}</div>
         </div>
       </mat-card-content>
     </mat-card>

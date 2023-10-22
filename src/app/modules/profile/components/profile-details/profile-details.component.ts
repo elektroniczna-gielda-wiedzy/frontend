@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EntryType, TokenService, UserInfo } from 'src/app/core';
+import { Subscription } from 'rxjs';
+import { EntryType, Language, TokenService, UserInfo } from 'src/app/core';
 import { UserHttpService } from 'src/app/core/http/user-http.service';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
   selector: 'app-profile-details',
@@ -10,13 +12,15 @@ import { UserHttpService } from 'src/app/core/http/user-http.service';
 })
 export class ProfileDetailsComponent {
   userInfo?: UserInfo;
-  adminView = false; //TODO adjust admin view add ban & chat button, hide change password button
-
+  adminView = false;
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
   constructor(
     private userHttpService: UserHttpService,
     private tokenService: TokenService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit() {
@@ -33,6 +37,19 @@ export class ProfileDetailsComponent {
       const userId = this.route.snapshot.paramMap.get('id');
       this.fetchUserInfo(parseInt(userId || ''));
     }
+    this.initLanguage();
+  }
+
+  ngOnDestroy() {
+    this.langChangeSubscription?.unsubscribe();
+  }
+
+  initLanguage() {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
   }
 
   fetchUserInfo(userId: number | null) {
