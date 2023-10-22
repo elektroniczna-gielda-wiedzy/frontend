@@ -21,8 +21,8 @@ import {
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { NGXLogger } from 'ngx-logger';
 import { MatDialog } from '@angular/material/dialog';
-import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fullscreen-image-dialog.component';
 import { Router } from '@angular/router';
+import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
 @Component({
   selector: 'app-answer-card',
   templateUrl: './answer-card.component.html',

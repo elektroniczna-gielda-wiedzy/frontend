@@ -9,6 +9,7 @@ import { EntryListComponent } from './components/entry-list/entry-list.component
 import { EntryAddComponent } from './components/entry-add/entry-add.component';
 import { EntryDetailsComponent } from './components/entry-details/entry-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AnswersModule } from './modules/answers/answers.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    AnswersModule,
   ]
 })
 export class EntriesModule { }

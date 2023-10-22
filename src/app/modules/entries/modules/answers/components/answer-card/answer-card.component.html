@@ -3,16 +3,16 @@
   <h3>{{ answers.length }} {{ "Answers" | translate }}</h3>
 </mat-card-header>
 <mat-card-content *ngFor="let answer of answers">
-  <div id="answer-id-{{answer.answer_id}}" class="answer-outer-container">
+  <div id="answer-id-{{ answer.answer_id }}" class="answer-outer-container">
     <div class="answer-widget-container">
       <app-top-answer-widget
-      *ngIf="canMarkAnswer(answer.author.user_id)"
+        *ngIf="canMarkAnswer(answer.author.user_id)"
         [isTopAnswer]="answer.top_answer"
         [entryId]="entryId"
         [answerId]="answer.answer_id"
         (onChangeTopAnswer)="onChangeTopAnswer($event)"
       ></app-top-answer-widget>
-      
+
       <app-votes-widget
         [count]="answer?.votes || 0"
         [entryId]="entryId"
@@ -45,7 +45,10 @@
       </ng-container>
 
       <div class="answer-footer">
-        <div class="app-answer-action-buttons" *appIfAuthorOrAdmin="answer?.author?.user_id">
+        <div
+          class="app-answer-action-buttons"
+          *appIfAuthorOrAdmin="answer?.author?.user_id"
+        >
           <app-answer-action-buttons
             *ngIf="answer"
             [answerId]="answer.answer_id"
@@ -53,9 +56,12 @@
             [entryId]="entryId"
             (answerDeleted)="onAnswerDelete($event)"
           ></app-answer-action-buttons>
-      </div>
+        </div>
         <mat-card-subtitle>
-          <div class="author-container" (click)="userEntries(answer?.author?.user_id)">
+          <div
+            class="author-container"
+            (click)="userEntries(answer?.author?.user_id)"
+          >
             <span>
               {{ answer?.author?.first_name }}
             </span>
@@ -69,20 +75,16 @@
               {{ answer?.created_at | relativeTime : currentLanguage }}
             </span>
           </div>
-       
         </mat-card-subtitle>
-      
       </div>
-     
     </div>
-
   </div>
- 
-  <app-comments-card  
-      [answerId]="answer.answer_id"
-      [entryId]="entryId"
-      [comments]="answer?.comments"
-></app-comments-card>
+
+  <app-comments-card
+    [answerId]="answer.answer_id"
+    [entryId]="entryId"
+    [comments]="answer?.comments"
+  ></app-comments-card>
 
   <mat-divider></mat-divider>
 </mat-card-content>
@@ -122,9 +124,7 @@
           {{ "Remove" | translate }}</a
         >
 
-        <span class="file-name" *ngIf="isImageSaved">{{
-          filename
-        }}</span>
+        <span class="file-name" *ngIf="isImageSaved">{{ filename }}</span>
       </div>
 
       <button

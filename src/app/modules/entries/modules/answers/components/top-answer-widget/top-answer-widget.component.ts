@@ -19,7 +19,6 @@ export class TopAnswerWidgetComponent {
   onChangeTopAnswer: EventEmitter<{ answerId: number; isTopAnswer: boolean }> =
     new EventEmitter<{ answerId: number; isTopAnswer: boolean }>();
 
-
   changeTopAnswer() {
     if (!this.entryId) {
       return;
