@@ -15,7 +15,6 @@ export interface Entry {
   created_at: string;
   content?: string;
   image?: string;
-  answers?: Answer[];
 }
 
 export interface EntryRequest {

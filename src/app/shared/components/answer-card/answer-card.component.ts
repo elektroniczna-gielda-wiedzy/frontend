@@ -1,11 +1,8 @@
 import {
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
-  Output,
-  SimpleChanges,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
@@ -20,13 +17,11 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { NGXLogger } from 'ngx-logger';
 import { MatDialog } from '@angular/material/dialog';
 import { FullscreenImageDialogComponent } from '../fullscreen-image-dialog/fullscreen-image-dialog.component';
-import { Comment } from 'src/app/core/models/comment';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-answer-card',
@@ -38,8 +33,7 @@ export class AnswerCardComponent implements OnDestroy {
   entryAuthorId?: number;
   @Input()
   entryId!: number;
-  @Input()
-  answers?: Answer[] = [];
+  answers: Answer[] = [];
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
   base64File?: string;
@@ -47,7 +41,6 @@ export class AnswerCardComponent implements OnDestroy {
   isImageSaved: boolean = false;
   cardImageBase64: string | null | undefined;
   filename = '';
-  @Output() answerDeleted = new EventEmitter<number>();
 
   form: FormGroup = this.fb.group({
     answer: [null, [Validators.required]],
@@ -65,10 +58,21 @@ export class AnswerCardComponent implements OnDestroy {
     private router: Router
   ) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['answers'] && this.answers) {
-      this.loadImages();
+  loadAnswers() {
+    if (!this.entryId) {
+      return;
     }
+    this.answerHttpService.getAnswers(this.entryId).subscribe({
+      next: (res) => {
+        if (res.success && res.result?.length > 0) {
+          this.answers = res.result;
+          this.loadImages();
+        }
+      },
+      error: (err) => {
+        this.logger.error(err);
+      },
+    });
   }
 
   loadImage(answer: Answer) {
@@ -84,7 +88,7 @@ export class AnswerCardComponent implements OnDestroy {
     });
   }
 
-  ngOnInit(): void {
+  initLanguage() {
     this.langChangeSubscription = this.languageService.languageChange.subscribe(
       () => {
         this.currentLanguage = this.languageService.language;
@@ -92,10 +96,13 @@ export class AnswerCardComponent implements OnDestroy {
     );
   }
 
+  ngOnInit(): void {
+    this.loadAnswers();
+    this.initLanguage();
+  }
+
   ngOnDestroy() {
-    if (this.langChangeSubscription) {
-      this.langChangeSubscription.unsubscribe();
-    }
+    this.langChangeSubscription?.unsubscribe();
   }
 
   onFileSelected(event: any): void {
@@ -162,8 +169,10 @@ export class AnswerCardComponent implements OnDestroy {
     });
   }
 
-  propagateDeletion(id: number) {
-    this.answerDeleted.emit(id);
+  onAnswerDelete(answerId: number) {
+    this.answers = this.answers.filter(
+      (answer) => answer.answer_id != answerId
+    );
   }
 
   onChangeTopAnswer({

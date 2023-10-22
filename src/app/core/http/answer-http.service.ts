@@ -12,6 +12,11 @@ export class AnswerHttpService {
   private readonly apiUrl = `${environment.apiUrl}/entry`;
   constructor(private http: HttpClient) { }
 
+  getAnswers(entryId: number): Observable<StandardResponse<Answer>> {
+    const url = `${this.apiUrl}/${entryId}/answer`;
+    return this.http.get<StandardResponse<Answer>>(url);
+  }
+
   addAnswer(entryId: number, answer: AnswerRequest): Observable<StandardResponse<Answer>> {
     const url = `${this.apiUrl}/${entryId}/answer`;
     return this.http.post<StandardResponse<Answer>>(url, answer);

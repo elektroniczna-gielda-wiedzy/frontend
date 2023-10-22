@@ -1,6 +1,6 @@
 <mat-divider></mat-divider>
 <mat-card-header id="answer-count">
-  <h3>{{ answers?.length }} {{ "Answers" | translate }}</h3>
+  <h3>{{ answers.length }} {{ "Answers" | translate }}</h3>
 </mat-card-header>
 <mat-card-content *ngFor="let answer of answers">
   <div id="answer-id-{{answer.answer_id}}" class="answer-outer-container">
@@ -51,7 +51,7 @@
             [answerId]="answer.answer_id"
             [answer]="answer"
             [entryId]="entryId"
-            (answerDeleted)="propagateDeletion($event)"
+            (answerDeleted)="onAnswerDelete($event)"
           ></app-answer-action-buttons>
       </div>
         <mat-card-subtitle>
