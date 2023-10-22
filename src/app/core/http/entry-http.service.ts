@@ -65,8 +65,6 @@ export class EntryHttpService {
       return of({ result: [], messages: ['No user id found'], success: false });
     }
 
-    queryParams.params = queryParams.params.set('order', 'DESC');
-
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
@@ -82,8 +80,6 @@ export class EntryHttpService {
     } else {
       return of({ result: [], messages: ['No user id found'], success: false });
     }
-
-    queryParams.params = queryParams.params.set('order', 'DESC');
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
