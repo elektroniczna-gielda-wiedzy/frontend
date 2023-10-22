@@ -20,6 +20,7 @@ export class EntryHttpService {
     type?: EntryType;
     categories?: Number[];
     query?: string;
+    sort?: string;
   }): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
@@ -41,7 +42,9 @@ export class EntryHttpService {
       queryParams.params = queryParams.params.set('query', params.query);
     }
 
-    queryParams.params = queryParams.params.set('order', 'DESC');
+    if (params.sort || params.sort === '0') {
+      queryParams.params = queryParams.params.set('sort', params.sort);
+    }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }

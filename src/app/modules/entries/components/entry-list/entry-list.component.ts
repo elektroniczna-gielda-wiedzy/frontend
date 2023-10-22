@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -8,7 +8,11 @@ import {
   stringToEntryType,
   EntryHttpService,
   Entry,
+  SORT_DEFAULT,
+  SORT_KEY,
+  SORT_OPTIONS,
 } from 'src/app/core';
+
 
 
 @Component({
@@ -18,20 +22,22 @@ import {
 })
 export class EntryListComponent implements OnInit, OnDestroy {
   entryType!: EntryType;
-
+  sortOptions = SORT_OPTIONS;
   entries: Entry[] = [];
   private paramMapSubscription?: Subscription;
   private entriesSubscription?: Subscription;
 
   filterForm = new FormGroup({
     search: new FormControl(''),
+    sort: new FormControl(localStorage.getItem(SORT_KEY) || SORT_DEFAULT),
     categories: new FormControl([]),
   });
 
   constructor(
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +63,10 @@ export class EntryListComponent implements OnInit, OnDestroy {
     if (this.entryType !== null) {
       const categories = this.filterForm.value.categories || [];
       const query = this.filterForm.value.search || '';
+      const sort = this.filterForm.value.sort || SORT_DEFAULT;
+      localStorage.setItem(SORT_KEY, sort);
       this.entriesSubscription = this.entryHttpService
-        .getEntries({ type: this.entryType, categories, query })
+        .getEntries({ type: this.entryType, categories, query, sort })
         .subscribe((response) => {
           this.entries = response.result;
         });
@@ -78,6 +86,38 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.filterForm.reset();
     this.loadEntries();
   }
+
+  @ViewChild('inputsContainer', { static: false }) inputsContainer?: ElementRef;
+  
+  moveToLast: boolean = false;
+
+  ngAfterViewInit() {
+    this.checkWrap();
+    this.cdr.detectChanges();
+  }
+
+  @HostListener('window:resize', [])
+  onResize() {
+    this.checkWrap();
+  }
+
+  checkWrap() {
+    if (!this.inputsContainer) {
+      return;
+    }
+    const container = this.inputsContainer.nativeElement;
+    const children = container.children;
+
+    if (!children || children.length === 0) {
+      return;
+    }
+
+    const containerHeight = container.getBoundingClientRect().height;
+    const childHeight = children[0].getBoundingClientRect().height; 
+    const rows = Math.ceil(containerHeight / childHeight);
+    this.moveToLast = rows === 2;
+}
+
 
   // onEntryDeleted(id: number) {
   //   this.loadEntries();
