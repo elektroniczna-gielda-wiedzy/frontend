@@ -7,13 +7,16 @@ mat-card {
     margin: 0 auto;
 }
 
-mat-card-header {
-    padding-top: 30px;
+.card-header-outer-container,
+.card-header-inner-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1em;
+}
+
+.card-header-inner-container {
+    flex-direction: row;
     gap: 1em;
 }
 

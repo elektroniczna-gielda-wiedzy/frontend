@@ -41,6 +41,7 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     title: [null, [Validators.required]],
     content: [null, [Validators.required]],
     categories: [null, [Validators.required]],
+    image: [null],
   });
   private langChangeSubscription?: Subscription;
   private breakpointSubscription?: Subscription;
@@ -237,14 +238,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     return this.categoryService.getCategoryName(category);
   }
 
-  // getEntryTypeHint(entry_type: EntryType | null) {
-  //   let result: string = '';
-  //   if (entry_type) {
-  //     result = this.entryHttpService.getCategoryTypeHint(entry_type);
-  //   }
-  //   return result;
-  // }
-
   getHint(entryType: EntryType | null) {
     if (!entryType) {
       return '';
@@ -258,6 +251,8 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     this.isImageSaved = false;
     this.filename = '';
     this.imageRowSpan = this.defaultImage ? 3 : 1;
+    this.imageError = '';
+    this.form.controls['image'].setValue(null);
   }
 
   openDialog(): void {

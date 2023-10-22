@@ -116,7 +116,8 @@ export class AnswerCardComponent implements OnDestroy {
   removeImage() {
     this.cardImageBase64 = null;
     this.isImageSaved = false;
-    this.form.value.image = null;
+    this.form.controls['image'].setValue(null);
+    this.imageError = '';
   }
 
   createAnswer() {

@@ -1,22 +1,24 @@
 <mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>
-      <!-- <h3>{{ "Add new " + entryTypeString | translate }}</h3> -->
-      <h3>
-        {{
-          !entryId
-            ? ("Add new " + entryTypeString | translate)
-            : ("Edit " + entryTypeString | translate)
-        }}
-      </h3>
-    </mat-card-title>
-    <mat-icon
-      color="primary"
-      matTooltip="{{ getHint(entryType) }}"
-      aria-label="Help guide"
-      class="help-guide"
-      >help</mat-icon
-    >
+  <mat-card-header class="card-header-outer-container">
+    <div class="card-header-inner-container">
+      <mat-card-title>
+        <h3>
+          {{
+            !entryId
+              ? ("Add new " + entryTypeString | translate)
+              : ("Edit " + entryTypeString | translate)
+          }}
+        </h3>
+      </mat-card-title>
+      <mat-icon
+        color="primary"
+        matTooltip="{{ getHint(entryType) }}"
+        aria-label="Help guide"
+        class="help-guide"
+        >help</mat-icon
+      >
+    </div>
+    <mat-error *ngIf="imageError">{{ imageError }}</mat-error>
   </mat-card-header>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
     <mat-card-content>
@@ -53,7 +55,9 @@
         <mat-grid-tile>
           <div class="add-suggestion-btn-container">
             <span> Don't see a suitable category? </span>
-            <button type="button" mat-button (click)="openSuggestionWizard()">Add your suggestion</button>
+            <button type="button" mat-button (click)="openSuggestionWizard()">
+              Add your suggestion
+            </button>
           </div>
         </mat-grid-tile>
 
@@ -78,6 +82,7 @@
               <span class="file-name">{{ filename }}</span>
             </div>
             <input
+              formControlName="image"
               hidden
               (change)="onFileSelected($event)"
               #fileInput
