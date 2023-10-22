@@ -34,7 +34,6 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   defaultImage?: string;
   entryType!: EntryType;
   entryTypeString: string | null = null;
-  hide = true;
   sending = false;
   categories: Category[] = [];
   categorySubscription?: Subscription;
@@ -47,15 +46,14 @@ export class EntryAddComponent implements OnInit, OnDestroy {
   private breakpointSubscription?: Subscription;
   private entrySubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
-  imageError!: string;
-  isImageSaved: boolean | null | undefined;
+  imageError: string = '';
+  isImageSaved: boolean = false;
   cardImageBase64: string | null | undefined;
   filename = '';
   cols = 2;
   imageRowSpan = 1;
   suggestionWizardOpen = false;
 
-  selectedFile: File | undefined;
   constructor(
     private readonly route: ActivatedRoute,
     private fb: FormBuilder,
@@ -169,45 +167,20 @@ export class EntryAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  //TODO: refactor extract to service
   onFileSelected(event: any): void {
-    const max_size = 20971520;
-    const allowed_types = ['image/png', 'image/jpeg'];
-    const max_height = 15200;
-    const max_width = 25600;
-    this.selectedFile = event.target.files[0] ?? null;
-
-    if (!this.selectedFile) {
-      return;
-    }
-
-    if (event.target.files[0].size > max_size) {
-      this.imageError =  'Maximum size allowed is ' + max_size / 1000 + 'Mb';
-      this.logger.error(this.imageError);
-     return;
-    }
-    
-    if (allowed_types.indexOf(event.target.files[0].type) === -1) {
-      this.imageError = 'Only Images are allowed ( JPG | PNG )';
-      this.logger.error(this.imageError);
-      return;
-    }
-
-    var fileReader = new FileReader();
-    fileReader.onload = (e: any) => {
-      const image = new Image();
-      image.src = e.target.result;
-      const imgBase64Path = e.target.result;
-      this.cardImageBase64 = imgBase64Path?.substring(
-        imgBase64Path.indexOf(',') + 1
+    this.imageService.readImageFile(event).then(({filename, imgBase64}) => {
+      this.filename = filename;
+      this.entryImage = imgBase64
+      this.cardImageBase64 = imgBase64?.substring(
+        imgBase64.indexOf(',') + 1
       );
-      this.entryImage = imgBase64Path;
       this.imageRowSpan = 3;
       this.isImageSaved = true;
-      this.filename = this.selectedFile?.name ?? '';
-    };
-
-    fileReader.readAsDataURL(event.target.files[0]);
+      this.imageError = '';
+    }).catch((err) => {
+      this.logger.error(err);
+      this.imageError = err;
+    });
   }
 
   backClicked() {
