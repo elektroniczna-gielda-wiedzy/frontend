@@ -114,7 +114,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
 
     const containerHeight = container.getBoundingClientRect().height;
     const childHeight = children[0].getBoundingClientRect().height; 
-    const rows = Math.ceil(containerHeight / childHeight);
+    const rows = Math.round(containerHeight / childHeight);
     this.moveToLast = rows === 2;
 }
 
