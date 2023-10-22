@@ -15,5 +15,8 @@ export interface Answer {
   
   export interface AnswerRequest {
     content: string;
-    image?: string;
+    image?: {
+      filename: string;
+      data: string;
+    }
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 import { LanguageService } from 'src/app/modules/translate/language.service';
+import { CategorySubType, CategoryType } from '../enums/category-type';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,9 @@ export class CategoryService {
     const result: string[] = ['category'];
 
     if (category.parent_id !== null) {
-      category.type === 1 ? result.push('subarea') : result.push('major');
+      result.push(CategorySubType[category.type].toLowerCase());
     }
-    category.type === 1 ? result.push('area') : result.push('faculty');
+    result.push(CategoryType[category.type].toLowerCase());
     return result;
   }
 
@@ -56,13 +57,13 @@ export class CategoryService {
     }[] = [
       {
         name: 'Faculties',
-        type: 0,
-        categories: categories.filter((category) => category.type === 0),
+        type: CategoryType.FACULTY,
+        categories: categories.filter((category) => category.type === CategoryType.FACULTY),
       },
       {
         name: 'Areas',
-        type: 1,
-        categories: categories.filter((category) => category.type === 1),
+        type: CategoryType.AREA,
+        categories: categories.filter((category) => category.type === CategoryType.AREA),
       },
     ];
 

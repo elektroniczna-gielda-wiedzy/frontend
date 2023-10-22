@@ -5,17 +5,26 @@
       (ngSubmit)="applyFilter()"
       class="filter-form"
     >
-      <div class="inputs-container">
+      <div #inputsContainer class="inputs-container" >
         <mat-form-field class="search-field" appearance="outline">
           <mat-label>{{ "Search" | translate }}</mat-label>
           <input matInput formControlName="search" />
         </mat-form-field>
 
-        <div class="categories-filter">
+        <div class="categories-filter" [class.last]="moveToLast">
           <app-category-selector
             [formGroup]="filterForm"
           ></app-category-selector>
         </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ "Sort by" | translate }}</mat-label>
+          <mat-select formControlName="sort">
+            <mat-option *ngFor="let sortOption of sortOptions" value="{{sortOption.value}}">
+              {{ sortOption.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div class="buttons-container">

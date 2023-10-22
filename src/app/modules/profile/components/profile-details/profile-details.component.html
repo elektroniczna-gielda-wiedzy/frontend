@@ -1,0 +1,99 @@
+<div class="profile-details-outer-container">
+  <div class="profile-details-inner-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> {{ "User Details" | translate }} </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="username-container">
+          <span>
+            {{ userInfo?.first_name }}
+            {{ userInfo?.last_name }}
+          </span>
+          <ng-container *ngIf="adminView">
+            <mat-icon *ngIf="userInfo?.is_banned; else authBlock" color="warn"
+              >block</mat-icon
+            >
+            <ng-template #authBlock>
+              <mat-icon *ngIf="userInfo?.is_email_auth" color="primary"
+                >check_circle</mat-icon
+              >
+              <mat-icon *ngIf="!userInfo?.is_email_auth" color="accent"
+                >check_circle_outline</mat-icon
+              >
+            </ng-template>
+          </ng-container>
+        </h2>
+        <div>
+          <h4>Email</h4>
+          <div>{{ userInfo?.email }}</div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="btn-container">
+        <button
+          *ngIf="!adminView; else adminButtons"
+          mat-raised-button
+          color="primary"
+        >
+          {{ "Change Password" | translate }}
+        </button>
+        <ng-template #adminButtons>
+          <button mat-raised-button color="primary" (click)="userEntries(userInfo?.user_id)">
+            {{"Entries" | translate}}
+          </button>
+          <button mat-raised-button color="warn" *ngIf="!userInfo?.is_banned">
+            {{"Block" | translate}}
+          </button>
+          <button mat-raised-button color="primary" *ngIf="userInfo?.is_banned">
+            {{"Unblock" | translate}}
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> {{ "Entries Stats" | translate }} </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <h4>{{ "Number of entries added" | translate }}</h4>
+          <div *ngFor="let entryCount of userInfo?.entries_count">
+            <span class="margin-right"
+              >{{ getLabel(entryCount.entry_type_id) | translate }}:</span
+            >
+            <span>{{ entryCount.count }}</span>
+          </div>
+        </div>
+        <div>
+          <h4>{{ "Total votes received" | translate }}</h4>
+          <div *ngFor="let voteCount of userInfo?.votes_count">
+            <span class="margin-right"
+              >{{ getLabel(voteCount.entry_type_id) | translate }}:</span
+            >
+            <mat-icon>arrow_drop_up</mat-icon>
+            <span>{{ voteCount.positive }}</span>
+            <mat-icon>arrow_drop_down</mat-icon>
+            <span>{{ voteCount.negative }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> {{ "Account Activity" | translate }} </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <h4>{{ "Account create date" | translate }}</h4>
+          <div>{{ userInfo?.created_at | formatTime : currentLanguage }}</div>
+        </div>
+        <div>
+          <h4>{{ "Last login date" | translate }}</h4>
+          <div>{{ userInfo?.last_login | formatTime : currentLanguage }}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -20,13 +20,14 @@ export class EntryHttpService {
     type?: EntryType;
     categories?: Number[];
     query?: string;
+    sort?: string;
   }): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
       params: new HttpParams(),
     };
 
-    if (params.type) {
+    if (params.type || params.type === 0) {
       queryParams.params = queryParams.params.set('type', params.type);
     }
 
@@ -41,25 +42,28 @@ export class EntryHttpService {
       queryParams.params = queryParams.params.set('query', params.query);
     }
 
-    queryParams.params = queryParams.params.set('order', 'DESC');
+    if (params.sort || params.sort === '0') {
+      queryParams.params = queryParams.params.set('sort', params.sort);
+    }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
-  getMyEntries(): Observable<StandardResponse<Entry>> {
+  getUserEntries(userId?: number | null): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
       params: new HttpParams(),
     };
 
-    const userId = this.tokenService.getUserId();
+    if (!userId) {
+      userId = this.tokenService.getUserId();
+    }
+
     if (userId) {
       queryParams.params = queryParams.params.set('author', userId);
     } else {
       return of({ result: [], messages: ['No user id found'], success: false });
     }
-
-    queryParams.params = queryParams.params.set('order', 'DESC');
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
@@ -77,14 +81,12 @@ export class EntryHttpService {
       return of({ result: [], messages: ['No user id found'], success: false });
     }
 
-    queryParams.params = queryParams.params.set('order', 'DESC');
-
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
   setFavorite(id: number, value: number): Observable<StandardResponse<Entry>> {
     const url = `${this.apiUrl}/${id}/favorite`;
-    return this.http.put<StandardResponse<Entry>>(url, {value});
+    return this.http.put<StandardResponse<Entry>>(url, { value });
   }
 
   createEntry(params: EntryRequest): Observable<StandardResponse<Entry>> {

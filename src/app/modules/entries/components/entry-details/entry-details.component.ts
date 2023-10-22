@@ -8,6 +8,7 @@ import {
   Answer,
   Category,
   CategoryService,
+  CategoryType,
   Entry,
   EntryHttpService,
   EntryType,
@@ -83,8 +84,6 @@ export class EntryDetailsComponent {
   }
 
   loadEntry(id: number): void {
-    if (!this.entryType) return;
-
     this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
       next: (response) => {
         this.entry = response.result[0];
@@ -95,7 +94,6 @@ export class EntryDetailsComponent {
             this.entry.entry_id,
           ]);
           this.entryType = this.entry.entry_type_id;
-          return;
         }
 
         if (this.entry.image) {
@@ -109,8 +107,8 @@ export class EntryDetailsComponent {
     });
   }
 
-  loadImage(imageUrl: string): void {
-    this.imageService.getImage(imageUrl).then((response) => {
+  loadImage(image: string): void {
+    this.imageService.getImage(image).then((response) => {
       this.image = response;
     });
   }
@@ -141,8 +139,35 @@ export class EntryDetailsComponent {
     this.router.navigate(['/chat']);
   }
 
+  userEntries(userId?: number) {
+    if (!userId) {
+      return;
+    }
+    if (this.tokenService.isAdmin()) {
+      this.router.navigate(['/admin-dashboard', 'users', userId]);
+      return;
+    }
+    this.router.navigate(['/profile', userId, 'entries']);
+  }
+
+  isFaculty(category: Category): boolean {
+    return category.type === CategoryType.FACULTY;
+  }
+
+  isArea(category: Category): boolean {
+    return category.type === CategoryType.AREA;
+  }
+
   get isAuthor(): boolean {
     if (!this.entry) return false;
     return this.tokenService.getUserId() === this.entry.author.user_id;
+  }
+
+  get displayContactButton(): boolean {
+    return this.entry?.entry_type_id !== EntryType.Post && !this.isAuthor
+  }
+
+  get displayAnswers(): boolean {
+    return this.entry?.entry_type_id === EntryType.Post;
   }
 }

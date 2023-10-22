@@ -21,6 +21,8 @@ import { CommentActionButtonsComponent } from './components/comment-action-butto
 
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { TopAnswerWidgetComponent } from './components/top-answer-widget/top-answer-widget.component';
+import { FormatTimePipe } from './pipes/format-time.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     VotesWidgetComponent,
     IsAdminDirective,
     AnswerEditPopupComponent,
+    TopAnswerWidgetComponent,
+    FormatTimePipe,
   ],
   imports: [
     CommonModule,
@@ -62,7 +66,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     IfAuthorOrAdminDirective,
     VotesWidgetComponent,
     IsAdminDirective,
-    AnswerEditPopupComponent
+    AnswerEditPopupComponent,
+    FormatTimePipe
   ],
 })
 export class SharedModule {}

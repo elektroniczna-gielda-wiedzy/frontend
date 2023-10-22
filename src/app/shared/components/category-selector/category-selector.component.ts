@@ -74,9 +74,15 @@ export class CategorySelectorComponent implements OnInit, OnDestroy {
       
       const parentId = this.childToParentMap[removedValue];
       if (parentId && this.selectedValues.includes(parentId)) {
-        this.selectedValues = this.selectedValues.filter((val: number) => val !== parentId);
-        this.formGroup.controls['categories'].setValue(this.selectedValues, { emitEvent: false });
-        this.selectedValues = this.selectedValues;
+        const noSiblingsSelected = this.selectedValues.reduce((acc: number, val: number) => {
+          return this.childToParentMap[val] === parentId ? acc + 1 : acc;
+        }, 0);
+
+        if (noSiblingsSelected == 0) {
+          this.selectedValues = this.selectedValues.filter((val: number) => val !== parentId);
+          this.formGroup.controls['categories'].setValue(this.selectedValues, { emitEvent: false });
+          return;
+        }
         return;
       }
     

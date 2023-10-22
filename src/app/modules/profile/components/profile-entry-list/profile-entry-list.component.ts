@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 
@@ -7,7 +7,11 @@ import {
   EntryType,
   EntryHttpService,
   Entry,
+  Author,
+  UserInfo,
 } from 'src/app/core';
+import { UserHttpService } from 'src/app/core/http/user-http.service';
+import { ChatService } from 'src/app/modules/chat/services/chat.service';
 
 @Component({
   selector: 'app-profile-entry-list',
@@ -22,19 +26,29 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   private paramMapSubscription?: Subscription;
   private entriesSubscription?: Subscription;
   page?: string;
+  userId?: number;
+  userInfo?: UserInfo;
 
   constructor(
     private readonly route: ActivatedRoute,
     private entryHttpService: EntryHttpService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private userHttpService: UserHttpService,
+    private chatService: ChatService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.page = this.route.snapshot.data['page'];
     if (this.page === 'entries') {
-      this.loadMyEntries();
+      this.loadUserEntries();
     } else if (this.page === 'favorites') {
       this.loadMyFavorites();
+    } else if (this.page === 'other-user-entries') {
+      const userId = this.route.snapshot.paramMap.get('userId');
+      this.userId = parseInt(userId || '');
+      this.loadUserEntries();
+      this.fetchUserInfo()
     }
   }
 
@@ -46,9 +60,10 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
       this.entriesSubscription.unsubscribe();
     }
   }
-  loadMyEntries(): void {
+
+  loadUserEntries(): void {
     this.entriesSubscription = this.entryHttpService
-      .getMyEntries()
+      .getUserEntries(this.userId)
       .subscribe((response) => {
         this.allEntries = response.result;
         this.entriesSubject.next(response.result);
@@ -85,7 +100,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   }
 
   private updateEntries(): void {
-    if (!this.entryType) {
+    if (this.entryType == null) {
       this.entriesSubject.next(this.allEntries);
       return;
     }
@@ -108,6 +123,38 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   }
 
   onEntryDeleted(entryId: number): void {
-    this.loadMyEntries()
+    this.loadUserEntries()
+  }
+
+  fetchUserInfo(): void {
+    if (!this.userId) {
+      return;
+    }
+    this.userHttpService.getUserInfo(this.userId).subscribe((response) => {
+      if (response.success && response.result?.length > 0) {
+        this.userInfo = response.result[0];
+      }
+    });
+  }
+
+  getPageTitle(): string {
+    if (this.page === 'entries') {
+      return this.translateService.instant('My Entries');
+    } else if (this.page === 'favorites') {
+      return this.translateService.instant('My Favorites');
+    } else if (this.page === 'other-user-entries') {
+      return this.translateService.instant('User Entries');
+    } else {
+      return '';
+    }
+  }
+
+  contactUser() {
+    if (!this.userInfo) {
+      return;
+    }
+
+    this.chatService.startChatWithUser(this.userInfo);
+    this.router.navigate(['/chat']);
   }
 }

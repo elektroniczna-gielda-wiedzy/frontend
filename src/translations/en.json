@@ -50,6 +50,9 @@
     "Add new post": "Add new post",
     "Add new note": "Add new note",
     "Add new announcement": "Add new announcement",
+    "Edit post": "Edit post",
+    "Edit note": "Edit note",
+    "Edit announcement": "Edit announcement",
     "Title": "Title",
     "Description": "Description",
     "Categories":"Categories",
@@ -108,5 +111,24 @@
     "Select existing category": "Select existing category",
     "Fill category names": "Fill category names",
     "New category": "New category",
-    "New subcategory": "New subcategory"
+    "New subcategory": "New subcategory",
+
+    "Users": "Users",
+    "Profile Details": "Profile details",
+    "User details": "User Details",
+    "Change Password": "Change Password",
+    "Entries Stats": "Entries Stats",
+    "Number of entries added": "Number of entries added",
+    "Total votes received": "Total votes received",
+    "Account Activity": "Account Activity",
+    "Account create date": "Account create date",
+    "Last login date": "Last login date",
+    "Block": "Block",
+    "Unblock": "Unblock",
+    "Entries": "Entries",
+
+    "Sort by": "Sort by",
+    "Newest": "Newest",
+    "Recently modified": "Recently modified",
+    "Highest votes": "Highest votes"
 }

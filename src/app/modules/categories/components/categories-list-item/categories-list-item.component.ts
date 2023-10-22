@@ -3,9 +3,8 @@ import {
   EventEmitter,
   Input,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { Category, CategoryService } from 'src/app/core';
+import { Category, CategoryService, CategoryStatus, CategoryType } from 'src/app/core';
 
 @Component({
   selector: 'app-categories-list-item',
@@ -71,7 +70,7 @@ export class CategoriesListItemComponent {
       category_id: 0,
       parent_id: this.category.category_id,
       type: this.category.type,
-      status: this.tab === 0 ? 'ACTIVE' : 'SUGGESTED',
+      status: this.tab,
       names: [
         {
           lang_id: 1,
@@ -87,11 +86,11 @@ export class CategoriesListItemComponent {
   }
 
   approveCategory(): void {
-      const updatedCategory: Category = {
-        ...this.category,
-        status: 'ACTIVE',
-      }
-      this.onUpdateCategory.emit(updatedCategory);
+    const updatedCategory: Category = {
+      ...this.category,
+      status: CategoryStatus.ACTIVE,
+    };
+    this.onUpdateCategory.emit(updatedCategory);
   }
 
   updateCategory(): void {
@@ -117,5 +116,29 @@ export class CategoriesListItemComponent {
 
   getCategoryName(category: Category) {
     return this.categoryService.getCategoryName(category);
+  }
+
+  get displayApprovedIcon(): boolean {
+    return (
+      this.tab === CategoryStatus.SUGGESTED &&
+      this.category.status === CategoryStatus.ACTIVE
+    );
+  }
+
+  get displayApproveButton(): boolean {
+    return (
+      this.tab === CategoryStatus.SUGGESTED &&
+      this.category.status === CategoryStatus.SUGGESTED
+    );
+  }
+
+  get displayAddSubcategoryButton(): boolean {
+    return (
+      !this.isSubcategory && this.category.status === CategoryStatus.ACTIVE
+    );
+  }
+
+  get isArea(): boolean {
+    return this.category.type === CategoryType.AREA;
   }
 }

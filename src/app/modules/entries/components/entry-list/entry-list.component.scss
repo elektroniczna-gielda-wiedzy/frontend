@@ -25,10 +25,14 @@
     display: flex;
     flex-wrap: wrap;
     flex: content;
-
+    gap: .1em;
     & > * {
-        flex: 1 1 50%;
+        flex: 1 1 max(350px, 30%);
     }
+}
+
+.categories-filter.last  {
+    order: 2;
 }
 
 .buttons-container {

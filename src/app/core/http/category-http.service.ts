@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { StandardResponse } from '../models/standard-response';
-import { Category, CategoryStatus } from '../models/category';
+import { Category } from '../models/category';
+import { CategoryStatus } from '../enums/category-status';
+import { CategoryType } from '../enums/category-type';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,7 @@ export class CategoryHttpService {
   getCategories(
     params: {
       status?: CategoryStatus;
-      type?: number;
+      type?: CategoryType;
       parent_id?: number;
     } = {}
   ): Observable<StandardResponse<Category>> {
@@ -24,11 +26,11 @@ export class CategoryHttpService {
       params: new HttpParams(),
     };
 
-    if (params.status) {
+    if (params.status || params.status === 0) {
       queryParams.params = queryParams.params.set('status', params.status);
     }
 
-    if (params.type !== undefined) {
+    if (params.type || params.type === 0) {
       queryParams.params = queryParams.params.set('type', params.type);
     }
 

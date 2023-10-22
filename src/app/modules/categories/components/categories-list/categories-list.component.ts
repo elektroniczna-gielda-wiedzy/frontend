@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { Category, CategoryHttpService, CategoryService } from 'src/app/core';
+import { Category, CategoryHttpService, CategoryService, CategoryType } from 'src/app/core';
 
 @Component({
   selector: 'app-categories-list',
@@ -12,7 +12,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   private categorySubscription?: Subscription;
   polishName: string = '';
   englishName: string = '';
-  addCategoryFormState: string = 'closed';
+  addCategoryFormState: CategoryType | null = null;
 
   private refreshCategoriesSubject = new BehaviorSubject<boolean>(false);
   refreshCategories$: Observable<boolean> =
@@ -24,6 +24,11 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   tab: number = 0;
   loading = true;
 
+  categoryTypes = [
+    { id: CategoryType.AREA, label: 'Areas' },
+    { id: CategoryType.FACULTY, label: 'Faculties' },
+  ]
+
   constructor(
     private categoryHttpService: CategoryHttpService,
     private categoryService: CategoryService,
@@ -31,31 +36,31 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.updateCategories();
+    this.fetchCategories();
   }
 
   ngOnDestroy(): void {
     this.categorySubscription?.unsubscribe();
   }
 
-  displayAddCategoryForm(name: string): void {
+  displayAddCategoryForm(categoryType: CategoryType): void {
     this.polishName = '';
     this.englishName = '';
-    this.addCategoryFormState = name;
+    this.addCategoryFormState = categoryType;
   }
 
-  getAddCategoryFormTitle(name: string): string {
-    return name === 'Areas' ? 'Add new area' : 'Add new faculty';
+  getAddCategoryFormTitle(categoryType: CategoryType): string {
+    return 'Add new ' + CategoryType[categoryType].toLowerCase(); 
   }
 
-  setAddCategoryFormState(name: string) {
-    this.addCategoryFormState = name;
+  setAddCategoryFormState(categoryType: CategoryType) {
+    this.addCategoryFormState = categoryType;
   }
 
   cancelAddCategory(): void {
     this.polishName = '';
     this.englishName = '';
-    this.addCategoryFormState = 'closed';
+    this.addCategoryFormState = null;
   }
 
   _addCategory(type: number): void {
@@ -73,7 +78,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       parent_id: null,
       type: type,
       category_id: 0,
-      status: this.tab === 0 ? 'ACTIVE' : 'SUGGESTED',
+      status: this.tab
     };
 
     this.addCategory(newCategory);
@@ -146,14 +151,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   onTabChange(event: any): void {
     this.tab = event.index;
-    let params = {};
-    if (this.tab === 1) {
-      params = { status: 'suggested' };
-    }
-    this.updateCategories(params);
+    this.fetchCategories({ status: this.tab });
   }
 
-  updateCategories(params = {}): void {
+  fetchCategories(params = {}): void {
     this.loading = true;
     this.categoryHttpService.getCategories(params).subscribe((response) => {
       this.loading = false;
@@ -171,5 +172,13 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       this.refreshCategoriesSubject.next(true);
       this.refreshCategoriesSubject.next(false);
     });
+  }
+
+  isFaculty(categoryType: CategoryType): boolean {
+    return categoryType === CategoryType.FACULTY;
+  }
+
+  isArea(categoryType: CategoryType): boolean {
+    return categoryType === CategoryType.AREA;
   }
 }

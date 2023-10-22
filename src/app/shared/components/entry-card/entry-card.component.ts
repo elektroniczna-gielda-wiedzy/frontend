@@ -7,6 +7,7 @@ import {
   EntryType,
   CategoryService,
   Language,
+  CategoryType,
 } from 'src/app/core';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 
@@ -62,4 +63,12 @@ export class EntryCardComponent implements OnInit, OnDestroy {
   propagateDeletion(id: number) {
     this.entryDeleted.emit(id);
   } 
+
+  isFaculty(category: Category): boolean {
+    return category.type === CategoryType.FACULTY;
+  }
+
+  isArea(category: Category): boolean {
+    return category.type === CategoryType.AREA;
+  }
 }

@@ -146,14 +146,16 @@
           Admin
         </button>
         <mat-menu #adminMenu="matMenu" class="profile-menu">
-          <a
-            mat-menu-item
-            *ngFor="let link of adminLinks"
-            routerLink="{{ link.url }}"
-            routerLinkActive="active-side-nav-item"
-            (click)="drawer.close()"
-            >{{ link.label | translate }}</a
-          >
+          <ng-container *appIsAdmin>
+            <a
+              mat-menu-item
+              *ngFor="let link of adminLinks"
+              routerLink="{{ link.url }}"
+              routerLinkActive="active-side-nav-item"
+              (click)="drawer.close()"
+              >{{ link.label | translate }}</a
+            >
+          </ng-container>
         </mat-menu>
         <app-language-selector></app-language-selector>
       </div>

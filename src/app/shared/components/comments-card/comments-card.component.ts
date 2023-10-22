@@ -45,7 +45,7 @@ export class CommentsCardComponent {
 
   
   ngOnInit(): void {
-    console.log(this.comments)
+    this.logger.trace(this.comments)
     this.comments?.sort((b,a) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     this.step = 0;
 

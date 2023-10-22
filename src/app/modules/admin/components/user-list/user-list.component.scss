@@ -1,0 +1,62 @@
+.user-list-outer-container {
+    margin: 1em;
+}
+
+.user-list-controls {
+    margin-bottom: 1em;
+}
+
+
+.inputs-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: content;
+
+    & > * {
+        flex: 1 1 max(250px, 50%);
+    }
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.user-list-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    padding: .5em;
+    border: 1px solid #ccc;
+    border-radius: .5em;
+    margin-bottom: .5em;
+    align-items: center;
+}
+
+.username{
+    font-weight: 500;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.action-icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    margin-left: auto;
+    & > *{
+        transition: all .2s ease-in-out;
+    }
+    & > *:hover {
+        cursor: pointer;
+        scale: 1.1; 
+    }
+}
+
+.user-info-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    align-items: center;
+}
