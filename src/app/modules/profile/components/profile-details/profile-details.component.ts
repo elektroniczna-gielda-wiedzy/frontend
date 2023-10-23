@@ -82,4 +82,11 @@ export class ProfileDetailsComponent {
     }
     this.router.navigate(['/profile', userId, 'entries']);
   }
+
+
+  changePassword() {
+   
+    this.router.navigate(['/profile/password']);
+  
+  }
 }
