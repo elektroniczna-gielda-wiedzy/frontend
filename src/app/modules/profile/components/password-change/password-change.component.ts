@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { AuthService } from 'src/app/core';
+import { Subscription } from 'rxjs';
+import { AuthService, Language } from 'src/app/core';
+import { LanguageService } from 'src/app/modules/translate/language.service';
 
 
 function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
@@ -33,7 +35,8 @@ function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
 
 
 export class PasswordChangeComponent {
-
+  private langChangeSubscription?: Subscription;
+  currentLanguage: Language = this.languageService.language;
 
   unauthorize = false;
   passwordForm = this.fb.group({
@@ -57,9 +60,21 @@ export class PasswordChangeComponent {
     private logger: NGXLogger,
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private languageService: LanguageService
   ) {}
 
+  ngOnDestroy() {
+    this.langChangeSubscription?.unsubscribe();
+  }
+
+  initLanguage() {
+    this.langChangeSubscription = this.languageService.languageChange.subscribe(
+      () => {
+        this.currentLanguage = this.languageService.language;
+      }
+    );
+  }
 
   
   

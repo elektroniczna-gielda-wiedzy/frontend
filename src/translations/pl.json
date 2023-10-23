@@ -33,6 +33,10 @@
     "Forgot your password?": "Zapomniałeś hasła?",
     "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl",
     "Invalid email or password": "Nieprawidłowy email lub hasło",
+    "New password": "Nowe hasło",
+    "Repeat new password": "Powtórz nowe hasło",
+    "Old password is required.":"Poprzednie hasło jest wymagane.",
+    "Change":"Zmień",
 
     "Already have an account?": "Masz już konto?",
     "First Name": "Imię",
