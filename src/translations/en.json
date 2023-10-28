@@ -130,5 +130,16 @@
     "Sort by": "Sort by",
     "Newest": "Newest",
     "Recently modified": "Recently modified",
-    "Highest votes": "Highest votes"
+    "Highest votes": "Highest votes",
+
+    "--email-not-found-msg": "User with this email does not exist.",
+    "--verify-email-msg": "Verification link has been sent to your email address. Please check your inbox and click the link to verify your email address.",
+    "--email-confirm-invalid-msg": "Invalid confirmation link.",
+    "--email-confirm-expired-msg": "Confirmation link has expired.",
+    "--email-confirm-already-confirmed-msg": "Email already confirmed.",
+    "--email-confirmed-msg": "Email confirmed successfully. You can now sign in.",
+
+    "--resend-email-title": "Resend confirmation email",
+    "--resend-email-subtitle": "Please enter your email address below to receive a new confirmation link.",
+    "Resend": "Resend"
 }

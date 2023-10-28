@@ -1,4 +1,4 @@
-<mat-card class="responsive-mat-card">
+<mat-card *ngIf="!loading;else spinner" class="responsive-mat-card">
   <mat-card-header class="card-header">
     <mat-card-title class="card-title">
       <h2 translate>Sign Up</h2>
@@ -114,3 +114,8 @@
     </form>
   </mat-card-content>
 </mat-card>
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

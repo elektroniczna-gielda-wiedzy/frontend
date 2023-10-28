@@ -1,0 +1,61 @@
+<mat-card
+  *ngIf="!loading; else spinner"
+  class="responsive-mat-card"
+>
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">
+      <h2 translate>{{ "--resend-email-title" | translate }}</h2>
+    </mat-card-title>
+    <mat-card-subtitle class="card-center-row">
+      <span translate>{{ "--resend-email-subtitle" | translate }}</span>
+    </mat-card-subtitle>
+    <mat-error translate *ngIf="errorMsg">
+        {{ errorMsg | translate }}
+    </mat-error>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="resendForm"
+      (ngSubmit)="resendFormSubmit()"
+      class="form-container"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          translate="yes"
+          matInput
+          formControlName="email"
+          placeholder="{{ 'example@student.agh.edu.pl' | translate }}"
+          required
+        />
+        <mat-error
+          translate
+          *ngIf="resendForm.get('email')?.errors?.['required']"
+        >
+          Email is required.
+        </mat-error>
+        <mat-error
+          translate
+          *ngIf="resendForm.get('email')?.errors?.['pattern']"
+        >
+          Please enter a valid student email.
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!resendForm.valid"
+      >
+        {{ "Resend" | translate }}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

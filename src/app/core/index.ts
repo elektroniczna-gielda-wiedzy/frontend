@@ -2,6 +2,7 @@
 export * from './http/entry-http.service';
 export * from './http/category-http.service';
 export * from './http/answer-http.service';
+export * from './http/email-http.service';
 
 // services
 export * from './services/auth.service';
