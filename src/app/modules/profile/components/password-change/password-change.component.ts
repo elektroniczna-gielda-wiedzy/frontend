@@ -1,56 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
-import { AuthService } from 'src/app/core';
-
-function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (control.parent && reverse) {
-      const c = (control.parent?.controls as any)[matchTo] as AbstractControl;
-      if (c) {
-        c.updateValueAndValidity();
-      }
-      return null;
-    }
-    return !!control.parent &&
-      !!control.parent.value &&
-      control.value === (control.parent?.controls as any)[matchTo].value
-      ? null
-      : { matching: true };
-  };
-}
-
-function differentValidator(
-  differentTo: string,
-  reverse?: boolean
-): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (control.parent && reverse) {
-      const c = (control.parent?.controls as any)[
-        differentTo
-      ] as AbstractControl;
-      if (c) {
-        c.updateValueAndValidity();
-      }
-      return null;
-    }
-
-    return !!control.parent &&
-      !!control.parent.value &&
-      !!control.value &&
-      control.value === (control.parent?.controls as any)[differentTo].value
-      ? { different: true }
-      : null;
-  };
-}
+import { AuthService, differentValidator, matchValidator } from 'src/app/core';
 
 @Component({
   selector: 'app-password-change',
@@ -141,7 +94,9 @@ export class PasswordChangeComponent {
 
   getRepeatNewPasswordErrorMessage() {
     if (this.passwordForm.controls.repeatNewPassword.hasError('required')) {
-      return this.translateService.instant('--repeat-new-password-required-msg');
+      return this.translateService.instant(
+        '--repeat-new-password-required-msg'
+      );
     }
     if (this.passwordForm.controls.repeatNewPassword.hasError('matching')) {
       return this.translateService.instant('--repeat-new-password-match-msg');
