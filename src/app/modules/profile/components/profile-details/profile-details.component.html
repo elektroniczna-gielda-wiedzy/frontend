@@ -31,15 +31,31 @@
           {{ "Change Password" | translate }}
         </button>
         <ng-template #adminButtons>
-          <button mat-raised-button color="primary" (click)="userEntries(userInfo?.user_id)">
-            {{"Entries" | translate}}
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="userEntries(userInfo?.user_id)"
+          >
+            {{ "Entries" | translate }}
           </button>
-          <button mat-raised-button color="warn" *ngIf="!userInfo?.is_banned">
-            {{"Block" | translate}}
-          </button>
-          <button mat-raised-button color="primary" *ngIf="userInfo?.is_banned">
-            {{"Unblock" | translate}}
-          </button>
+          <ng-container *ngIf="!isCurrentUser(userInfo?.user_id)">
+            <button
+              mat-raised-button
+              color="warn"
+              *ngIf="!userInfo?.is_banned"
+              (click)="setBanned(userInfo?.user_id, !userInfo?.is_banned)"
+            >
+              {{ "Block" | translate }}
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              *ngIf="userInfo?.is_banned"
+              (click)="setBanned(userInfo?.user_id, !userInfo?.is_banned)"
+            >
+              {{ "Unblock" | translate }}
+            </button>
+          </ng-container>
         </ng-template>
       </mat-card-actions>
     </mat-card>
