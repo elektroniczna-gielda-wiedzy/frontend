@@ -138,6 +138,10 @@
     "Block": "Zablokuj",
     "Unblock": "Odblokuj",
     "Entries": "Wpisy",
+    "--ban-yourself-msg": "Nie możesz zablokować samego siebie.",
+    "--user-not-found-msg": "Użytkownik o podanym id nie istnieje.",
+    "--user-id-not-found-msg": "Użytkownik o id = {{id}} nie istnieje.",
+    "--ban-admin-msg": "Nie możesz zablokować administratora.",
 
     "Sort by": "Sortuj według",
     "Newest": "Najnowsze",

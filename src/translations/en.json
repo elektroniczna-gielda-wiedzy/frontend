@@ -138,6 +138,10 @@
     "Block": "Block",
     "Unblock": "Unblock",
     "Entries": "Entries",
+    "--ban-yourself-msg": "You cannot block yourself.",
+    "--user-not-found-msg": "User does not exist.",
+    "--user-id-not-found-msg": "User with id = {{id}} does not exist.",
+    "--ban-admin-msg": "You cannot block an admin.",
 
     "Sort by": "Sort by",
     "Newest": "Newest",
