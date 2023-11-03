@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Author, UserInfo } from 'src/app/core';
+import { Author, TokenService, UserInfo } from 'src/app/core';
 import { UserHttpService } from 'src/app/core/http/user-http.service';
 import { ChatService } from 'src/app/modules/chat/services/chat.service';
 
@@ -22,7 +22,8 @@ export class UserListComponent {
     private userHttpService: UserHttpService,
     private logger: NGXLogger,
     private chatService: ChatService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
@@ -80,5 +81,28 @@ export class UserListComponent {
 
   userDetails(userId: number) {
     this.router.navigate(['/admin-dashboard', 'users', userId]);
+  }
+
+  setBanned(userId: number, isBanned: boolean) {
+    this.userHttpService.setBanned(userId, isBanned).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.users = this.users.map((user) => {
+            if (user.user_id === userId) {
+              user.is_banned = isBanned;
+            }
+            return user;
+          });
+        }
+        this.logger.trace(response);
+      },
+      error: (err) => {
+        this.logger.error(err);
+      },
+    });
+  }
+
+  isCurrentUser(userId: number): boolean {
+    return this.tokenService.getUserId() === userId;
   }
 }
