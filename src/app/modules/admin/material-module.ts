@@ -9,6 +9,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { MatSelectModule } from '@angular/material/select';
         MatButtonToggleModule,
         MatProgressSpinnerModule,
         MatRadioModule,
-        MatSelectModule
+        MatSelectModule,
+        MatListModule,
+        MatCardModule,
     ]
 })
 export class MaterialModule { }

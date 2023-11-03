@@ -1,0 +1,42 @@
+<ng-container *ngIf="report; else loading">
+  <mat-card class="responsive-mat-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{ report.topic }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="report-description">
+        {{ report.description }}
+      </p>
+      <mat-card-subtitle class="reporter-container" *ngIf="reporter">
+        <span> {{ "--reporter-label" | translate }} </span>
+        <a
+          mat-flat-button
+          class="author-container"
+          [routerLink]="['/admin-dashboard/users', reporter.user_id]"
+        >
+          <span>
+            {{ reporter.first_name }}
+          </span>
+          <span>
+            {{ reporter.last_name }}
+          </span>
+        </a>
+      </mat-card-subtitle>
+      <app-entry-details [entryId]="report.entry_id"></app-entry-details>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="markAsResolved()">
+        {{ "--resolve-report-btn" | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

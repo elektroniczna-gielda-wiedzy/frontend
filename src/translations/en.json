@@ -157,5 +157,23 @@
 
     "--resend-email-title": "Resend confirmation email",
     "--resend-email-subtitle": "Please enter your email address below to receive a new confirmation link.",
-    "Resend": "Resend"
+    "Resend": "Resend",
+    "Submit": "Submit",
+
+    "--report-title": "Report entry",
+    "--report-topic-label": "Topic",
+    "--report-description-label": "Description",
+    "--report-subtitle": "Please provide a reason for reporting this entry.",
+    "--report-topic-required-msg": "Topic is required",
+    "--report-description-required-msg": "Description is required",
+    "--report-topic-placeholder": "Topic of the report",
+    "--report-description-placeholder": "Please provide a reason for reporting this entry.",
+    "--report-success-msg": "Entry reported successfully. Thank you for your feedback.",
+    
+    "--report-list-title": "Reports",
+    "--resolve-report-btn": "Resolve report",
+    "--reporter-label": "Reported by",
+    "--no-entry-title": "There is no such entry",
+    "--no-entry-msg": "Entry with this id does not exist or has been deleted.",
+    "--report-list-empty-msg": "There are no reports to resolve."
 }

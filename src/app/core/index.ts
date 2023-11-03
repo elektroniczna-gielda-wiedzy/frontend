@@ -4,6 +4,7 @@ export * from './http/category-http.service';
 export * from './http/answer-http.service';
 export * from './http/email-http.service';
 export * from './http/user-http.service';
+export * from './http/report-http.service';
 
 // services
 export * from './services/auth.service';
@@ -25,6 +26,7 @@ export * from './models/user';
 export * from './models/token';
 export * from './models/standard-response';
 export * from './models/chat';
+export * from './models/report';
 
 // guards
 export * from './guards/entry-type.guard';

@@ -1,0 +1,25 @@
+.report-title {
+    text-align: center;
+}
+
+.reports-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.reports-list-item {
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: box-shadow .2s ease-in-out;
+    &:hover {
+        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.4);
+    }
+}
+
+.empty-list {
+    display: flex;
+    justify-content: center;
+}

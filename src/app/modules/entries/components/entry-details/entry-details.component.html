@@ -1,25 +1,30 @@
-<mat-card class="responsive-mat-card">
+<mat-card class="responsive-mat-card" *ngIf="entry; else noEntry">
   <mat-card-header class="header-flex-container">
     <div class="header-left">
       <mat-card-title>
-        {{ entry?.title }}
+        {{ entry.title }}
       </mat-card-title>
       <div class="content">
-        {{ entry?.content }}
+        {{ entry.content }}
       </div>
     </div>
     <div class="header-right">
       <app-favorite-icon
-        [isFavorite]="entry?.favorite === true"
-        [entryId]="entry?.entry_id"
+        [isFavorite]="entry.favorite === true"
+        [entryId]="entry.entry_id"
         [bigger]="true"
       ></app-favorite-icon>
       <app-votes-widget
-        [count]="entry?.votes || 0"
-        [entryId]="entry?.entry_id"
-        [authorId]="entry?.author?.user_id"
-        [voted]="entry?.user_vote || 0"
+        [count]="entry.votes || 0"
+        [entryId]="entry.entry_id"
+        [authorId]="entry.author.user_id"
+        [voted]="entry.user_vote || 0"
       ></app-votes-widget>
+      <div class="report-icon-container">
+        <mat-icon class="report-icon" (click)="openReportDialog()"
+          >report</mat-icon
+        >
+      </div>
     </div>
   </mat-card-header>
   <mat-card-content>
@@ -70,19 +75,24 @@
       >
         {{ "Contact author" | translate }}
       </button>
+      <span class="spacer"></span>
       <mat-card-subtitle>
-        <div class="author-container" (click)="userEntries(entry?.author?.user_id)">
+        <a
+          mat-flat-button
+          class="author-container"
+          [routerLink]="getAuthorLink(entry.author.user_id)"
+        >
           <span>
-            {{ entry?.author?.first_name }}
+            {{ entry.author.first_name }}
           </span>
           <span>
-            {{ entry?.author?.last_name }}
+            {{ entry.author.last_name }}
           </span>
-        </div>
+        </a>
         <div class="date-container">
           <span translate>added</span>
           <span>
-            {{ entry?.created_at | relativeTime : currentLanguage }}
+            {{ entry.created_at | relativeTime : currentLanguage }}
           </span>
         </div>
       </mat-card-subtitle>
@@ -98,7 +108,22 @@
   </div>
   <app-answer-card
     *ngIf="displayAnswers"
-    [entryId]="entry!.entry_id"
-    [entryAuthorId]="entry?.author?.user_id"
+    [entryId]="entry.entry_id"
+    [entryAuthorId]="entry.author.user_id"
   ></app-answer-card>
 </mat-card>
+
+<ng-template #noEntry>
+  <mat-card class="responsive-mat-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{ "--no-entry-title" | translate }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{ "--no-entry-msg" | translate }}
+      </p>
+    </mat-card-content>
+  </mat-card></ng-template
+>
