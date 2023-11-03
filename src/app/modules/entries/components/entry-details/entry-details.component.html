@@ -20,6 +20,11 @@
         [authorId]="entry?.author?.user_id"
         [voted]="entry?.user_vote || 0"
       ></app-votes-widget>
+      <div class="report-icon-container">
+        <mat-icon class="report-icon" (click)="openReportDialog()"
+          >report</mat-icon
+        >
+      </div>
     </div>
   </mat-card-header>
   <mat-card-content>
@@ -70,8 +75,12 @@
       >
         {{ "Contact author" | translate }}
       </button>
+      <span class="spacer"></span>
       <mat-card-subtitle>
-        <div class="author-container" (click)="userEntries(entry?.author?.user_id)">
+        <div
+          class="author-container"
+          (click)="userEntries(entry?.author?.user_id)"
+        >
           <span>
             {{ entry?.author?.first_name }}
           </span>

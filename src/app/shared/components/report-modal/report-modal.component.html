@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>
+  {{ "--report-title" | translate }}
+</h2>
+
+<form [formGroup]="reportForm" class="report-form">
+  <mat-dialog-content class="report-content">
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ "--report-topic-label" | translate }}
+      </mat-label>
+      <input
+        matInput
+        formControlName="topic"
+        placeholder="{{ getPlaceholder('topic') }}"
+      />
+      <mat-error *ngIf="reportForm.controls['topic'].hasError('required')">
+        {{ "--report-topic-required-msg" | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ "--report-description-label" | translate }}
+      </mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="{{ getPlaceholder('description') }}"
+      ></textarea>
+      <mat-error
+        translate
+        *ngIf="reportForm.controls['description'].hasError('required')"
+      >
+        {{ "--report-description-required-msg" | translate }}
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="report-actions">
+    <button mat-raised-button mat-dialog-close>
+      {{ "Cancel" | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="createReport()"
+      [disabled]="!reportForm.valid"
+    >
+      {{ "Submit" | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

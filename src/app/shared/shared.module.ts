@@ -17,6 +17,7 @@ import { IsAdminDirective } from './directives/is-admin.directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 import { UserStatusIconComponent } from './components/user-status-icon/user-status-icon.component';
+import { ReportModalComponent } from './components/report-modal/report-modal.component';
 
 const components = [
   EntryCardComponent,
@@ -26,6 +27,7 @@ const components = [
   EntryActionButtonsComponent,
   VotesWidgetComponent,
   UserStatusIconComponent,
+  ReportModalComponent,
 ]
 
 const pipes = [

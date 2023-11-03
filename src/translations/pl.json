@@ -157,6 +157,15 @@
 
     "--resend-email-title": "Wyślij ponownie link aktywacyjny",
     "--resend-email-subtitle": "Proszę podać adres email, na który ma zostać wysłany link aktywacyjny.",
-    "Resend": "Wyślij"
+    "Resend": "Wyślij",
+
+    "--report-title": "Zgłoś wpis",
+    "--report-topic-label": "Tytuł",
+    "--report-description-label": "Opis",
+    "--report-topic-required-msg": "Tytuł jest wymagany.",
+    "--report-description-required-msg": "Opis jest wymagany.",
+    "--report-topic-placeholder": "Tytuł zgłoszenia",
+    "--report-description-placeholder": "Proszę podać powód zgłoszenia tego wpisu.",
+    "--report-success-msg": "Dziękujemy za zgłoszenie. Zostanie ono rozpatrzone przez administratora."
 
 }

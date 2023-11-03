@@ -20,6 +20,7 @@ import {
 import { ChatService } from 'src/app/modules/chat/services/chat.service';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 import { FullscreenImageDialogComponent } from 'src/app/shared/components/fullscreen-image-dialog/fullscreen-image-dialog.component';
+import { ReportModalComponent } from 'src/app/shared/components/report-modal/report-modal.component';
 
 @Component({
   selector: 'app-entry-details',
@@ -120,6 +121,12 @@ export class EntryDetailsComponent {
     });
   }
 
+  openReportDialog(): void {
+    this.dialog.open(ReportModalComponent, {
+      data: { entryId: this.entry?.entry_id },
+    });
+  }
+
   entryDeleted(id: number) {
     if (this.entry && this.entry.entry_id === id) {
       this.router.navigate(['/']);
@@ -157,7 +164,7 @@ export class EntryDetailsComponent {
   }
 
   get displayContactButton(): boolean {
-    return this.entry?.entry_type_id !== EntryType.Post && !this.isAuthor
+    return this.entry?.entry_type_id !== EntryType.Post && !this.isAuthor;
   }
 
   get displayAnswers(): boolean {

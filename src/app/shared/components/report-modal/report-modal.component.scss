@@ -1,0 +1,15 @@
+
+
+.report-content {
+  width: min(80vw, 600px);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5em;
+    padding: 1em;
+}

@@ -157,5 +157,15 @@
 
     "--resend-email-title": "Resend confirmation email",
     "--resend-email-subtitle": "Please enter your email address below to receive a new confirmation link.",
-    "Resend": "Resend"
+    "Resend": "Resend",
+
+    "--report-title": "Report entry",
+    "--report-topic-label": "Topic",
+    "--report-description-label": "Description",
+    "--report-subtitle": "Please provide a reason for reporting this entry.",
+    "--report-topic-required-msg": "Topic is required",
+    "--report-description-required-msg": "Description is required",
+    "--report-topic-placeholder": "Topic of the report",
+    "--report-description-placeholder": "Please provide a reason for reporting this entry.",
+    "--report-success-msg": "Entry reported successfully. Thank you for your feedback."
 }
