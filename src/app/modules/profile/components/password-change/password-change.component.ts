@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
-import { Subscription } from 'rxjs';
-import { AuthService, Language } from 'src/app/core';
-import { LanguageService } from 'src/app/modules/translate/language.service';
-
+import { AuthService } from 'src/app/core';
 
 function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -24,32 +28,55 @@ function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
   };
 }
 
+function differentValidator(
+  differentTo: string,
+  reverse?: boolean
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.parent && reverse) {
+      const c = (control.parent?.controls as any)[
+        differentTo
+      ] as AbstractControl;
+      if (c) {
+        c.updateValueAndValidity();
+      }
+      return null;
+    }
 
+    return !!control.parent &&
+      !!control.parent.value &&
+      !!control.value &&
+      control.value === (control.parent?.controls as any)[differentTo].value
+      ? { different: true }
+      : null;
+  };
+}
 
 @Component({
   selector: 'app-password-change',
   templateUrl: './password-change.component.html',
-  styleUrls: ['./password-change.component.scss']
+  styleUrls: ['./password-change.component.scss'],
 })
-
-
-
 export class PasswordChangeComponent {
-  private langChangeSubscription?: Subscription;
-  currentLanguage: Language = this.languageService.language;
-
   unauthorize = false;
   passwordForm = this.fb.group({
-    password: ['', Validators.required],
+    password: [
+      '',
+      [Validators.required, differentValidator('newPassword', true)],
+    ],
     newPassword: [
       '',
       [
         Validators.required,
         Validators.minLength(6),
-        matchValidator('confirmPassword', true),
+        matchValidator('repeatNewPassword', true),
+        differentValidator('password'),
       ],
     ],
-    repeatNewPassword: ['', [Validators.required, matchValidator('newPassword')]],
+    repeatNewPassword: [
+      '',
+      [Validators.required, matchValidator('newPassword')],
+    ],
   });
 
   hidePassword = true;
@@ -61,27 +88,64 @@ export class PasswordChangeComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private languageService: LanguageService
+    private translateService: TranslateService
   ) {}
 
-  ngOnDestroy() {
-    this.langChangeSubscription?.unsubscribe();
+  ngOnDestroy() {}
+
+  onSubmit() {
+    if (
+      this.passwordForm.invalid ||
+      !this.passwordForm.value.password ||
+      !this.passwordForm.value.newPassword
+    ) {
+      return;
+    }
+
+    this.authService
+      .changePassword(
+        this.passwordForm.value.password,
+        this.passwordForm.value.newPassword
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.router.navigate(['/profile/details']);
+          }
+        },
+        error: (err) => {
+          this.logger.error(err);
+          const msgs = err?.error?.messages || [];
+          const msg = msgs.join(' ').toLowerCase();
+          if (msg.includes('old password does not match')) {
+            this.unauthorize = true;
+          }
+        },
+      });
   }
 
-  initLanguage() {
-    this.langChangeSubscription = this.languageService.languageChange.subscribe(
-      () => {
-        this.currentLanguage = this.languageService.language;
-      }
-    );
+  getNewPasswordErrorMessage() {
+    if (this.passwordForm.controls.newPassword.hasError('required')) {
+      return this.translateService.instant('--new-password-required-msg');
+    }
+    if (this.passwordForm.controls.newPassword.hasError('minlength')) {
+      return this.translateService.instant('--password-min-length-msg', {
+        length: 6,
+      });
+    }
+    if (this.passwordForm.controls.newPassword.hasError('different')) {
+      return this.translateService.instant('--password-different-msg');
+    }
+    return '';
   }
 
-  
-  
-  onSubmit(){
-      console.log("Change password!")
-
-
+  getRepeatNewPasswordErrorMessage() {
+    if (this.passwordForm.controls.repeatNewPassword.hasError('required')) {
+      return this.translateService.instant('--repeat-new-password-required-msg');
+    }
+    if (this.passwordForm.controls.repeatNewPassword.hasError('matching')) {
+      return this.translateService.instant('--repeat-new-password-match-msg');
+    }
+    return '';
   }
-
 }

@@ -65,4 +65,17 @@ export class AuthService {
     this.loggedIn.next(false);
     this.router.navigate(['auth', 'sign-in']);
   }
+
+  changePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Observable<StandardResponse<void>> {
+    const url = `${this.apiUrl}/reset_password`;
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.put<StandardResponse<void>>(
+      url,
+      { old_password: currentPassword, new_password: newPassword },
+      { headers }
+    );
+  }
 }

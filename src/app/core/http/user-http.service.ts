@@ -48,9 +48,16 @@ export class UserHttpService {
     return this.http.get<StandardResponse<Author>>(url, queryParams);
   }
 
-  setBanned(userId: number, isBanned: boolean): Observable<StandardResponse<void>> {
+  setBanned(
+    userId: number,
+    isBanned: boolean
+  ): Observable<StandardResponse<void>> {
     const url = `${this.apiUrl}/${userId}/ban`;
     const headers = { 'Content-Type': 'application/json' };
-    return this.http.put<StandardResponse<void>>(url, { value: isBanned }, { headers });
+    return this.http.put<StandardResponse<void>>(
+      url,
+      { value: isBanned },
+      { headers }
+    );
   }
 }

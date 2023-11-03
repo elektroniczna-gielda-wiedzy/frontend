@@ -34,9 +34,17 @@
     "example@student.agh.edu.pl": "your.email@student.agh.edu.pl",
     "Invalid email or password": "Invalid email or password",
     "New password": "New password",
-    "Repeat new password": "Repeat New password",
+    "Repeat new password": "Repeat new password",
     "Old password is required.":"Old password is required.", 
     "Change":"Change",
+
+    "--old-password-required-msg": "Old password is required.",
+    "--new-password-required-msg": "New password is required.",
+    "--password-min-length-msg": "Password must be at least {{length}} characters long.",
+    "--password-different-msg": "New password must be different than the old one.",
+    "--repeat-new-password-required-msg": "You must repeat your new password.",
+    "--repeat-new-password-match-msg": "Passwords must match.",
+    "--invalid-password-msg": "Invalid password.",
 
     "Already have an account?": "Already have an account?",
     "First Name": "First Name",
