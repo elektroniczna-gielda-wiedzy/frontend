@@ -135,5 +135,17 @@
     "Sort by": "Sortuj według",
     "Newest": "Najnowsze",
     "Recently modified": "Ostatnio zmodyfikowane",
-    "Highest votes": "Najwyżej oceniane"
+    "Highest votes": "Najwyżej oceniane",
+
+    "--email-not-found-msg": "Użytkownik o podanym adresie email nie istnieje.",
+    "--verify-email-msg": "Na podany adres email został wysłany link aktywacyjny. Sprawdź swoją skrzynkę i kliknij w link, aby aktywować konto.",
+    "--email-confirm-invalid-msg": "Nieprawidłowy link aktywacyjny.",
+    "--email-confirm-expired-msg": "Link aktywacyjny wygasł.",
+    "--email-confirm-already-confirmed-msg": "Email został już potwierdzony.",
+    "--email-confirmed-msg": "Email został potwierdzony. Możesz się teraz zalogować.",
+
+    "--resend-email-title": "Wyślij ponownie link aktywacyjny",
+    "--resend-email-subtitle": "Proszę podać adres email, na który ma zostać wysłany link aktywacyjny.",
+    "Resend": "Wyślij"
+
 }

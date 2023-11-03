@@ -6,9 +6,15 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
-import { AuthService, UserSignUpCredentials } from 'src/app/core';
+import {
+  AuthService,
+  UserSignUpCredentials,
+  getEmailValidators,
+} from 'src/app/core';
 
 function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -36,16 +42,7 @@ export class SignUpComponent {
   signUpForm = this.fb.group({
     first_name: ['', Validators.required],
     last_name: ['', Validators.required],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(
-          /^[a-z0-9]+[\._]?[a-z0-9]+[@]student[.]agh[.]edu[.]pl$/
-        ),
-      ],
-    ],
+    email: ['', getEmailValidators()],
     password: [
       '',
       [
@@ -59,22 +56,35 @@ export class SignUpComponent {
   emailTaken = false;
   hidePassword = true;
   hideRepeatPassword = true;
+  loading = false;
 
   constructor(
     private logger: NGXLogger,
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService,
   ) {}
 
   onSubmit() {
+    this.loading = true;
     this.authService
       .register(this.signUpForm.value as UserSignUpCredentials)
       .subscribe({
         next: (response) => {
+          this.loading = false;
           this.emailTaken = false;
           if (response.success) {
             this.logger.info('register successful');
+            this.snackBar.open(
+              this.translateService.instant('--verify-email-msg'),
+              this.translateService.instant('Close'),
+              {
+                duration: 10000,
+                verticalPosition: 'top',
+              },
+            );
             this.router.navigate(['/auth/sign-in']);
           } else {
             this.logger.info('register failed');
@@ -82,6 +92,7 @@ export class SignUpComponent {
           }
         },
         error: (response) => {
+          this.loading = false;
           this.logger.info('register failed');
           this.logger.error(response);
 

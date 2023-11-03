@@ -3,7 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { AuthService, UserSignInCredentials } from 'src/app/core';
+import {
+  AuthService,
+  UserSignInCredentials,
+  getEmailValidators,
+} from 'src/app/core';
 import { LanguageService } from 'src/app/modules/translate/language.service';
 
 @Component({
@@ -13,22 +17,13 @@ import { LanguageService } from 'src/app/modules/translate/language.service';
 })
 export class SignInComponent {
   signInForm = this.fb.group({
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(
-          /^[a-z0-9]+[\._]?[a-z0-9]+[@]student[.]agh[.]edu[.]pl$/
-        ),
-      ],
-    ],
+    email: ['', getEmailValidators()],
     password: ['', Validators.required],
     rememberMe: [false],
   });
   unauthorize = false;
   hidePassword = true;
-  
+
   constructor(
     private logger: NGXLogger,
     private fb: FormBuilder,

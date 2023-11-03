@@ -10,9 +10,11 @@ import { TokenService } from './services/token.service';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { EmailConfirmComponent } from './components/email-confirm/email-confirm.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [NavbarComponent, PageNotFoundComponent],
+  declarations: [NavbarComponent, PageNotFoundComponent, EmailConfirmComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -28,7 +30,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
         disallowedRoutes: [...environment.tokenDisallowedRoutes],
       },
     }),
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [TokenService],
   exports: [NavbarComponent],

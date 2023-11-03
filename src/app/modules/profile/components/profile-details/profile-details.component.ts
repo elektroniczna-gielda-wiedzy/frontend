@@ -26,7 +26,7 @@ export class ProfileDetailsComponent {
   ngOnInit() {
     const currentUserId = this.tokenService.getUserId();
     const url = this.router.url;
-    
+
     if (url === '/profile/details') {
       this.fetchUserInfo(currentUserId);
     } else if (
@@ -83,10 +83,31 @@ export class ProfileDetailsComponent {
     this.router.navigate(['/profile', userId, 'entries']);
   }
 
+  setBanned(userId?: number, isBanned?: boolean) {
+    if (!userId || isBanned === undefined) {
+      return;
+    }
+
+    this.userHttpService.setBanned(userId, isBanned).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.userInfo = {
+            ...this.userInfo!,
+            is_banned: isBanned,
+          };
+        }
+      },
+    });
+  }
+
+  isCurrentUser(userId?: number) {
+    if (!userId) {
+      return false;
+    }
+    return this.tokenService.getUserId() === userId;
+  }
 
   changePassword() {
-   
     this.router.navigate(['/profile/password']);
-  
   }
 }
