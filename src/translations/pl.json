@@ -33,6 +33,17 @@
     "Forgot your password?": "Zapomniałeś hasła?",
     "example@student.agh.edu.pl": "twój.email@student.agh.edu.pl",
     "Invalid email or password": "Nieprawidłowy email lub hasło",
+    "New password": "Nowe hasło",
+    "Repeat new password": "Powtórz nowe hasło",
+    "Change":"Zmień",
+
+    "--old-password-required-msg": "Poprzednie hasło jest wymagane.",
+    "--new-password-required-msg": "Nowe hasło jest wymagane.",
+    "--password-min-length-msg": "Hasło musi mieć przynajmniej {{length}} znaków długości.",
+    "--password-different-msg": "Nowe hasło musi być inne niż poprzednie.",
+    "--repeat-new-password-required-msg": "Musisz powtórzyć nowe hasło.",
+    "--repeat-new-password-match-msg": "Hasła muszą być takie same.",
+    "--invalid-password-msg": "Nieprawidłowe hasło.",
 
     "Already have an account?": "Masz już konto?",
     "First Name": "Imię",

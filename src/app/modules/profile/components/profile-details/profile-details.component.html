@@ -27,6 +27,7 @@
           *ngIf="!adminView; else adminButtons"
           mat-raised-button
           color="primary"
+          (click)="changePassword()"
         >
           {{ "Change Password" | translate }}
         </button>
