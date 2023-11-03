@@ -26,6 +26,9 @@ import { AnswersModule } from './modules/answers/answers.module';
     ReactiveFormsModule,
     TranslateModule,
     AnswersModule,
+  ],
+  exports: [
+    EntryDetailsComponent,
   ]
 })
 export class EntriesModule { }

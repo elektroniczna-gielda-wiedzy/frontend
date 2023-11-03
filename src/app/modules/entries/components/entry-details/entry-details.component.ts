@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,6 +34,8 @@ export class EntryDetailsComponent {
   private entrySubscription?: Subscription;
   private langChangeSubscription?: Subscription;
   currentLanguage: Language = this.languageService.language;
+  @Input()
+  entryId?: number;
 
   constructor(
     private router: Router,
@@ -49,6 +51,11 @@ export class EntryDetailsComponent {
   ) {}
 
   ngOnInit(): void {
+    if (this.entryId) {
+      this.loadEntry(this.entryId, true);
+      return;
+    }
+
     const idParam = Number(this.route.snapshot.paramMap.get('id'));
     if (isNaN(idParam)) {
       this.router.navigate(['/']);
@@ -84,11 +91,11 @@ export class EntryDetailsComponent {
     return this.categoryService.getCategoryName(category);
   }
 
-  loadEntry(id: number): void {
+  loadEntry(id: number, component: boolean = false): void {
     this.entrySubscription = this.entryHttpService.getEntry(id).subscribe({
       next: (response) => {
         this.entry = response.result[0];
-        if (this.entry.entry_type_id !== this.entryType) {
+        if (!component && this.entry.entry_type_id !== this.entryType) {
           this.router.navigate([
             'entries',
             EntryType[this.entry.entry_type_id].toLowerCase(),
@@ -103,6 +110,9 @@ export class EntryDetailsComponent {
       },
       error: (response) => {
         console.error(response);
+        if (component) {
+          return;
+        }
         this.router.navigate(['/']);
       },
     });
@@ -139,15 +149,14 @@ export class EntryDetailsComponent {
     this.router.navigate(['/chat']);
   }
 
-  userEntries(userId?: number) {
+  getAuthorLink(userId?: number) {
     if (!userId) {
-      return;
+      return ['/'];
     }
     if (this.tokenService.isAdmin()) {
-      this.router.navigate(['/admin-dashboard', 'users', userId]);
-      return;
+      return ['/admin-dashboard', 'users', userId];
     }
-    this.router.navigate(['/profile', userId, 'entries']);
+    return ['/profile', userId, 'entries'];
   }
 
   isFaculty(category: Category): boolean {

@@ -29,7 +29,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ];
   adminLinks = [
     { url: '/categories', label: 'Categories' },
-    { url: '/admin-dashboard/users', label: 'Users'}
+    { url: '/admin-dashboard/users', label: 'Users'},
+    { url: '/admin-dashboard/reports', label: '--report-list-title'},
   ];
   loggedInLinks = [
     { url: '/entries/post', label: 'Posts' },

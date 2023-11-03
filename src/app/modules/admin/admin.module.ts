@@ -7,12 +7,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReportListComponent } from './components/report-list/report-list.component';
+import { ReportDetailsComponent } from './components/report-details/report-details.component';
+import { EntriesModule } from '../entries/entries.module';
 
 @NgModule({
-  declarations: [
-  
-    UserListComponent
-  ],
+  declarations: [UserListComponent, ReportListComponent, ReportDetailsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -21,6 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-  ]
+    EntriesModule
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

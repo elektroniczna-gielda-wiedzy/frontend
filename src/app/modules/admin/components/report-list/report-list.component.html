@@ -1,0 +1,18 @@
+<h2 class="report-title">{{ "--report-list-title" | translate }}</h2>
+<mat-list class="reports-list-container">
+  <mat-list-item
+    class="reports-list-item"
+    *ngFor="let report of reports"
+    lines="3"
+    (click)="openDetails(report.report_id)"
+  >
+    <span matListItemTitle>{{ report.topic }}</span>
+    <span
+      >{{ report.description }}
+    </span>
+  </mat-list-item>
+</mat-list>
+
+<div class="empty-list" *ngIf="reports && reports.length === 0">
+  {{ "--report-list-empty-msg" | translate }}
+</div>
