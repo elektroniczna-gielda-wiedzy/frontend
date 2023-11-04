@@ -175,5 +175,10 @@
     "--reporter-label": "Reported by",
     "--no-entry-title": "There is no such entry",
     "--no-entry-msg": "Entry with this id does not exist or has been deleted.",
-    "--report-list-empty-msg": "There are no reports to resolve."
+    "--report-list-empty-msg": "There are no reports to resolve.",
+    
+    "--invalid-credentials-msg": "Invalid credentials.",
+    "--account-locked-msg": "Your account has been locked.",
+    "--email-not-auth-msg": "Email has not been verified.",
+    "--resent-email-msg": "Did not receive an email? Click here to resend."
 }
