@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { DEFAULT_PAGE_SIZE_OPTIONS, DEFAULT_RESULT_INFO } from 'src/app/core';
 
 @Component({
   selector: 'app-paginator',
@@ -10,13 +11,13 @@ export class PaginatorComponent {
   hidePageSize = false;
   showFirstLastButtons = true;
   @Input()
-  pageIndex = 0;
+  pageIndex = DEFAULT_RESULT_INFO.page - 1;
   @Input()
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS;
   @Input()
-  pageSize = 10;
+  pageSize = DEFAULT_RESULT_INFO.per_page;
   @Input()
-  length: number = 0;
+  length: number = DEFAULT_RESULT_INFO.total_count;
   @Output()
   onPageChange: EventEmitter<PageEvent> = new EventEmitter();
 
