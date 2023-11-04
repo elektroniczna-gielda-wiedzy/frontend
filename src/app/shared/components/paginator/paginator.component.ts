@@ -9,8 +9,8 @@ import { PageEvent } from '@angular/material/paginator';
 export class PaginatorComponent {
   hidePageSize = false;
   showFirstLastButtons = true;
+  @Input()
   pageIndex = 0;
-  
   @Input()
   pageSizeOptions = [5, 10, 25];
   @Input()

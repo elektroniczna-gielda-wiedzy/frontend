@@ -21,6 +21,7 @@ import {
   SORT_KEY,
   SORT_OPTIONS,
   ResultInfo,
+  DEFAULT_RESULT_INFO,
 } from 'src/app/core';
 
 @Component({
@@ -32,7 +33,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
   entryType!: EntryType;
   sortOptions = SORT_OPTIONS;
   entries: Entry[] = [];
-  resultInfo?: ResultInfo = { per_page: 10, page: 1, count: 0, total_count: 0 };
+  resultInfo?: ResultInfo = DEFAULT_RESULT_INFO;
   private paramMapSubscription?: Subscription;
   private entriesSubscription?: Subscription;
 
@@ -54,6 +55,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
       const entryType = paramMap.get('entryType');
       if (entryType) {
         this.entryType = stringToEntryType(entryType);
+        this.resultInfo = DEFAULT_RESULT_INFO;
         this.loadEntries();
       }
     });

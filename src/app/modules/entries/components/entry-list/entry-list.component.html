@@ -76,6 +76,7 @@
     *ngIf="resultInfo"
     [length]="resultInfo.total_count"
     [pageSize]="resultInfo.per_page"
+    [pageIndex]="resultInfo.page - 1"
     (onPageChange)="handlePageEvent($event)"
   ></app-paginator>
 </div>
