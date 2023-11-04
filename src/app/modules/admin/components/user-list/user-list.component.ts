@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Author, TokenService, UserInfo } from 'src/app/core';
+import { Author, DEFAULT_RESULT_INFO, ResultInfo, TokenService, UserInfo } from 'src/app/core';
 import { UserHttpService } from 'src/app/core/http/user-http.service';
 import { ChatService } from 'src/app/modules/chat/services/chat.service';
 
@@ -18,6 +19,8 @@ export class UserListComponent {
     status: new FormControl(''),
   });
 
+  resultInfo?: ResultInfo = DEFAULT_RESULT_INFO
+
   constructor(
     private userHttpService: UserHttpService,
     private logger: NGXLogger,
@@ -30,11 +33,13 @@ export class UserListComponent {
     this.loadUsers();
   }
 
-  loadUsers(): void {
+  loadUsers(event?: PageEvent): void {
     const params = {
       search: this.userFilterForm.value.search || '',
       isEmailAuth: '',
       isBanned: '',
+      page: event?.pageIndex || this.resultInfo?.page || DEFAULT_RESULT_INFO.page,
+      per_page: event?.pageSize || this.resultInfo?.per_page || DEFAULT_RESULT_INFO.per_page,
     };
     switch (this.userFilterForm.value.status) {
       case 'email-auth':
@@ -47,10 +52,12 @@ export class UserListComponent {
         params.isBanned = 'true';
         break;
     }
+    
     this.userHttpService.getUsers(params).subscribe({
       next: (response) => {
         if (response.success) {
           this.users = response.result;
+          this.resultInfo = response.result_info;
         }
         this.logger.trace(response);
       },
@@ -104,5 +111,9 @@ export class UserListComponent {
 
   isCurrentUser(userId: number): boolean {
     return this.tokenService.getUserId() === userId;
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.loadUsers(event);
   }
 }
