@@ -21,6 +21,8 @@ export class EntryHttpService {
     categories?: Number[];
     query?: string;
     sort?: string;
+    page?: number;
+    per_page?: number;
   }): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
@@ -44,6 +46,14 @@ export class EntryHttpService {
 
     if (params.sort || params.sort === '0') {
       queryParams.params = queryParams.params.set('sort', params.sort);
+    }
+
+    if (params.page) {
+      queryParams.params = queryParams.params.set('page', params.page);
+    }
+
+    if (params.per_page) {
+      queryParams.params = queryParams.params.set('per_page', params.per_page);
     }
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
