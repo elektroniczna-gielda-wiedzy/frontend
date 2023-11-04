@@ -28,6 +28,8 @@ export class UserHttpService {
       search?: string;
       isEmailAuth?: string;
       isBanned?: string;
+      page?: number;
+      per_page?: number;
     } = {}
   ): Observable<StandardResponse<UserInfo>> {
     const url = `${this.apiUrl}`;
@@ -49,6 +51,14 @@ export class UserHttpService {
 
     if (params.isBanned) {
       queryParams.params = queryParams.params.set('is_banned', params.isBanned);
+    }
+
+    if (params.page) {
+      queryParams.params = queryParams.params.set('page', params.page);
+    }
+
+    if (params.per_page) {
+      queryParams.params = queryParams.params.set('per_page', params.per_page);
     }
 
     return this.http.get<StandardResponse<Author>>(url, queryParams);

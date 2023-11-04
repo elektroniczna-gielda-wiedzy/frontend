@@ -16,45 +16,74 @@ export class EntryHttpService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  getEntries(params: {
-    type?: EntryType;
+  private setParams(params: {
+    type?: EntryType | null;
     categories?: Number[];
     query?: string;
     sort?: string;
-  }): Observable<StandardResponse<Entry>> {
-    const url = this.apiUrl;
-    let queryParams = {
-      params: new HttpParams(),
-    };
-
+    page?: number;
+    per_page?: number;
+  }) {
+    let httpParams = new HttpParams();
     if (params.type || params.type === 0) {
-      queryParams.params = queryParams.params.set('type', params.type);
+      httpParams = httpParams = httpParams.set('type', params.type);
     }
 
     if (params.categories && params.categories.length > 0) {
-      queryParams.params = queryParams.params.set(
-        'categories',
-        params.categories.join(',')
-      );
+      httpParams = httpParams.set('categories', params.categories.join(','));
     }
 
     if (params.query) {
-      queryParams.params = queryParams.params.set('query', params.query);
+      httpParams = httpParams.set('query', params.query);
     }
 
     if (params.sort || params.sort === '0') {
-      queryParams.params = queryParams.params.set('sort', params.sort);
+      httpParams = httpParams.set('sort', params.sort);
     }
+
+    if (params.page) {
+      httpParams = httpParams.set('page', params.page);
+    }
+
+    if (params.per_page) {
+      httpParams = httpParams.set('per_page', params.per_page);
+    }
+
+    return httpParams;
+  }
+
+  getEntries(
+    params: {
+      type?: EntryType;
+      categories?: Number[];
+      query?: string;
+      sort?: string;
+      page?: number;
+      per_page?: number;
+    } = {}
+  ): Observable<StandardResponse<Entry>> {
+    const url = this.apiUrl;
+    let queryParams = {
+      params: this.setParams(params),
+    };
 
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
-  getUserEntries(userId?: number | null): Observable<StandardResponse<Entry>> {
+  getUserEntries(
+    params: {
+      userId?: number | null;
+      page?: number;
+      per_page?: number;
+      type?: EntryType | null;
+    } = {}
+  ): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
-      params: new HttpParams(),
+      params: this.setParams(params),
     };
 
+    let userId = params.userId;
     if (!userId) {
       userId = this.tokenService.getUserId();
     }
@@ -68,10 +97,16 @@ export class EntryHttpService {
     return this.http.get<StandardResponse<Entry>>(url, queryParams);
   }
 
-  getMyFavorites(): Observable<StandardResponse<Entry>> {
+  getMyFavorites(
+    params: {
+      page?: number;
+      per_page?: number;
+      type?: EntryType | null;
+    } = {}
+  ): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
     let queryParams = {
-      params: new HttpParams(),
+      params: this.setParams(params),
     };
 
     const userId = this.tokenService.getUserId();

@@ -1,5 +1,14 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  HostListener,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
@@ -11,9 +20,9 @@ import {
   SORT_DEFAULT,
   SORT_KEY,
   SORT_OPTIONS,
+  ResultInfo,
+  DEFAULT_RESULT_INFO,
 } from 'src/app/core';
-
-
 
 @Component({
   selector: 'app-entry-list',
@@ -24,6 +33,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
   entryType!: EntryType;
   sortOptions = SORT_OPTIONS;
   entries: Entry[] = [];
+  resultInfo?: ResultInfo = DEFAULT_RESULT_INFO;
   private paramMapSubscription?: Subscription;
   private entriesSubscription?: Subscription;
 
@@ -45,6 +55,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
       const entryType = paramMap.get('entryType');
       if (entryType) {
         this.entryType = stringToEntryType(entryType);
+        this.resultInfo = DEFAULT_RESULT_INFO;
         this.loadEntries();
       }
     });
@@ -59,15 +70,21 @@ export class EntryListComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadEntries(): void {
+  loadEntries(event?: PageEvent): void {
     if (this.entryType !== null) {
-      const categories = this.filterForm.value.categories || [];
-      const query = this.filterForm.value.search || '';
-      const sort = this.filterForm.value.sort || SORT_DEFAULT;
-      localStorage.setItem(SORT_KEY, sort);
+      const params = {
+        type: this.entryType,
+        categories: this.filterForm.value.categories || [],
+        query: this.filterForm.value.search || '',
+        sort: this.filterForm.value.sort || SORT_DEFAULT,
+        page: event?.pageIndex || this.resultInfo?.page || DEFAULT_RESULT_INFO.page,
+        per_page: event?.pageSize || this.resultInfo?.per_page || DEFAULT_RESULT_INFO.per_page,
+      };
+
       this.entriesSubscription = this.entryHttpService
-        .getEntries({ type: this.entryType, categories, query, sort })
+        .getEntries(params)
         .subscribe((response) => {
+          this.resultInfo = response.result_info;
           this.entries = response.result;
         });
     }
@@ -81,14 +98,14 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.logger.info(this.filterForm.value);
     this.loadEntries();
   }
-  
+
   clearFilter() {
     this.filterForm.reset();
     this.loadEntries();
   }
 
   @ViewChild('inputsContainer', { static: false }) inputsContainer?: ElementRef;
-  
+
   moveToLast: boolean = false;
 
   ngAfterViewInit() {
@@ -113,13 +130,12 @@ export class EntryListComponent implements OnInit, OnDestroy {
     }
 
     const containerHeight = container.getBoundingClientRect().height;
-    const childHeight = children[0].getBoundingClientRect().height; 
+    const childHeight = children[0].getBoundingClientRect().height;
     const rows = Math.round(containerHeight / childHeight);
     this.moveToLast = rows === 2;
-}
+  }
 
-
-  // onEntryDeleted(id: number) {
-  //   this.loadEntries();
-  // }
+  handlePageEvent(event: PageEvent) {
+    this.loadEntries(event);
+  }
 }

@@ -5,7 +5,7 @@
       (ngSubmit)="applyFilter()"
       class="filter-form"
     >
-      <div #inputsContainer class="inputs-container" >
+      <div #inputsContainer class="inputs-container">
         <mat-form-field class="search-field" appearance="outline">
           <mat-label>{{ "Search" | translate }}</mat-label>
           <input matInput formControlName="search" />
@@ -20,7 +20,10 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ "Sort by" | translate }}</mat-label>
           <mat-select formControlName="sort">
-            <mat-option *ngFor="let sortOption of sortOptions" value="{{sortOption.value}}">
+            <mat-option
+              *ngFor="let sortOption of sortOptions"
+              value="{{ sortOption.value }}"
+            >
               {{ sortOption.label | translate }}
             </mat-option>
           </mat-select>
@@ -69,4 +72,11 @@
       [entry]="entry"
     ></app-entry-card>
   </div>
+  <app-paginator
+    *ngIf="resultInfo"
+    [length]="resultInfo.total_count"
+    [pageSize]="resultInfo.per_page"
+    [pageIndex]="resultInfo.page - 1"
+    (onPageChange)="handlePageEvent($event)"
+  ></app-paginator>
 </div>
