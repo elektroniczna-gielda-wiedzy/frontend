@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import {
   AuthService,
+  EmailHttpService,
   UserSignInCredentials,
   getEmailValidators,
 } from 'src/app/core';
@@ -21,8 +22,9 @@ export class SignInComponent {
     password: ['', Validators.required],
     rememberMe: [false],
   });
-  unauthorize = false;
+  errorMessage = '';
   hidePassword = true;
+  loading = false;
 
   constructor(
     private logger: NGXLogger,
@@ -30,16 +32,17 @@ export class SignInComponent {
     private router: Router,
     private authService: AuthService,
     private _snackBar: MatSnackBar,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private emailHttpService: EmailHttpService
   ) {}
 
   onSubmit() {
+    this.loading = true;
     this.authService
       .login(this.signInForm.value as UserSignInCredentials)
       .subscribe({
         next: (response) => {
-          this.unauthorize = false;
-
+          this.loading = false;
           if (
             response.success &&
             response.result.length > 0 &&
@@ -52,11 +55,70 @@ export class SignInComponent {
             this.logger.debug(response);
           }
         },
-        error: (response) => {
+        error: (err) => {
+          this.loading = false;
           this.logger.info('login failed');
-          this.logger.error(response);
-          this.unauthorize = response.status === 401;
+          this.logger.error(err);
+          const msgs = err?.error?.messages || [];
+          const msg = msgs.join(' ').toLowerCase();
+          if (
+            /user with email = .* does not exist/.test(msg) ||
+            msg.includes('bad credentials')
+          ) {
+            this.errorMessage = '--invalid-credentials-msg';
+          } else if (msg.includes('locked')) {
+            this.errorMessage = '--account-locked-msg';
+          } else if (msg.includes('disabled')) {
+            this.errorMessage = '--email-not-auth-msg';
+            this.displayResentEmail();
+          }
         },
       });
+  }
+
+  displayResentEmail() {
+    const snackBarRef = this._snackBar.open(
+      this.languageService.translate('--resent-email-msg'),
+      this.languageService.translate('Resend'),
+      {
+        duration: 10000,
+        verticalPosition: 'top',
+      }
+    );
+
+    snackBarRef.onAction().subscribe(() => {
+      const email = this.signInForm.get('email')?.value;
+      if (!email || this.signInForm.get('email')?.invalid) {
+        return;
+      }
+      this.loading = true;
+
+      this.emailHttpService.resendConfirmationEmail(email).subscribe({
+        next: (response) => {
+          this.loading = false;
+          if (response.success) {
+            this.logger.info('resent email successful');
+            this._snackBar.open(
+              this.languageService.translate('--verify-email-msg'),
+              this.languageService.translate('Close'),
+              {
+                duration: 10000,
+                verticalPosition: 'top',
+              }
+            );
+          }
+        },
+        error: (err) => {
+          this.loading = false;
+          this.logger.info('resent email failed');
+          this.logger.error(err);
+          const msgs = err?.error?.messages || [];
+          const msg = msgs.join(' ').toLowerCase();
+          if (msg.includes('does not exist')) {
+            this.errorMessage = '--email-not-found-msg'
+          }
+        },
+      });
+    });
   }
 }

@@ -76,7 +76,7 @@ export class SignUpComponent {
 
           if (
             response.error.messages.some((message: string) =>
-              message.includes('User with given email exists')
+              /User with email = .* already exists/.test(message)
             )
           ) {
             this.emailTaken = true;

@@ -1,4 +1,4 @@
-<mat-card class="responsive-mat-card">
+<mat-card *ngIf="!loading;else spinner" class="responsive-mat-card">
   <mat-card-header class="card-header">
     <mat-card-title class="card-title">
       <h2 translate>Sign In</h2>
@@ -9,8 +9,8 @@
         >{{'Sign Up' | translate}}</a
       >
     </mat-card-subtitle>
-    <mat-error translate *ngIf="unauthorize">
-      Invalid email or password
+    <mat-error *ngIf="errorMessage">
+      {{errorMessage | translate}}
     </mat-error>
   </mat-card-header>
   <mat-card-content>
@@ -65,3 +65,9 @@
     >
   </mat-card-footer>
 </mat-card>
+
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
