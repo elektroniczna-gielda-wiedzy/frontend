@@ -180,5 +180,17 @@
     "--invalid-credentials-msg": "Invalid credentials.",
     "--account-locked-msg": "Your account has been locked.",
     "--email-not-auth-msg": "Email has not been verified.",
-    "--resent-email-msg": "Did not receive an email? Click here to resend."
+    "--resent-email-msg": "Did not receive an email? Click here to resend.",
+
+    "--mat-paginator": {
+        "itemsPerPage": "Items per page:",
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "firstPage": "First page",
+        "lastPage": "Last page",
+        "getRange": {
+            "zero": "0 of {{length}}",
+            "other": "{{start}} - {{end}} of {{length}}"
+        }
+    }
 }

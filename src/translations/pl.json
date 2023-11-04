@@ -179,5 +179,17 @@
     "--invalid-credentials-msg": "Nieprawidłowe dane logowania.",
     "--account-locked-msg": "Twoje konto zostało zablokowane.",
     "--email-not-auth-msg": "Email nie został jeszcze potwierdzony.",
-    "--resent-email-msg": "Nie otrzymałeś linku aktywacyjnego? Wyślij ponownie."
+    "--resent-email-msg": "Nie otrzymałeś linku aktywacyjnego? Wyślij ponownie.",
+
+    "--mat-paginator": {
+        "itemsPerPage": "Wierszy na stronę:",
+        "nextPage": "Następna strona",
+        "previousPage": "Poprzednia strona",
+        "firstPage": "Pierwsza strona",
+        "lastPage": "Ostatnia strona",
+        "getRange": {
+            "zero": "0 z {{length}}",
+            "other": "{{start}} - {{end}} z {{length}}"
+        }
+    }
 }

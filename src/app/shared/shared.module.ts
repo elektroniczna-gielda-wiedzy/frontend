@@ -4,7 +4,7 @@ import { EntryCardComponent } from './components/entry-card/entry-card.component
 import { MaterialModule } from './material-module';
 import { FavoriteIconComponent } from './components/favorite-icon/favorite-icon.component';
 import { RelativeTimePipe } from './pipes/relative-time.pipe';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IsLoggedInDirective } from './directives/is-logged-in.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategorySelectorComponent } from './components/category-selector/category-selector.component';
@@ -18,6 +18,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 import { UserStatusIconComponent } from './components/user-status-icon/user-status-icon.component';
 import { ReportModalComponent } from './components/report-modal/report-modal.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from './components/paginator/custom-paginator';
 
 const components = [
   EntryCardComponent,
@@ -28,6 +31,7 @@ const components = [
   VotesWidgetComponent,
   UserStatusIconComponent,
   ReportModalComponent,
+  PaginatorComponent,
 ]
 
 const pipes = [
@@ -59,6 +63,9 @@ const directives = [
     ...components,
     ...pipes,
     ...directives,
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl, deps: [TranslateService] }
   ],
 })
 export class SharedModule {}
