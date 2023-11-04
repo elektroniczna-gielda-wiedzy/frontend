@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
@@ -9,6 +10,8 @@ import {
   Entry,
   Author,
   UserInfo,
+  ResultInfo,
+  DEFAULT_RESULT_INFO,
 } from 'src/app/core';
 import { UserHttpService } from 'src/app/core/http/user-http.service';
 import { ChatService } from 'src/app/modules/chat/services/chat.service';
@@ -16,7 +19,7 @@ import { ChatService } from 'src/app/modules/chat/services/chat.service';
 @Component({
   selector: 'app-profile-entry-list',
   templateUrl: './profile-entry-list.component.html',
-  styleUrls: ['./profile-entry-list.component.scss']
+  styleUrls: ['./profile-entry-list.component.scss'],
 })
 export class ProfileEntryListComponent implements OnInit, OnDestroy {
   entryType: EntryType | null = null;
@@ -28,6 +31,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   page?: string;
   userId?: number;
   userInfo?: UserInfo;
+  resultInfo?: ResultInfo = DEFAULT_RESULT_INFO;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -36,7 +40,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
     private userHttpService: UserHttpService,
     private chatService: ChatService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.page = this.route.snapshot.data['page'];
@@ -48,7 +52,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
       const userId = this.route.snapshot.paramMap.get('userId');
       this.userId = parseInt(userId || '');
       this.loadUserEntries();
-      this.fetchUserInfo()
+      this.fetchUserInfo();
     }
   }
 
@@ -61,20 +65,40 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadUserEntries(): void {
+  private setParams(event?: PageEvent) {
+    let params: any = {
+      type: this.entryType,
+      page:
+        event?.pageIndex || this.resultInfo?.page || DEFAULT_RESULT_INFO.page,
+      per_page:
+        event?.pageSize ||
+        this.resultInfo?.per_page ||
+        DEFAULT_RESULT_INFO.per_page,
+    };
+    return params;
+  }
+
+  loadUserEntries(event?: PageEvent): void {
+    const params = this.setParams(event);
+    params['user_id'] = this.userId;
+
     this.entriesSubscription = this.entryHttpService
-      .getUserEntries(this.userId)
+      .getUserEntries(params)
       .subscribe((response) => {
         this.allEntries = response.result;
+        this.resultInfo = response.result_info;
         this.entriesSubject.next(response.result);
       });
   }
 
-  loadMyFavorites(): void {
+  loadMyFavorites(event?: PageEvent): void {
+    const params = this.setParams(event);
+
     this.entriesSubscription = this.entryHttpService
-      .getMyFavorites()
+      .getMyFavorites(params)
       .subscribe((response) => {
         this.allEntries = response.result;
+        this.resultInfo = response.result_info;
         this.entriesSubject.next(response.result);
       });
   }
@@ -96,15 +120,8 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
       default:
         break;
     }
-    this.updateEntries();
-  }
-
-  private updateEntries(): void {
-    if (this.entryType == null) {
-      this.entriesSubject.next(this.allEntries);
-      return;
-    }
-    this.entriesSubject.next(this.allEntries.filter((entry) => entry.entry_type_id === this.entryType));
+    this.resultInfo = DEFAULT_RESULT_INFO;
+    this.loadEntries();
   }
 
   getLabel(label: string): string {
@@ -123,7 +140,7 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
   }
 
   onEntryDeleted(entryId: number): void {
-    this.loadUserEntries()
+    this.loadUserEntries();
   }
 
   fetchUserInfo(): void {
@@ -156,5 +173,21 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
 
     this.chatService.startChatWithUser(this.userInfo);
     this.router.navigate(['/chat']);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.loadEntries(event);
+  }
+
+  loadEntries(event?: PageEvent): void {
+    if (this.page === 'entries' || this.page === 'other-user-entries') {
+      this.loadUserEntries(event);
+    } else if (this.page === 'favorites') {
+      this.loadMyFavorites(event);
+    }
+  }
+
+  get defaultPageSize(): number {
+    return DEFAULT_RESULT_INFO.per_page;
   }
 }

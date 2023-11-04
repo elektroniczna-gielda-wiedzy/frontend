@@ -3,19 +3,14 @@
     <h2>{{ getPageTitle() }}</h2>
 
     <h3 class="user-info-container" *ngIf="userInfo">
-    <span class="username">
+      <span class="username">
         {{ userInfo.first_name }}
         {{ userInfo.last_name }}</span
-    >
-    <mat-icon
-        class="chat-icon"
-        color="primary"
-        (click)="contactUser()"
-    >
+      >
+      <mat-icon class="chat-icon" color="primary" (click)="contactUser()">
         chat</mat-icon
-    >
+      >
     </h3>
-
   </div>
 
   <mat-tab-group
@@ -36,4 +31,11 @@
       (entryDeleted)="onEntryDeleted($event)"
     ></app-entry-card>
   </div>
+  <app-paginator
+    *ngIf="resultInfo && resultInfo.total_count > defaultPageSize"
+    [length]="resultInfo.total_count"
+    [pageSize]="resultInfo.per_page"
+    [pageIndex]="resultInfo.page - 1"
+    (onPageChange)="handlePageEvent($event)"
+  ></app-paginator>
 </div>

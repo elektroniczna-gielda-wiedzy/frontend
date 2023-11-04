@@ -17,7 +17,7 @@ export class EntryHttpService {
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   private setParams(params: {
-    type?: EntryType;
+    type?: EntryType | null;
     categories?: Number[];
     query?: string;
     sort?: string;
@@ -75,7 +75,7 @@ export class EntryHttpService {
       userId?: number | null;
       page?: number;
       per_page?: number;
-      type?: EntryType;
+      type?: EntryType | null;
     } = {}
   ): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
@@ -101,7 +101,7 @@ export class EntryHttpService {
     params: {
       page?: number;
       per_page?: number;
-      type?: EntryType;
+      type?: EntryType | null;
     } = {}
   ): Observable<StandardResponse<Entry>> {
     const url = this.apiUrl;
