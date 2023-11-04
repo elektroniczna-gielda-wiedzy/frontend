@@ -77,8 +77,8 @@ export class EntryListComponent implements OnInit, OnDestroy {
         categories: this.filterForm.value.categories || [],
         query: this.filterForm.value.search || '',
         sort: this.filterForm.value.sort || SORT_DEFAULT,
-        page: event?.pageIndex || this.resultInfo?.page || 0,
-        per_page: event?.pageSize || this.resultInfo?.per_page || 10,
+        page: event?.pageIndex || this.resultInfo?.page || DEFAULT_RESULT_INFO.page,
+        per_page: event?.pageSize || this.resultInfo?.per_page || DEFAULT_RESULT_INFO.per_page,
       };
 
       this.entriesSubscription = this.entryHttpService
