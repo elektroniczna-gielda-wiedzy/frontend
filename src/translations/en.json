@@ -192,5 +192,8 @@
             "zero": "0 of {{length}}",
             "other": "{{start}} - {{end}} of {{length}}"
         }
-    }
+    },
+    "--my-entries-title": "My entries",
+    "--my-favorites-title": "My favorites",
+    "--user-entries-title": "User entries"
 }

@@ -156,11 +156,11 @@ export class ProfileEntryListComponent implements OnInit, OnDestroy {
 
   getPageTitle(): string {
     if (this.page === 'entries') {
-      return this.translateService.instant('My Entries');
+      return this.translateService.instant('--my-entries-title');
     } else if (this.page === 'favorites') {
-      return this.translateService.instant('My Favorites');
+      return this.translateService.instant('--my-favorites-title');
     } else if (this.page === 'other-user-entries') {
-      return this.translateService.instant('User Entries');
+      return this.translateService.instant('--user-entries-title');
     } else {
       return '';
     }
