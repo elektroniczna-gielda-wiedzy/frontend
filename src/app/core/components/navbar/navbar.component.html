@@ -63,7 +63,7 @@
           (click)="adminDropdownOpen = !adminDropdownOpen"
         >
           <div class="profile-side-nav">
-            <span translate class="admin-text">Admin</span>
+            <span translate>Admin</span>
             <mat-icon>
               {{ adminDropdownOpen ? "expand_more" : "chevron_right" }}
             </mat-icon>
@@ -141,7 +141,7 @@
           *appIsAdmin
           mat-button
           [matMenuTriggerFor]="adminMenu"
-          class="main-nav-item admin-text"
+          class="main-nav-item"
         >
           Admin
         </button>
