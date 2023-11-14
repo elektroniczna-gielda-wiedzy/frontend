@@ -191,5 +191,8 @@
             "zero": "0 z {{length}}",
             "other": "{{start}} - {{end}} z {{length}}"
         }
-    }
+    },
+    "--my-entries-title": "Moje wpisy",
+    "--my-favorites-title": "Ulubione",
+    "--user-entries-title": "Wpisy użytkownika"
 }
