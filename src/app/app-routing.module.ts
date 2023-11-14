@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { EmailConfirmComponent } from './core/components/email-confirm/email-confirm.component';
 import { authGuard, notAuthGuard } from './core';
+import { PasswordResetComponent } from './core/components/password-reset/password-reset.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
       ),
   },
   { path: 'email-confirm', component: EmailConfirmComponent, canActivate: [notAuthGuard] },
+  { path: 'reset-password', component: PasswordResetComponent, canActivate: [notAuthGuard] },
   { path: '', redirectTo: '/entries/announcement', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

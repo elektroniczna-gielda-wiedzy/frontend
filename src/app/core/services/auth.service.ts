@@ -79,6 +79,26 @@ export class AuthService {
       { headers }
     );
   }
+
+
+  modifyPassword(
+    token : string,
+    newPassword: string
+  ): Observable<StandardResponse<void>> {
+    const headers = { 'Content-Type': 'application/json' };
+    console.log(newPassword)
+    return this.http.put<StandardResponse<void>>(
+      `${this.apiUrl}/modify_password`,
+      { token: token  , new_password: newPassword },
+      { headers }
+    );
+  }
+
+
+
+
+  
+
 }
 
 export function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {

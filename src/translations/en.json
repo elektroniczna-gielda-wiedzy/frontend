@@ -155,6 +155,10 @@
     "--email-confirm-already-confirmed-msg": "Email already confirmed.",
     "--email-confirmed-msg": "Email confirmed successfully. You can now sign in.",
 
+    "--password-change-msg": "Password changed successfully. You can now sign in.",
+    "--password-remind-msg": "Password change link has been sent to your email address. Please check your inbox and click the link to reset your password.",
+    "Set new password": "Set new password",
+
     "--resend-email-title": "Resend confirmation email",
     "--resend-email-subtitle": "Please enter your email address below to receive a new confirmation link.",
     "Resend": "Resend",

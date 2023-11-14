@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { differentValidator, getEmailValidators, matchValidator } from 'src/app/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, EmailHttpService, differentValidator, getEmailValidators, matchValidator } from 'src/app/core';
 import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.scss']
 })
 export class PasswordResetComponent {
-  emailSend = false; 
   hideNewPassword = true;
   hideRepeatNewPassword = true;
-
+  token = null;
   unauthorize = false;
   passwordForm = this.fb.group({
     newPassword: [
@@ -30,28 +30,57 @@ export class PasswordResetComponent {
     ],
   });
 
-
-  emailForm = this.fb.group({
-    email: ['', getEmailValidators()]
-  });
-
   constructor(
+      private readonly route: ActivatedRoute,
       private router: Router,
       private translateService : TranslateService,
-      private fb: FormBuilder)
-    {}
+      private fb: FormBuilder,
+      private snackBar: MatSnackBar,
+      private authService: AuthService )
+    {
+
+
+     
+    }
 
   ngOnDestroy() {}
 
-  onSubmit(form: FormGroup) {
-    if (form == this.emailForm){
-      //TODO
-      this.emailSend = true;
-    }
-    else if (form == this.passwordForm){
-      //TODO
-    }
-    
+
+  ngOnInit(){
+    this.token = this.route.snapshot.queryParams['token'];
+
+  }
+  onSubmit() {
+
+      if (this.token &&  this.passwordForm){
+        console.log(this.token)
+        if(  !this.passwordForm.value.repeatNewPassword ){
+            return;
+        }
+        console.log(this.passwordForm.value)
+        this.authService.modifyPassword(this.token, this.passwordForm.value.repeatNewPassword).subscribe(
+          { next: (response) => {
+            if (response.success) {
+              this.displayMessage('--password-remind-msg');
+              this.router.navigate(['/auth/sign-in']);
+            }
+          }
+        }
+        )
+
+      }
+
+  }
+  displayMessage(message: string) {
+    this.snackBar.open(
+      this.translateService.instant(message),
+      this.translateService.instant('Close'),
+      {
+        duration: 10000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      }
+    );
   }
 
   getNewPasswordErrorMessage() {

@@ -155,6 +155,10 @@
     "--email-confirm-already-confirmed-msg": "Email został już potwierdzony.",
     "--email-confirmed-msg": "Email został potwierdzony. Możesz się teraz zalogować.",
 
+    "--password-change-msg": "Hasło zostało zmienione. Możesz się teraz zalogować.",
+    "--password-remind-msg": "Na podany adres email został wysłany link zmiany hasła. Sprawdź swoją skrzynkę i kliknij w link, aby zresetować hasło.",
+    "Set new password": "Ustaw nowe hasło",
+    
     "--resend-email-title": "Wyślij ponownie link aktywacyjny",
     "--resend-email-subtitle": "Proszę podać adres email, na który ma zostać wysłany link aktywacyjny.",
     "Resend": "Wyślij",

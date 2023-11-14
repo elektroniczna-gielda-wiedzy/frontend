@@ -26,8 +26,16 @@ export class EmailHttpService {
       { email }
     );
   }
-}
+  remindPassword(
+    email : string
+  ): Observable<StandardResponse<any>> {
+    return this.http.post<StandardResponse<void>>(
+      `${this.apiUrl}/remind_password`,
+      { email  },
+    );
+  }
 
+}
 export function getEmailValidators() {
   return [
     Validators.required,

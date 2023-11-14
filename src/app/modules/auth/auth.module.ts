@@ -6,13 +6,15 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { MaterialModule } from './material-module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordResetComponent } from '../../core/components/password-reset/password-reset.component';
+import { EmailLinkComponent } from './components/email-link/email-link.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    EmailLinkComponent
   ],
   imports: [
     CommonModule,
