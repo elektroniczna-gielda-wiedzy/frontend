@@ -81,10 +81,10 @@
             <span class="margin-right"
               >{{ getLabel(voteCount.entry_type_id) | translate }}:</span
             >
-            <mat-icon>arrow_drop_up</mat-icon>
-            <span>{{ voteCount.positive }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-            <span>{{ voteCount.negative }}</span>
+          
+            <span>  <mat-icon  class="icon-display">thumb_up</mat-icon>{{ voteCount.positive }}</span>
+            <span class="divider"></span>
+            <span> <mat-icon  class="icon-display">thumb_down</mat-icon>{{ voteCount.negative }}</span>
           </div>
         </div>
       </mat-card-content>
