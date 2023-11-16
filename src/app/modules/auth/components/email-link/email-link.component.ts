@@ -47,7 +47,7 @@ export class EmailLinkComponent {
             this.loading = false;
             this.router.navigate(['/auth/sign-in']);
             if (response.success) {
-              this.displayMessage('--password-change-msg');
+              this.displayMessage('--password-remind-msg');
        
             }
           }

@@ -58,10 +58,11 @@ export class PasswordResetComponent {
             return;
         }
         console.log(this.passwordForm.value)
+        
         this.authService.modifyPassword(this.token, this.passwordForm.value.repeatNewPassword).subscribe(
           { next: (response) => {
-            if (response.success) {
-              this.displayMessage('--password-remind-msg');
+            if (response) {
+              this.displayMessage('--password-change-msg');
               this.router.navigate(['/auth/sign-in']);
             }
           }
