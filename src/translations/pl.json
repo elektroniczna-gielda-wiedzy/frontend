@@ -198,5 +198,8 @@
     },
     "--my-entries-title": "Moje wpisy",
     "--my-favorites-title": "Ulubione",
-    "--user-entries-title": "Wpisy użytkownika"
+    "--user-entries-title": "Wpisy użytkownika",
+
+    "Add your suggestion": "Dodaj sugestię",
+    "Don't see a suitable category?" : "Nie możesz znaleźć odpowiedniej kategorii?"
 }
