@@ -29,7 +29,7 @@ export class EmailHttpService {
   remindPassword(
     email : string
   ): Observable<StandardResponse<any>> {
-    return this.http.post<StandardResponse<void>>(
+    return this.http.put<StandardResponse<void>>(
       `${this.apiUrl}/remind_password`,
       { email  },
     );
