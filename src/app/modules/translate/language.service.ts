@@ -3,8 +3,8 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Language, stringToLanguage } from 'src/app/core';
 
-import en from 'src/translations/en.json';
-import pl from 'src/translations/pl.json';
+import en from './translations/en.json';
+import pl from './translations/pl.json';
 const LANGUAGE_KEY = 'language';
 
 @Injectable({
