@@ -159,8 +159,10 @@
     "--password-remind-msg": "Password change link has been sent to your email address. Please check your inbox and click the link to reset your password.",
     "Set new password": "Set new password",
 
+    "--email-link-title": "Email for password change",
     "--resend-email-title": "Resend confirmation email",
     "--resend-email-subtitle": "Please enter your email address below to receive a new confirmation link.",
+    "Send": "Send",
     "Resend": "Resend",
     "Submit": "Submit",
 

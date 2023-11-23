@@ -1,52 +1,57 @@
-<mat-card *ngIf="!loading; else spinner"
-class="responsive-mat-card">
-    <mat-card-header class="card-header">
-      <mat-card-title class="card-title">
-        <h2 translate>Set new password</h2>
-      </mat-card-title>
-      <mat-error translate *ngIf="unauthorize">
-        {{ "--invalid-password-msg" }}
-      </mat-error>
-    </mat-card-header>
-    <mat-card-content>
-        <form 
-        [formGroup]="emailForm"
-        (ngSubmit)="onSubmit(emailForm)"
-        class="form-container"
-      >
+<mat-card *ngIf="!loading; else spinner" class="responsive-mat-card">
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">
+      <h2>
+        {{ "--email-link-title" | translate }}
+      </h2>
+    </mat-card-title>
+    <mat-error translate *ngIf="unauthorize">
+      {{ "--invalid-password-msg" }}
+    </mat-error>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="emailForm"
+      (ngSubmit)="onSubmit(emailForm)"
+      class="form-container"
+    >
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input
           translate="yes"
           matInput
           formControlName="email"
-          placeholder="{{'example@student.agh.edu.pl' | translate}}"
+          placeholder="{{ 'example@student.agh.edu.pl' | translate }}"
           required
         />
-        <mat-error translate *ngIf="emailForm.get('email')?.errors?.['required']">
+        <mat-error
+          translate
+          *ngIf="emailForm.get('email')?.errors?.['required']"
+        >
           Email is required.
         </mat-error>
-        <mat-error translate *ngIf="emailForm.get('email')?.errors?.['pattern']">
+        <mat-error
+          translate
+          *ngIf="emailForm.get('email')?.errors?.['pattern']"
+        >
           Please enter a valid student email.
         </mat-error>
       </mat-form-field>
-  
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="!emailForm.valid"
-        >
-          {{ "Send" | translate }}
-        </button>
-      </form>
 
-      </mat-card-content>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!emailForm.valid"
+      >
+        {{ "Send" | translate }}
+      </button>
+    </form>
+  </mat-card-content>
 </mat-card>
-    
+
 <ng-template #spinner>
-    <div class="spinner-container">
-      <mat-spinner></mat-spinner>
-    </div>
-  </ng-template>
-  
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
