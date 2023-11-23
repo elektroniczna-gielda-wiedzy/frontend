@@ -50,14 +50,15 @@ export class ChatListComponent {
     chat.last_message = message;
     this.chatList.unshift(chat);
 
+    const prevIsRead = chat.is_read || false;
     if (chat.is_read) {
       chat.is_read = false;
     }
-
+    
     if (message.chat_id === this.currentChatId) {
       this.newMessage = message;
       this.markAsRead(chat, false);
-    } else {
+    } if (prevIsRead && !chat.is_read) {
       this.chatService.incrementUnreadCount();
     }
   }
