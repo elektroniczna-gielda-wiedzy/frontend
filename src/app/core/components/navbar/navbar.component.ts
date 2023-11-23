@@ -74,6 +74,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.chatService.updateUnreadCount();
         } else {
           this.links = this.notLoggedInLinks;
+          this.notificationsSubscription?.unsubscribe();
+          this.chatService.disconnect();
         }
       }
     );
