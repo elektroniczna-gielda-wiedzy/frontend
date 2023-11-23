@@ -124,7 +124,7 @@ export class ChatListComponent {
     this.notificationSubscription = this.chatService
       .notifications()
       .subscribe((notification) => {
-        const { chat_id } = JSON.parse(notification.body);
+        const chat_id = JSON.parse(notification.body);
         this.handleNewChatStarted(chat_id);
       });
   }

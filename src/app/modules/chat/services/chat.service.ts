@@ -37,9 +37,6 @@ export class ChatService {
     const subscription = this.rxStompService
       .watch(`/topic/chat/${chatId}`)
       .subscribe((message: Message) => {
-        this.logger.trace(
-          'New message with chatId: ' + chatId + '\nContent: ' + message.body
-        );
         this.messageSubject.next(message.body);
       });
     this.chatSubscriptions.set(chatId, subscription);
