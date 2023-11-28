@@ -188,7 +188,7 @@
     "--resent-email-msg": "Nie otrzymałeś linku aktywacyjnego? Wyślij ponownie.",
 
     "--mat-paginator": {
-        "itemsPerPage": "Wierszy na stronę:",
+        "itemsPerPage": "Wpisów na stronę:",
         "nextPage": "Następna strona",
         "previousPage": "Poprzednia strona",
         "firstPage": "Pierwsza strona",
