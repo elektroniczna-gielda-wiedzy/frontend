@@ -52,11 +52,9 @@ export class PasswordResetComponent {
   onSubmit() {
 
       if (this.token &&  this.passwordForm){
-        console.log(this.token)
         if(  !this.passwordForm.value.repeatNewPassword ){
             return;
         }
-        console.log(this.passwordForm.value)
         
         this.authService.modifyPassword(this.token, this.passwordForm.value.repeatNewPassword).subscribe(
           { next: (response) => {

@@ -52,7 +52,6 @@ export class CommentActionButtonsComponent {
             }
           });
 
-        console.log('The dialog was closed');
       }
     });
   }

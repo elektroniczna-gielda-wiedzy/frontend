@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { NGXLogger } from 'ngx-logger';
 import { ReportHttpService } from 'src/app/core';
 
 @Component({
@@ -19,6 +20,7 @@ export class ReportModalComponent {
     private reportHttpService: ReportHttpService,
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
+    private logger: NGXLogger,
     @Inject(MAT_DIALOG_DATA) public data: { entryId: number }
   ) {
     this.reportForm = this.fb.group({
@@ -49,7 +51,7 @@ export class ReportModalComponent {
         }
       },
       error: (err) => {
-        console.log(err);
+        this.logger.error(err);
       },
     });
   }
