@@ -21,7 +21,6 @@ export class PasswordResetComponent {
         Validators.required,
         Validators.minLength(6),
         matchValidator('repeatNewPassword', true),
-        differentValidator('password'),
       ],
     ],
     repeatNewPassword: [
