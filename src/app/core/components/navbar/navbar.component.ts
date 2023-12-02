@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   initChat(): void {
     this.chatService.connect();
     this.notificationsSubscription = this.chatService
-      .notifications()
+      .notificationQueue()
       .subscribe((notification: Message) => {
         if (this.router.url !== '/chat') {
           this.displayNotification();

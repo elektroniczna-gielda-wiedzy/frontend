@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Message } from '@stomp/stompjs';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { RxStompService } from './rx-stomp.service';
 import { myRxStompConfig } from './my-rx-stomp.config';
 import { NGXLogger } from 'ngx-logger';
-import { Author } from 'src/app/core';
+import { AuthService, Author, TokenService } from 'src/app/core';
 import { ChatHttpService } from './chat-http.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private chatSubscriptions: Map<number, Subscription> = new Map();
   private messageSubject = new Subject<string>();
   user?: Author | null = null;
   private unreadCount = new BehaviorSubject<number>(0);
@@ -20,37 +18,29 @@ export class ChatService {
   constructor(
     private rxStompService: RxStompService,
     private logger: NGXLogger,
-    private chatHttpService: ChatHttpService
+    private chatHttpService: ChatHttpService,
+    private tokenService: TokenService,
+    private authService: AuthService,
   ) {}
 
   sendMessage(chatId: number, message: string) {
+    if (this.tokenService.isTokenExpired()) {
+      this.authService.logout();
+      return;
+    }
+
     this.rxStompService.publish({
       destination: `/api/v1/chat/${chatId}`,
       body: message,
     });
   }
 
-  subscribeToChat(chatId: number) {
-    if (this.chatSubscriptions.has(chatId)) {
-      return;
-    }
-    const subscription = this.rxStompService
-      .watch(`/topic/chat/${chatId}`)
-      .subscribe((message: Message) => {
-        this.messageSubject.next(message.body);
-      });
-    this.chatSubscriptions.set(chatId, subscription);
-  }
-
-  notifications() {
+  notificationQueue() {
     return this.rxStompService.watch(`/user/queue/notification`);
   }
 
-  unsubscribeFromAllChats() {
-    this.chatSubscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-    this.chatSubscriptions.clear();
+  messageQueue() {
+    return this.rxStompService.watch(`/user/queue/message`);
   }
 
   connect() {

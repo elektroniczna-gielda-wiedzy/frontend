@@ -145,7 +145,6 @@ export class ChatDetailsComponent {
     this.chatHttpService.createChat(otherUserId).subscribe((response) => {
       this.chatId = response.result[0].chat_id;
       this.createChatCompleted.emit(this.chatId);
-      this.chatService.subscribeToChat(this.chatId);
       this.sendMessageToChat(message);
     });
   }
